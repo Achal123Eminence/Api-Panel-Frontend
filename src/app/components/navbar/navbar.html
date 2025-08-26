@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" href="#">BetFair2025</a> -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link sidebartoggler nav-icon-hover ms-n3" id="headerCollapse" href="javascript:void(0)">
+                <i class="fa fa-bars"></i>
+              </a>
+            </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cricket" [class.active]="isCricketActive()" aria-current="page">CRICKET</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tennis" [class.active]="isTennisActive()" aria-current="page">TENNIS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/soccer" [class.active]="isSoccerActive()" aria-current="page">SOCCER</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cricket-events" [class.active]="isListCricketActive()" aria-current="page">CRICKET EVENTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tennis-events" [class.active]="isListTennisActive()" aria-current="page">TENNIS EVENTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/soccer-events" [class.active]="isListSoccerActive()" aria-current="page">SOCCER EVENTS</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            EXAMPLE
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item">OPTION 01</a></li>
+            <li><a class="dropdown-item">OPTION 02</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <!-- <li class="nav-item d-none d-lg-block">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-search"></i>
+            </a>
+        </li> -->
+        <!-- <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+            <img
+              src="/assets/Images/user.png"
+              alt="Profile"
+              class="rounded-circle me-1"
+              style="width: 30px; height: 30px;"
+            />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
