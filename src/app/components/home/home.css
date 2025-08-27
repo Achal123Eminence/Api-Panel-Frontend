@@ -79,3 +79,18 @@ label, .entries-num{
 .brown{
     background-color: brown;
 }
+
+.blue.active{
+    background-color: #026b72;
+    box-shadow: none;
+}
+
+.green.active{
+    background-color:  rgb(51, 83, 4);
+    box-shadow: none;
+}
+
+.brown.active{
+    background-color:  rgb(93, 10, 10);
+    box-shadow: none;
+}
