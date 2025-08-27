@@ -19,27 +19,31 @@ export class Navbar {
     this.userService.logout()
   }
 
-  isCricketActive(): boolean {
-    return ['/cricket', '/c-event', '/c-market'].includes(this.router.url);
+  isBetfairCompetitionActive(): boolean {
+    return ['/home'].includes(this.router.url);
   }
 
-  isSoccerActive(): boolean {
-    return ['/soccer', '/s-event', '/s-market'].includes(this.router.url);
+  isBetfairCricketActive(): boolean {
+    return ['/betfair-cricket'].includes(this.router.url);
   }
 
-  isTennisActive(): boolean {
-    return ['/tennis', '/t-event', '/t-market'].includes(this.router.url);
+  isBetfairSoccerActive(): boolean {
+    return ['/betfair-soccer'].includes(this.router.url);
   }
 
-  isListCricketActive(): boolean {
-    return ['/cricket-events'].includes(this.router.url);
+  isBetfairTennisActive(): boolean {
+    return ['/betfair-tennis'].includes(this.router.url);
   }
 
-  isListSoccerActive(): boolean {
-    return ['/soccer-events'].includes(this.router.url);
+  isBetfairAllActive(): boolean {
+    return ['/betfair-tennis','/betfair-cricket','/betfair-soccer'].includes(this.router.url);
   }
 
-  isListTennisActive(): boolean {
-    return ['/tennis-events'].includes(this.router.url);
-  }
+  // isListSoccerActive(): boolean {
+  //   return ['/soccer-events'].includes(this.router.url);
+  // }
+
+  // isListTennisActive(): boolean {
+  //   return ['/tennis-events'].includes(this.router.url);
+  // }
 }

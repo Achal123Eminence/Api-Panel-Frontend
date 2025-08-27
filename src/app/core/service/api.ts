@@ -8,10 +8,15 @@ import { environment } from '../../environment/environment';
 })
 export class Api {
   private baseUrl = environment.baseUrl;
+  private baseUrl02 = environment.baseUrl02;
 
   constructor(private http:HttpClient){}
 
   login(obj:any): Observable<any>{
     return this.http.post(`${this.baseUrl}/user/login`, obj);
   }  
+
+  getAllEvents(sportId:any): Observable<any>{
+    return this.http.get(`${this.baseUrl02}/data/all-event/${sportId}`);
+  }
 }
