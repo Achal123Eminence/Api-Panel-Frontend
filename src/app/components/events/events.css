@@ -1,0 +1,53 @@
+thead tr th{
+    background-color: #006e76 !important;
+    color: #fff;
+}
+
+.events-btn{
+    background-color: #006e76;
+    color: #fff;
+    border: 1px solid #0aadb8;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.main-heading{
+    font-size: 1.3rem;
+    color: #006e76;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+label, .entries-num{
+    color: #fff;
+}
+
+/* Loader start */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #555;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Loader end */

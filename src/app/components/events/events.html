@@ -1,16 +1,12 @@
 <div class="cricket-container">
-    <div class="select-sport">
-        <button class="top-btn blue" (click)="fetchCricketCompetitionList('4')" [class.active]="selectedSport === '4'">Cricket</button>
-        <button class="top-btn green" (click)="fetchCricketCompetitionList('1')" [class.active]="selectedSport === '1'">Soccer</button>
-        <button class="top-btn brown" (click)="fetchCricketCompetitionList('2')" [class.active]="selectedSport === '2'">Tennis</button>
-    </div>
+  <h1 class="main-heading">{{ sportId === '4' ? 'Cricket' : sportId === '1' ? 'Soccer' : sportId === '2' ? 'Tennis' : '' }} Events</h1>
 
   <!-- Search & Page Size -->
   <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
     <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;border-bottom: 1px solid #fff;">
       <div>
         <label class="me-2">Show</label>
-        <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
+        <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)"> 
           <option value="5">5</option>
           <option value="10" selected>10</option>
           <option value="25">25</option>
@@ -25,7 +21,7 @@
           placeholder="Search..."
           style="max-width: 250px;"
           [value]="searchTerm()"
-          (input)="onSearchChange($event)" 
+          (input)="onSearchChange($event)"
         />
       </div>
     </div>
@@ -35,27 +31,27 @@
       <thead>
         <tr>
           <th scope="col">Sr.No</th>
-          <th scope="col">Cmpt ID</th>
-          <th scope="col">Cmpt Name</th>
-          <th scope="col">Cmpt Region</th>
-          <th scope="col">Sports Name</th>
-          <th scope="col">Event Count</th>
+          <th scope="col">EventId/MarketID</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Cmpt Id/Name</th>
+          <th scope="col">Open Date</th>
+          <th scope="col">Sport Name</th>
           <th scope="col">Market Count</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of paginatedList(); track $index) { 
+        @for (item of paginatedList(); track $index) {
           <tr>
             <th scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</th>
-            <td>{{item.competitionId}}</td>
-            <td>{{item.competitionName}}</td>
-            <td>{{item.competitionRegion}}</td>
-            <td>{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }}</td>
-            <td>{{item.eventCount}}</td>
-            <td>{{item.marketCount}}</td>
+            <td>{{item.event_id}}/{{item.marketId}}</td>
+            <td>{{item.event_name}}</td>
+            <td>{{item.competition_id}}/{{item.competition_name}}</td>
+            <td>{{item.open_date}}</td>
+            <td>{{ sportId === '4' ? 'Cricket' : sportId === '1' ? 'Soccer' : sportId === '2' ? 'Tennis' : '' }}</td>
+            <td>{{item.market_count}}</td>
             <td>
-              <button class="events-btn" routerLink="/events/{{selectedSport}}/{{item.competitionId}}">Events</button>
+              <button class="events-btn" routerLink="/markets/{{sportId}}/{{item.event_id}}">Markets</button>
             </td>
           </tr>
         }

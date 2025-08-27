@@ -23,4 +23,16 @@ export class Api {
   getCompetitionList(sportId:any): Observable<any>{
     return this.http.get(`${this.baseUrl02}/data/competition/${sportId}`);
   };
+
+  getEventList(competitionId:any): Observable<any>{
+    return this.http.get(`${this.baseUrl02}/data/event/${competitionId}`);
+  }
+
+  getMarketList(eventId:any): Observable<any>{
+    return this.http.get(`${this.baseUrl02}/data/market/${eventId}`);
+  }
+
+  getMarketBook(marketId:any): Observable<any>{
+    return this.http.get(`${this.baseUrl02}/data/book/${marketId}`);
+  }
 }
