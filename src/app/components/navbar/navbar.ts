@@ -23,27 +23,43 @@ export class Navbar {
     return ['/home'].includes(this.router.url);
   }
 
-  isBetfairCricketActive(): boolean {
-    return ['/betfair-cricket'].includes(this.router.url);
-  }
+  // isBetfairCricketActive(): boolean {
+  //   return ['/betfair-cricket'].includes(this.router.url);
+  // }
 
-  isBetfairSoccerActive(): boolean {
-    return ['/betfair-soccer'].includes(this.router.url);
-  }
+  // isBetfairSoccerActive(): boolean {
+  //   return ['/betfair-soccer'].includes(this.router.url);
+  // }
 
-  isBetfairTennisActive(): boolean {
-    return ['/betfair-tennis'].includes(this.router.url);
-  }
+  // isBetfairTennisActive(): boolean {
+  //   return ['/betfair-tennis'].includes(this.router.url);
+  // }
 
   isBetfairAllActive(): boolean {
-    return ['/betfair-tennis','/betfair-cricket','/betfair-soccer'].includes(this.router.url);
+    return ['/betfair'].includes(this.router.url);
   }
 
-  // isListSoccerActive(): boolean {
-  //   return ['/soccer-events'].includes(this.router.url);
-  // }
+  isAddActive(): boolean {
+    return ['/add-match','/add-competition'].includes(this.router.url);
+  }
 
-  // isListTennisActive(): boolean {
-  //   return ['/tennis-events'].includes(this.router.url);
-  // }
+  isAddCompetitionActive(): boolean {
+    return ['/add-competition'].includes(this.router.url);
+  }
+
+  isAddMatchActive(): boolean {
+    return ['/add-match'].includes(this.router.url);
+  }
+
+  isSettingsActive(): boolean {
+    return ['/default-settings','/currency'].includes(this.router.url);
+  }
+
+  isDefaultSettingsActive(): boolean {
+    return ['/default-settings'].includes(this.router.url);
+  }
+
+  isCurrencyActive(): boolean {
+    return ['/currency'].includes(this.router.url);
+  }
 }

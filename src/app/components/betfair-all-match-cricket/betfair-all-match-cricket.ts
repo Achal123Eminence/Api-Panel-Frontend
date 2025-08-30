@@ -16,6 +16,7 @@ export class BetfairAllMatchCricket implements OnInit {
   cricketAllEventList = signal<any[]>([]);
   isloading = false;  
   Math = Math; 
+  selectedSport: string = '4';
 
   // Pagination state
   pageSize = signal<number>(50);
@@ -44,16 +45,18 @@ export class BetfairAllMatchCricket implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.fetchCricketAllEventList('4');
+    this.fetchCricketAllEventList(this.selectedSport);
   }
 
   fetchCricketAllEventList(id: any) {
+    this.selectedSport = id
     this.isloading = true;
     this.apiService.getAllEvents(id).subscribe({
       next: (res: any) => {
         this.isloading = false;
         this.cricketAllEventList.set(res.events);
-        this.showToast('Cricket All Event list fetched successfully');
+        console.log(this.cricketAllEventList())
+        // this.showToast('Cricket All Event list fetched successfully');
         this.currentPage.set(1);
       },
       error: (err) => {
@@ -62,6 +65,24 @@ export class BetfairAllMatchCricket implements OnInit {
         this.showToast('Error in getting cricket all event list', true);
       },
     });
+  }
+
+  addEvent(data:any){
+    console.log(data)
+    if(data){
+      data.isAdded = true;
+      this.apiService.addEvent(data).subscribe({
+        next:(res:any) => {
+         this.showToast('Event Added successfully'); 
+         this.fetchCricketAllEventList(this.selectedSport);
+        },
+        error:(err)=>{
+          this.isloading = false;
+          console.log('Error in Adding Event: ', err);
+          this.showToast(`Error in Adding Event:${err.error.message}`, true);
+        }
+      })
+    }
   }
 
   

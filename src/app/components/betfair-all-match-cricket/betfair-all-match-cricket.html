@@ -1,5 +1,10 @@
 <div class="cricket-container">
-    <h1 class="main-heading">Cricket Events List</h1>
+  <div class="select-sport">
+    <button class="top-btn blue" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">Cricket</button>
+    <button class="top-btn green" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">Soccer</button>
+    <button class="top-btn brown" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">Tennis</button>
+  </div>
+    <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
   <!-- Search & Page Size -->
   <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
     <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;border-bottom: 1px solid #fff;">
@@ -29,28 +34,40 @@
     <table class="table table-striped mb-0">
       <thead>
         <tr>
-          <th scope="col">Sr.No</th>
-          <th scope="col">EventId/MarketID</th>
-          <th scope="col">Event Name</th>
-          <th scope="col">Cmpt Id/Name</th>
-          <th scope="col">Open Date</th>
-          <th scope="col">Sport Name</th>
-          <th scope="col">Market Count</th>
-          <th scope="col">Action</th>
+          <th scope="col" style="width: 5%;">Sr.No</th>
+          <!-- <th scope="col">EventId/MarketID</th> -->
+          <th scope="col" style="width: 10%;">EventId</th>
+          <th scope="col" style="width: 20%;">Event Name</th>
+          <th scope="col" style="width: 30%;">Cmpt Id/Name</th>
+          <th scope="col" style="width: 15%;">Open Date</th>
+          <!-- <th scope="col">Sport Name</th> -->
+          <!-- <th scope="col">Market Count</th> -->
+          <th scope="col" style="width: 5%;">Provider</th>
+          <th scope="col" style="width: 15%;text-align: center;">Action</th>
         </tr>
       </thead>
       <tbody>
         @for (item of paginatedList(); track $index) {
           <tr>
-            <th scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</th>
-            <td>{{item.eventId}}/{{item.marketId}}</td>
+            <td scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</td>
+            <!-- <td>{{item.eventId}}/{{item.marketId}}</td> -->
+            <td>{{item.eventId}}</td>
             <td>{{item.eventName}}</td>
-            <td> {{item.competitionId}}/{{item.competitionName}}</td>
-            <td>{{item.openDate}}</td>
-            <td>{{item.sportName}}</td>
-            <td>{{item.marketCount}}</td>
             <td>
-              <button class="events-btn" routerLink="/c-market/{{item.eventId}}">Add</button>
+              <span>{{item.competitionId}}/</span>
+              <span>{{item.competitionName}}</span>
+              <!-- <div style="display: grid;">
+              </div> -->
+               <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
+            <td>{{item.openDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+            <!-- <td>{{item.sportName}}</td> -->
+            <td><span>Betfair</span></td>
+            <td>
+              <div style="display: flex;justify-content: left;gap: 1rem;">
+                <button  class="events-btn" *ngIf="item.isAdded == false" (click)="addEvent(item)" >Add</button>
+                <button  class="events-btn" style="background-color: #012c58 !important;" *ngIf="item.isAdded == true">Added</button>
+                <button *ngIf="item.marketName == 'Winner'" class="events-btn purpel" style="margin-left: 3px;">Cup Winner</button>
+              </div>
             </td>
           </tr>
         }

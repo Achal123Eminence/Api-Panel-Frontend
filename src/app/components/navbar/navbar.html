@@ -11,17 +11,35 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isBetfairAllActive()">
-            Betfair Match
+          <a class="nav-link"  routerLink="/betfair" aria-current="page" [class.active]="isBetfairAllActive()">
+            Add Betfair Match
           </a>
-          <ul class="dropdown-menu">
+          <!-- <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/betfair-cricket" [class.active]="isBetfairCricketActive()">Cricket</a></li>
             <li><a class="dropdown-item" routerLink="/betfair-soccer" [class.active]="isBetfairSoccerActive()">Soccer</a></li>
             <li><a class="dropdown-item" routerLink="/betfair-tennis" [class.active]="isBetfairTennisActive()">Tennis</a></li>
-          </ul>
+          </ul> -->
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/home" [class.active]="isBetfairCompetitionActive()" aria-current="page">Betfair Competition</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddActive()">
+            Add
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/add-competition" [class.active]="isAddCompetitionActive()">Add Competition</a></li>
+            <li><a class="dropdown-item" routerLink="/add-match" [class.active]="isAddMatchActive()">Add Match</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isSettingsActive()">
+            Settings
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/default-settings" [class.active]="isDefaultSettingsActive()">Default Settings</a></li>
+            <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()">Add Currency</a></li>
+          </ul>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/tennis" [class.active]="isTennisActive()" aria-current="page">TENNIS</a>

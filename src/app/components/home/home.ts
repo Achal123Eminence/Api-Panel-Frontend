@@ -55,8 +55,17 @@ export class Home implements OnInit{
       next: (res:any) => {
         this.isloading = false;
         this.cricketCompetitionList.set(res?.competitions || []);
+        console.log(this.cricketCompetitionList())
         this.currentPage.set(1);
-        this.showToast("Cricket competition list fetched successfully");
+        // if(this.selectedSport=="4"){
+        //   this.showToast("Cricket competition list fetched successfully");
+        // }
+        // if(this.selectedSport=="1"){
+        //   this.showToast("Soccer competition list fetched successfully");
+        // }
+        // if(this.selectedSport=="2"){
+        //   this.showToast("Tennis competition list fetched successfully");
+        // }
       },
       error: (err) =>{
         this.isloading = false;

@@ -36,7 +36,7 @@
 .nav-link.active,
 .dropdown-item.active {
   font-weight: 400;
-  /* background-color: #31aab3; */
+  background-color: #006e76;
   color: #ffff00 !important;
   font-weight: 600;
 }

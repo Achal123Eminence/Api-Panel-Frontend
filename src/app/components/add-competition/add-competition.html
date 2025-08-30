@@ -1,0 +1,41 @@
+<section class="add-competition-container">
+    <h1>Add Manual Competition</h1>
+    <form [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="option01">Select Sport Type</label>
+            <select class="form-select" formControlName="sportId">
+                <option value=""> Select Sport </option>
+                <option *ngFor="let sport of sports" [value]="sport.id">
+                    {{ sport.name }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="option01">Competition Id</label>
+            <select class="form-select" formControlName="competitionId">
+                <option value=""> Select Competition Id</option>
+                <option  [value]="competitionId">{{competitionId}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="option01">Competition Name</label>
+            <input class="form-control" formControlName="competitionName" placeholder="Enter Competition Name" />
+        </div>
+        <div class="form-group">
+            <label for="option01">Select Competition Type</label>
+            <select class="form-select" formControlName="competitionType">
+                <option value=""> Select Competition Type </option>
+                <option *ngFor="let type of competitionTypes" [value]="type.id">
+                    {{ type.name }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="option01">Open Date</label>
+            <input type="datetime-local" class="form-control" formControlName="openDate" />
+        </div>
+        <div class="button-submit" type="submit" >
+            <button>Submit</button>
+        </div>
+    </form>
+</section>
