@@ -39,4 +39,12 @@ export class Api {
   addEvent(data:any): Observable<any>{
     return this.http.post(`${this.baseUrl}/event/add`,data);
   }
+
+  getDefaultSetting(data:any={}): Observable<any>{
+    return this.http.post(`${this.baseUrl}/event/get-default`,data);
+  }
+
+  updateDefaultSetting(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/event/update-default`,data);
+  }
 }

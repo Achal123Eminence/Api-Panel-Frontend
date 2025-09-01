@@ -1,8 +1,8 @@
 <div class="cricket-container">
   <div class="select-sport">
-    <button class="top-btn blue" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">Cricket</button>
-    <button class="top-btn green" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">Soccer</button>
-    <button class="top-btn brown" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">Tennis</button>
+    <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">Cricket Match</button>
+    <button class="top-btn" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">Soccer Match</button>
+    <button class="top-btn" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">Tennis Match</button>
   </div>
     <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
   <!-- Search & Page Size -->

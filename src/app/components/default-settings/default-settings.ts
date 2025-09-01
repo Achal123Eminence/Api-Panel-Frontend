@@ -1,11 +1,128 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Api } from '../../core/service/api';
+import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-default-settings',
-  imports: [],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './default-settings.html',
-  styleUrl: './default-settings.css'
+  styleUrl: './default-settings.css',
 })
-export class DefaultSettings {
+export class DefaultSettings implements OnInit {
+  private apiService = inject(Api);
+  selectedSport: string = '4';
+  allDataList = signal<any[]>([]);
 
+  gradeA = signal<any[]>([]);
+  gradeB = signal<any[]>([]);
+  gradeC = signal<any[]>([]);
+
+  isloading = false;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.fetchAllData(this.selectedSport);
+  }
+
+  fetchAllData(id:any) {
+    this.isloading = true;
+    this.apiService.getDefaultSetting().subscribe({
+      next: (res: any) => {
+        this.isloading = false;
+        this.allDataList.set(res.data);
+        console.log(this.allDataList(), 'Fetch all default settings');
+        if (res) {
+          this.selectedSport = id;
+          const filteredData = this.allDataList().filter((m) => m.sport === id);
+
+          // Divide into 3 arrays and sort by id
+          this.gradeA.set(
+            filteredData
+              .filter((m) => m.gradeType === 'A')
+              .sort((a, b) => a.id - b.id)
+          );
+
+          this.gradeB.set(
+            filteredData
+              .filter((m) => m.gradeType === 'B')
+              .sort((a, b) => a.id - b.id)
+          );
+
+          this.gradeC.set(
+            filteredData
+              .filter((m) => m.gradeType === 'C')
+              .sort((a, b) => a.id - b.id)
+          );
+
+          console.log('Grade A:', this.gradeA());
+          console.log('Grade B:', this.gradeB());
+          console.log('Grade C:', this.gradeC());
+        }
+      },
+      error: (err) => {
+        this.isloading = false;
+        console.log('Error in fetching all default settings data!!');
+      },
+    });
+  }
+
+  updateRow(item: any) {
+    const payload = {
+      sport: this.selectedSport,
+      id: item.id,
+      gradeType: item.gradeType,
+      updates: {
+        marketName: item.marketName,
+        status: item.status,
+        preMinStake: item.preMinStake,
+        preMaxStake: item.preMaxStake,
+        preMaxPL: item.preMaxPL,
+        minStake: item.minStake,
+        maxStake: item.maxStake,
+        maxPL: item.maxPL,
+        delay: item.delay,
+        oddsLimit: item.oddsLimit,
+      },
+    };
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to update this market setting?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.updateDefaultSetting(payload).subscribe({
+          next: (res: any) => {
+            this.showToast('Market updated successfully');
+          },
+          error: (err) => {
+            this.showToast(
+              `Failed to update market: ${err.error.message}`,
+              true
+            );
+          },
+        });
+      }
+    });
+  }
+
+  private showToast(message: string, isError: boolean = false): void {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: isError ? 'error' : 'success',
+      title: message,
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+  }
 }

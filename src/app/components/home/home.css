@@ -66,31 +66,10 @@ label, .entries-num{
     padding: 9px 45px;
     font-weight: 500;
     color: #fff;
+    background-color: rgb(162, 159, 159);
 }
 
-.blue{
-    background-color: #0aadb8;
-}
-
-.green{
-    background-color: rgb(102, 169, 2);
-}
-
-.brown{
-    background-color: brown;
-}
-
-.blue.active{
-    background-color: #026b72;
-    box-shadow: none;
-}
-
-.green.active{
-    background-color:  rgb(51, 83, 4);
-    box-shadow: none;
-}
-
-.brown.active{
-    background-color:  rgb(93, 10, 10);
+.top-btn.active{
+    background-color: #006e76;
     box-shadow: none;
 }

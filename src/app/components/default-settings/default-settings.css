@@ -1,0 +1,153 @@
+.select-sport{
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+
+.top-btn{
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: #000 0 2px 6px;
+    border-radius: 10px;
+    padding: 9px 45px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(162, 159, 159);
+}
+
+.top-btn.active{
+    background-color: #006e76;
+    box-shadow: none;
+}
+
+input{
+    width: 7rem;
+    height: 2.4rem;
+    border-radius: 10px;
+    padding: 2px 4px;
+    text-align: center;
+}
+
+input::placeholder{
+  color: rgb(79, 79, 251);
+}
+
+h3{
+    font-size: 1.2rem;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-top: 9px;
+}
+
+th{
+    background-color: yellow !important;
+}
+
+.grade-container{
+    margin-bottom: 2rem;
+}
+
+/* form check input */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d70303;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 3px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #0ca105;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #0ca105;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.save-btn{
+    background-color: green;
+    color: white;
+    border: 3px solid green;
+    border-radius: 4px;
+}
+
+input{
+    border: 1px solid #d9d9d9;
+    /* padding: 2px 2px 3px 8px; */
+}
+
+td{
+    background-color: #e3e3e3 !important;
+}
+
+table tbody tr td:first-child{
+    color:rgb(6, 70, 198);
+    font-weight: 600;
+}
+
+table thead tr th:first-child{
+  width: 16%;
+}
+
+table{
+    border: 1px solid rgb(175, 174, 174);
+    border-radius: 5px;
+}
+
+input:active{
+    border: none;
+}
+
+.grade-container{
+  /* border: 1px solid rgb(152, 150, 150); */
+  box-shadow: #000 0 2px 6px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}

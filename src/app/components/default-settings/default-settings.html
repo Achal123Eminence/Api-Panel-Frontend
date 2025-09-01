@@ -1,1 +1,148 @@
-<p>default-settings works!</p>
+<div class="setting-container">
+    <div class="select-sport">
+        <button class="top-btn" (click)="fetchAllData('4')" [class.active]="selectedSport === '4'">Cricket
+            Default Markets</button>
+        <button class="top-btn" (click)="fetchAllData('1')" [class.active]="selectedSport === '1'">Soccer
+            Default Markets</button>
+        <button class="top-btn" (click)="fetchAllData('2')" [class.active]="selectedSport === '2'">Tennis
+            Default Markets</button>
+    </div>
+
+    <div class="main">
+        <div class="grade-container">
+            <h3>GRADE A</h3>
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Market Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Pre Stake Min</th>
+                        <th scope="col">Pre Stake Max</th>
+                        <th scope="col">Pre PL Max</th>
+                        <th scope="col">Min Stake</th>
+                        <th scope="col">Max Stake</th>
+                        <th scope="col">Max PL</th>
+                        <th scope="col">Delay</th>
+                        <th scope="col">Odds Limit</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of gradeA(); track $index) {
+                    <tr>
+                        <td>{{item.marketName}}</td>
+                        <!-- <td>{{item.status}}</td> -->
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" [(ngModel)]="item.status"/>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td>
+                            <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="grade-container">
+            <h3>GRADE B</h3>
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Market Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Pre Stake Min</th>
+                        <th scope="col">Pre Stake Max</th>
+                        <th scope="col">Pre PL Max</th>
+                        <th scope="col">Min Stake</th>
+                        <th scope="col">Max Stake</th>
+                        <th scope="col">Max PL</th>
+                        <th scope="col">Delay</th>
+                        <th scope="col">Odds Limit</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of gradeB(); track $index) {
+                    <tr>
+                        <td>{{item.marketName}}</td>
+                        <!-- <td>{{item.status}}</td> -->
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" [(ngModel)]="item.status"/>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td>
+                            <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="grade-container">
+            <h3>GRADE C</h3>
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Market Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Pre Stake Min</th>
+                        <th scope="col">Pre Stake Max</th>
+                        <th scope="col">Pre PL Max</th>
+                        <th scope="col">Min Stake</th>
+                        <th scope="col">Max Stake</th>
+                        <th scope="col">Max PL</th>
+                        <th scope="col">Delay</th>
+                        <th scope="col">Odds Limit</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of gradeC(); track $index) {
+                    <tr>
+                        <td>{{item.marketName}}</td>
+                        <!-- <td>{{item.status}}</td> -->
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" [(ngModel)]="item.status"/>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td>
+                            <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
