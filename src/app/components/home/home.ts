@@ -53,6 +53,7 @@ export class Home implements OnInit{
     this.isloading = true;
     this.apiService.getCompetitionList(id).subscribe({
       next: (res:any) => {
+        console.log(res)
         this.isloading = false;
         this.cricketCompetitionList.set(res?.competitions || []);
         console.log(this.cricketCompetitionList())
@@ -70,7 +71,7 @@ export class Home implements OnInit{
       error: (err) =>{
         this.isloading = false;
         console.log('Error in getting cricket competition list: ',err);
-        this.showToast('Error in getting cricket competition list',true);
+        this.showToast(`Error in getting cricket competition list:${err.error.message}`,true);
       }
     })
   }

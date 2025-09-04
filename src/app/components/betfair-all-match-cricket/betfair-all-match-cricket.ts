@@ -51,14 +51,16 @@ export class BetfairAllMatchCricket implements OnInit {
   }
 
   initForm(sportId: string) {
-    if (sportId === '4') {
+    if (sportId === '4' && this.selectedEvent?.marketName !== 'Winner') {
+      // Cricket events (non-winner)
       this.addEventForm = this.fb.group({
         competitionGrade: ['', Validators.required],
         eventGrade: ['', Validators.required],
         matchType: ['', Validators.required],
         premium: [null, Validators.required],
       });
-    } else if (sportId === '1' || sportId === '2') {
+    } else {
+      // Soccer, Tennis, OR Cricket Winner market
       this.addEventForm = this.fb.group({
         competitionGrade: ['', Validators.required],
         eventGrade: ['', Validators.required],
@@ -101,7 +103,10 @@ export class BetfairAllMatchCricket implements OnInit {
       error: (err) => {
         this.isloading = false;
         console.log('Error in getting cricket all event list: ', err);
-        this.showToast('Error in getting cricket all event list', true);
+        this.showToast(
+          `Error in getting cricket all event list:${err.error.message}`,
+          true
+        );
       },
     });
   }

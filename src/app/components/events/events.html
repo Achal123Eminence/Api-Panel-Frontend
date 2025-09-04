@@ -47,7 +47,7 @@
             <td>{{item.event_id}}/{{item.marketId}}</td>
             <td>{{item.event_name}}</td>
             <td>{{item.competition_id}}/{{item.competition_name}}</td>
-            <td>{{item.open_date}}</td>
+            <td>{{item.open_date | date:'dd-MM-yyyy HH:mm:ss'}}</td>
             <td>{{ sportId === '4' ? 'Cricket' : sportId === '1' ? 'Soccer' : sportId === '2' ? 'Tennis' : '' }}</td>
             <td>{{item.market_count}}</td>
             <td>
