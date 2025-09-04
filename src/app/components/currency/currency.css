@@ -1,0 +1,80 @@
+.currency-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.sub-div {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 9px 13px;
+}
+
+.update-row{
+  /* display: flex; */
+  /* gap: 10px; */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.main{
+    border: 1px solid rgb(227, 224, 224);
+    border-radius: 10px;
+    width: 95%;
+    box-shadow: #000 0 2px 6px;
+}
+
+h3{
+    font-size: 1.4rem;
+    color: rgb(6 139 160);
+    padding: 9px 13px;
+    border-bottom: 1px solid rgb(227, 224, 224);
+    /* text-align: center; */
+    background-color: rgb(237, 237, 237);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+h4{
+    font-size: 1.1rem;
+    /* padding: 9px 13px; */
+    text-align: center;
+}
+
+.delete-currency{
+    display: flex;
+}
+
+.delete-currency button{
+    background-color: transparent;
+    border: none;
+    color: #d31010;
+    margin-bottom: 6px;
+}
+
+.btn{
+    background-color: #d31010;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+input{
+    border-radius: 8px;
+    border: 1px solid rgb(205, 203, 203);
+    padding: 4px 7px;
+    font-size: 1.1rem;
+}
+
+.fa{
+    font-size: 1rem;
+}
+
+.add-currency-form{
+    display: flex;
+    gap: 1rem;
+}

@@ -64,7 +64,7 @@
             <td><span>Betfair</span></td>
             <td>
               <div style="display: flex;justify-content: left;gap: 1rem;">
-                <button  class="events-btn" *ngIf="item.isAdded == false" (click)="addEvent(item)" >Add</button>
+                <button  class="events-btn" *ngIf="item.isAdded == false" (click)="openModal(item)" >Add</button>
                 <button  class="events-btn" style="background-color: #012c58 !important;" *ngIf="item.isAdded == true">Added</button>
                 <button *ngIf="item.marketName == 'Winner'" class="events-btn purpel" style="margin-left: 3px;">Cup Winner</button>
               </div>
@@ -97,6 +97,72 @@
     </div>
   </div>
 </div>
+
+//modal popup
+
+<div class="modal fade" id="addEventModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Event Details</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
+
+          <div class="mb-3">
+            <label>Competition Grade</label>
+            <select class="form-select" formControlName="competitionGrade">
+              <option value="">Select</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Event Grade</label>
+            <select class="form-select" formControlName="eventGrade">
+              <option value="">Select</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+
+          <div *ngIf="selectedSport === '4'">
+            <div class="mb-3">
+              <label>Match Type</label>
+              <select class="form-select" formControlName="matchType">
+                <option value="">Select</option>
+                <option value="t10">T10</option>
+                <option value="t15">T15</option>
+                <option value="100balls">100 Balls</option>
+                <option value="t20">T20</option>
+                <option value="oneDay">One Day</option>
+                <option value="test">Test</option>
+              </select>
+            </div>
+          
+            <div class="mb-3">
+              <label>Premium</label>
+              <select class="form-select" formControlName="premium">
+                <option value="">Select</option>
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+            </div>
+          
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success" [disabled]="addEventForm.invalid">Add Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="loader-overlay" *ngIf="isloading">
   <div class="spinner"></div>

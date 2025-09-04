@@ -1,1 +1,34 @@
-<p>currency works!</p>
+<div class="currency-container">
+    <div class="main">
+        <h3>Currency Master</h3>
+
+        <section class="panel">
+            <div class="sub-div">
+                <h4 style="margin-right: 6rem;">Base Currency</h4>
+                <input class="input" placeholder="Currency" style="width: 27rem;" [value]="base.name"  />
+                <button class="btn">UPDATE</button>
+            </div>
+
+            <div class="sub-div">
+                <h4 style="margin-right: 6rem;">Base Currency</h4>
+                <form [formGroup]="addCurrencyForm" (ngSubmit)="createCurrency()" class="add-currency-form">
+                    <input class="input" placeholder="Currency" formControlName="name" style="width: 13rem;" />
+                    <input class="input" placeholder="Value" formControlName="value" style="width: 13rem;" />
+                    <button class="btn" type="submit" [disabled]="addCurrencyForm.invalid" >CREATE</button>
+                </form>
+            </div>
+            <div class="sub-div" style="display: flex;align-items: flex-end;">
+                @for (item of allCurrencies(); track $index) {
+                    <div class="update-row">
+                        <div class="delete-currency">
+                            <h4>{{item.name}}</h4>
+                            <button class="btn" style="padding: 2px 10px;" (click)="deleteCurrency(item._id)"><i class="fa fa-trash"></i></button>
+                        </div>
+                        <input class="input" placeholder="Currency" [value]="item.value" />
+                    </div>
+                }
+                <button class="btn" >UPDATE</button>
+            </div>
+        </section>
+    </div>
+</div>

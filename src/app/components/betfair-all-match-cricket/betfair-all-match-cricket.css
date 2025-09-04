@@ -115,3 +115,10 @@ label, .entries-num{
     background-color: rgb(204, 103, 204) !important;
     border: 1px solid purple;
 }
+
+.modal-body label{
+    color: #052224;
+    margin-left: 3px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}

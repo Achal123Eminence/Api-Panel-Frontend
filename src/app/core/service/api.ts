@@ -47,4 +47,24 @@ export class Api {
   updateDefaultSetting(data:any): Observable<any>{
     return this.http.post(`${this.baseUrl}/event/update-default`,data);
   }
+
+  addCurrency(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/create`,data);
+  }
+
+  getCurrency(data:any={}): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/get`,data);
+  }
+  
+  getBaseCurrency(data:any={}): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/get-one`,data);
+  }
+  
+  UpdateMultipleCurrency(data:any={}): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/update`,data);
+  }
+
+  deleteCurrency(id:any): Observable<any>{
+    return this.http.delete(`${this.baseUrl}/currency/remove/${id}`);
+  }
 }
