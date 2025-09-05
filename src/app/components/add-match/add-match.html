@@ -12,10 +12,11 @@
         </div>
         <div class="form-group">
             <label for="option01">Competition Id</label>
-            <select class="form-select" formControlName="competitionId">
+            <!-- <select class="form-select" formControlName="competitionId">
                 <option value=""> Select </option>
                 <option  [value]="competitionId">{{competitionId}}</option>
-            </select>
+            </select> -->
+            <input class="form-control" formControlName="competitionId" placeholder="Enter Competition Id" />
         </div>
         <div class="form-group">
             <label for="option01">Competition Name</label>
@@ -39,10 +40,10 @@
 
 
         <div class="form-group">
-            <label for="option01">Select Match Type</label>
-            <select class="form-select" formControlName="matchType">
+            <label for="option01">Select Event Type</label>
+            <select class="form-select" formControlName="eventType">
                 <option value=""> Select </option>
-                <option *ngFor="let type of matchTypes" [value]="type.id">
+                <option *ngFor="let type of eventTypes" [value]="type.id">
                     {{ type.name }}
                 </option>
             </select>
@@ -52,7 +53,7 @@
             <input type="datetime-local" class="form-control" formControlName="openDate" />
         </div>
         <div class="button-submit" type="submit" >
-            <button>Submit</button>
+            <button [disabled]="matchForm.invalid">Submit</button>
         </div>
     </form>
 </section>

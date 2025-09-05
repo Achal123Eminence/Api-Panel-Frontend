@@ -67,4 +67,16 @@ export class Api {
   deleteCurrency(id:any): Observable<any>{
     return this.http.delete(`${this.baseUrl}/currency/remove/${id}`);
   }
+
+  addManualCompetition(data:any){
+    return this.http.post(`${this.baseUrl}/manual/add-competition`,data);
+  }
+
+  getNextManual(data:any={}){
+    return this.http.post(`${this.baseUrl}/manual/next-competition-id`,data);
+  }
+
+  addManualEvent(data:any){
+    return this.http.post(`${this.baseUrl}/manual/add-event`,data);
+  }
 }

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed, inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Api } from '../../core/service/api';
 
 @Component({
   selector: 'app-add-match',
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
   styleUrl: './add-match.css'
 })
 export class AddMatch implements OnInit{
+  private apiService = inject(Api);
   matchForm!: FormGroup;
   sports = [
     { id: '4', name: 'Cricket' },
@@ -18,10 +20,9 @@ export class AddMatch implements OnInit{
     { id: '2', name: 'Soccer' },
   ];
   competitionId:any=12345;
-  matchTypes = [
-    { id: 'A', name: 'Option01' },
-    { id: 'B', name: 'Option02' },
-    { id: 'C', name: 'Option03' },
+  eventTypes = [
+    { id: 'manual', name: 'Manual' },
+    { id: 'virtual', name: 'Virtual' }
   ];
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
@@ -34,7 +35,7 @@ export class AddMatch implements OnInit{
       eventId: ['',Validators.required],
       eventName: ['',Validators.required],
       marketId: ['',Validators.required],
-      matchType: ['', Validators.required],
+      eventType: ['', Validators.required],
       openDate: ['', Validators.required],
     });
   }
@@ -44,12 +45,17 @@ export class AddMatch implements OnInit{
       const formData = this.matchForm.value;
       console.log('Submitting competition:', formData);
 
-      this.showToast("Match added successfully");
-      this.matchForm.reset()
-      // this.http.post('/api/competitions', formData).subscribe({
-      //   next: (res) => console.log('✅ Competition saved:', res),
-      //   error: (err) => console.error('❌ Error:', err),
-      // });
+      this.apiService.addManualEvent(formData).subscribe({
+        next: (res) => {
+          console.log('Competition saved:', res)
+          this.showToast("Match added successfully");
+          this.matchForm.reset()
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          this.showToast(`Error in adding match:${err.error.message}`,true);
+        }
+      });
     }
   }
 

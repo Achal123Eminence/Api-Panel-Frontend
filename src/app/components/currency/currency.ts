@@ -2,22 +2,13 @@
 import {
   Component,
   OnInit,
-  computed,
   signal,
-  inject,
-  WritableSignal,
+  inject
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule,FormBuilder,ReactiveFormsModule,Validators } from '@angular/forms';
+import { FormGroup, FormsModule,FormBuilder,ReactiveFormsModule,Validators,FormArray } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Api } from '../../core/service/api';
-
-interface CurrencyModel {
-  _id?: string;
-  name: string;
-  value: number;
-  isBase: boolean;
-}
 
 @Component({
   selector: 'app-currency',
@@ -38,16 +29,33 @@ export class Currency implements OnInit {
   constructor(private fb: FormBuilder){}
 
   ngOnInit(): void {
-    this.getBaseCurrency();
-    this.getAllCurrency();
     this.addCurrencyForm = this.fb.group({
       name:['', Validators.required],
       value:['', Validators.required],
     })
-
+    
     this.updateForm = this.fb.group({
-      value:['',Validators.required]
-    })
+      currencies: this.fb.array([])
+    });
+    
+    this.getAllCurrency();
+    this.getBaseCurrency();
+  }
+  get currenciesControls() {
+    return this.currencies.controls;
+  }
+
+  get currencies(): FormArray {
+    return this.updateForm.get('currencies') as FormArray;
+  }
+
+  private buildCurrencyGroup(currency: any): FormGroup {
+    return this.fb.group({
+      _id: [currency._id],
+      name: [currency.name, Validators.required],
+      value: [currency.value, [Validators.required, Validators.min(0)]],
+      isBase: [currency.isBase || false],
+    });
   }
 
   getBaseCurrency() {
@@ -60,7 +68,7 @@ export class Currency implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        console.log('Error in getting cricket competition list: ', err);
+        console.log('Error in getting Base Currency: ', err);
       },
     });
   }
@@ -70,12 +78,13 @@ export class Currency implements OnInit {
     this.api.getCurrency().subscribe({
       next: (res: any) => {
         this.isLoading = false;
-        this.allCurrencies.set(res.data);
-        console.log(this.allCurrencies());
+        this.currencies.clear();
+        res.data.forEach((c: any) => this.currencies.push(this.buildCurrencyGroup(c)));
+        console.log(this.currencies);
       },
       error: (err) => {
         this.isLoading = false;
-        console.log('Error in getting cricket competition list: ', err);
+        console.log('Error in getting Currency list', err);
       },
     });
   }
@@ -122,14 +131,36 @@ export class Currency implements OnInit {
       next:(res:any)=>{
         this.isLoading = false;
         this.showToast("Currency created successfully");
-        this.getAllCurrency();
         this.addCurrencyForm.reset()
+        this.getAllCurrency();
       },
       error:(err)=>{
         this.isLoading = false;
         this.showToast(err.error.message || "Error creating currency", true)
       }
     })
+  }
+
+  updateCurrencies() {
+    if (this.updateForm.invalid) {
+      this.updateForm.markAllAsTouched();
+      return;
+    }
+
+    const payload = { currencies: this.currencies.value };
+
+    this.isLoading = true;
+    this.api.UpdateMultipleCurrency(payload).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.showToast('Currencies updated successfully');
+        this.getAllCurrency();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.showToast(err.error.message || 'Error updating currencies', true);
+      },
+    });
   }
 
   private showToast(message: string, isError: boolean = false): void {
