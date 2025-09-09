@@ -19,6 +19,11 @@ export class AddMatch implements OnInit{
     { id: '1', name: 'Tennis' },
     { id: '2', name: 'Soccer' },
   ];
+  compGrade = [
+    { id: 'A', name: 'A' },
+    { id: 'B', name: 'B' },
+    { id: 'C', name: 'C' },
+  ];
   competitionId:any=12345;
   eventTypes = [
     { id: 'manual', name: 'Manual' },
@@ -32,6 +37,7 @@ export class AddMatch implements OnInit{
       sportId: ['', Validators.required],
       competitionId: ['', Validators.required],
       competitionName: ['', Validators.required],
+      competitionGrade: ['', Validators.required],
       eventId: ['',Validators.required],
       eventName: ['',Validators.required],
       marketId: ['',Validators.required],
