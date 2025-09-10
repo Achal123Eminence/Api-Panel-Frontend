@@ -79,4 +79,12 @@ export class Api {
   addManualEvent(data:any){
     return this.http.post(`${this.baseUrl}/manual/add-event`,data);
   }
+
+  addSingleMarket(data:any){
+    return this.http.post(`${this.baseUrl}/event/add-market`,data);
+  }
+
+  removeSingleMarket(data:any){
+    return this.http.post(`${this.baseUrl}/event/remove-market`,data);
+  }
 }

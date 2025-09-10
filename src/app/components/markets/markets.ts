@@ -63,7 +63,8 @@ export class Markets implements OnInit{
       next: (res: any) => {
         this.isloading = false;
         this.cricketMarketList.set(res.markets);
-        this.showToast('Cricket Market list fetched successfully');
+        // this.showToast('Cricket Market list fetched successfully');
+        console.log(this.cricketMarketList())
         this.currentPage.set(1);
       },
       error: (err) => {
@@ -71,28 +72,96 @@ export class Markets implements OnInit{
         console.log('Error in getting cricket Market list: ', err);
         this.showToast('Error in getting cricket Market list', true);
       },
+    })
+  }
+
+  addSingleMarket(data:any){
+    this.isloading = true;
+    const payload = {
+      eventId:data.event.id,
+      marketId:data.marketId,
+      marketName:data.marketName
+    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to Add this market?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Add it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.addSingleMarket(payload).subscribe({
+          next: (res: any) => {
+            this.isloading = false;
+            this.showToast('Market Added successfully');
+            this.fetchCricketMarketList(this.eventId);
+          },
+          error: (err) => {
+            this.isloading = false;
+            console.log('Error in Adding Market: ', err);
+            this.showToast(`Error in Adding Market : ${err.error.message}`,true);
+            this.fetchCricketMarketList(this.eventId);
+          },
+        });
+      }
     });
   }
 
-  openMarketDataModal(id: any) {
-    if(id){
-      this.isloading = true;
-      this.apiService.getMarketBook(id).subscribe({
-        next:(res:any) => {
-          this.isloading =false;
-          this.cricketMarketBookList.set(res.marketBook[0]);
-          const modal = document.getElementById('marketDataModal');
-          if (modal) new bootstrap.Modal(modal).show();
-          this.showToast('Cricket Market Book Data fetched successfully');
-        },
-        error: (err) => {
-          this.isloading = false;
-          console.log('Error in getting cricket Market book data: ', err);
-          this.showToast('Error in getting cricket Market book data', true);
-        }
-      })
-    }
+  removeSingleMarket(data:any){
+    this.isloading = true;
+    const payload = {
+      eventId:data.event.id,
+      marketId:data.marketId
+    };
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to Remove this market?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Remove it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.removeSingleMarket(payload).subscribe({
+          next: (res: any) => {
+            this.isloading = false;
+            this.showToast('Market Removed successfully');
+            this.fetchCricketMarketList(this.eventId);
+          },
+          error: (err) => {
+            this.isloading = false;
+            console.log('Error in Adding Market: ', err);
+            this.showToast(`Error in Adding Market : ${err.error.message}`,true);
+            this.fetchCricketMarketList(this.eventId);
+          },
+        });
+      }
+    });
   }
+
+  // openMarketDataModal(id: any) {
+  //   if(id){
+  //     this.isloading = true;
+  //     this.apiService.getMarketBook(id).subscribe({
+  //       next:(res:any) => {
+  //         this.isloading =false;
+  //         this.cricketMarketBookList.set(res.marketBook[0]);
+  //         const modal = document.getElementById('marketDataModal');
+  //         if (modal) new bootstrap.Modal(modal).show();
+  //         this.showToast('Cricket Market Book Data fetched successfully');
+  //       },
+  //       error: (err) => {
+  //         this.isloading = false;
+  //         console.log('Error in getting cricket Market book data: ', err);
+  //         this.showToast('Error in getting cricket Market book data', true);
+  //       }
+  //     })
+  //   }
+  // }
 
   setPageSize(event: Event) {
     const select = event.target as HTMLSelectElement | null;

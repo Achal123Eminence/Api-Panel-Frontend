@@ -40,7 +40,8 @@
           <td>{{item.marketName}}</td>
           <td>{{item.marketId}}</td>
           <td>
-            <button class="events-btn" (click)="openMarketDataModal(item.marketId)">Add</button>
+            <button class="events-btn" (click)="addSingleMarket(item)" *ngIf="item.isAdded === false">Add</button>
+            <button class="events-btn purpel" (click)="removeSingleMarket(item)" *ngIf="item.isAdded === true">Remove</button>
           </td>
         </tr>
         }
