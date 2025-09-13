@@ -10,6 +10,7 @@ import { AddCompetition } from './components/add-competition/add-competition';
 import { AddMatch } from './components/add-match/add-match';
 import { DefaultSettings } from './components/default-settings/default-settings';
 import { Currency } from './components/currency/currency';
+import { LimitSettings } from './components/limit-settings/limit-settings';
 
 export const routes: Routes = [
     {path:'', redirectTo:'login', pathMatch:'full'},
@@ -23,5 +24,6 @@ export const routes: Routes = [
     {path:'add-competition',component:AddCompetition},
     {path:'add-match',component:AddMatch},
     {path:'default-settings',component:DefaultSettings},
-    {path:'currency',component:Currency}
+    {path:'currency',component:Currency},
+    {path:'competition-setting',component:LimitSettings}
 ];

@@ -87,4 +87,37 @@ export class Api {
   removeSingleMarket(data:any){
     return this.http.post(`${this.baseUrl}/event/remove-market`,data);
   }
+
+  getBetfairCompetitionList(data:any){
+    return this.http.post(`${this.baseUrl}/event/get-competition`,data);
+  }
+
+  updateCompetitionGrade(data:any){
+    return this.http.post(`${this.baseUrl}/event/update-competition-grade`,data);
+  }
+
+  deleteCompetition(data:any){
+    return this.http.post(`${this.baseUrl}/event/remove-competition`,data);
+  }
+
+  updateEventGrade(data:any){
+    return this.http.post(`${this.baseUrl}/event/update-event-grade`,data);
+  }
+
+  deleteEvent(data:any){
+    return this.http.post(`${this.baseUrl}/event/remove-event`,data);
+  }
+
+  removeEvent(data:any){
+    return this.http.post(`${this.baseUrl}/event/partialy-remove-event`,data);
+  }
+
+  updateCompetitionMarket(data:any){
+    return this.http.post(`${this.baseUrl}/event/update-competition-market`,data);
+  }
+
+  updateEventMarket(data:any){
+    return this.http.post(`${this.baseUrl}/event/update-event-market`,data);
+  }
+
 }

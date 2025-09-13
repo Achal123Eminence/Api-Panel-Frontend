@@ -41,6 +41,14 @@
             <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()">Add Currency</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isLimitSettingsActive()">
+            Limit Settings
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()">Competition Settings</a></li>
+          </ul>
+        </li>
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/tennis" [class.active]="isTennisActive()" aria-current="page">TENNIS</a>
         </li>

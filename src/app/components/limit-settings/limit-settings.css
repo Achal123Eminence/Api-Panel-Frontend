@@ -1,0 +1,186 @@
+.select-sport{
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.main{
+    /* background-color: rgb(206, 206, 206); */
+    /* padding: 10px; */
+    border-radius: 10px;
+    /* box-shadow: #000 0 2px 6px; */
+}
+
+
+.top-btn{
+    font-size: 1.1rem;
+    border: none;
+    padding: 9px 45px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(162, 159, 159);
+}
+
+.top-btn.active{
+    background-color: #006e76;
+    box-shadow: none;
+}
+
+.select-sport{
+    box-shadow: #000 0 2px 6px;
+    width: fit-content;
+}
+
+.grade-container{
+  margin-bottom: 2rem;
+  box-shadow: #000 0 2px 6px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.allMatch{
+    background-color: yellow;
+    border: 1px solid rgb(132, 132, 0);
+    color: #000;
+    font-weight: 500;
+}
+
+.defaultSettings{
+    background-color: green;
+    color: #fff;
+}
+
+.competitionTable td{
+    background-color: rgb(220, 220, 220);
+    border: 1px solid black;
+}
+.competitionTable tr{
+    /* background-color: rgb(220, 220, 220); */
+    border: 1px solid black;
+}
+
+.matchTable td{
+    background-color: #f9f9f9 !important;
+}
+.matchDefaultRow td{
+    background-color: #ffffff !important;
+    padding: 0px;
+}
+
+h3{
+    background-color: #006e76;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 0px;
+}
+
+/* Slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d70303;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 3px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #0ca105;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #0ca105;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+input {
+    border: 2px solid #d0c7c7;
+}
+input {
+    width: 7rem;
+    height: 2.4rem;
+    border-radius: 10px;
+    padding: 2px 4px;
+    text-align: center;
+}
+
+.save-btn{
+    background-color: green;
+    color: white;
+    border: 3px solid green;
+    border-radius: 4px;
+}
+
+.save-grade-btn{
+    background-color: rgb(0, 94, 128);
+    color: white;
+    border: 1px solid rgb(14, 46, 58);
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.save-Competition-btn{
+    background-color: green;
+    color: white;
+    border: 1px solid rgb(7, 81, 7);
+    border-radius: 4px;
+}
+
+.delete-competition-btn{
+    background-color: rgb(170, 28, 28);
+    color: white;
+    border: 1px solid rgb(213, 7, 7);
+    border-radius: 4px;
+}
+
+.competition-grade-update{
+    padding: 3px 4px;
+    border-radius: 5px;
+}
+
+.competition-boolean-span{
+    background-color: #007f80;
+    color: #fff;
+    border-radius: 5px;
+    padding: 2px 7px 10px 7px;
+    margin: 8px;
+}
+
+.matchDefaultSetting td{
+    padding: 0.5rem !important;
+}

@@ -62,4 +62,12 @@ export class Navbar {
   isCurrencyActive(): boolean {
     return ['/currency'].includes(this.router.url);
   }
+
+  isLimitSettingsActive(): boolean {
+    return ['/competition-setting'].includes(this.router.url);
+  }
+
+  isCompetitionSettingsActive(): boolean {
+    return ['/competition-setting'].includes(this.router.url);
+  }
 }
