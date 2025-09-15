@@ -23,6 +23,10 @@ export class Navbar {
     return ['/home'].includes(this.router.url);
   }
 
+  isMtypeActive(): boolean {
+    return ['/mType'].includes(this.router.url);
+  }
+
   // isBetfairCricketActive(): boolean {
   //   return ['/betfair-cricket'].includes(this.router.url);
   // }

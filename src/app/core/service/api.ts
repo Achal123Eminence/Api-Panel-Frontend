@@ -120,4 +120,11 @@ export class Api {
     return this.http.post(`${this.baseUrl}/event/update-event-market`,data);
   }
 
+  getSavedEventList(data:any){
+    return this.http.post(`${this.baseUrl}/event/get-saved-event`,data);
+  }
+
+  rollBackEvent(data:any){
+    return this.http.post(`${this.baseUrl}/event/rollback-event`,data);
+  }
 }

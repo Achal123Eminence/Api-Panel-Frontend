@@ -11,6 +11,7 @@ import { AddMatch } from './components/add-match/add-match';
 import { DefaultSettings } from './components/default-settings/default-settings';
 import { Currency } from './components/currency/currency';
 import { LimitSettings } from './components/limit-settings/limit-settings';
+import { MType } from './components/m-type/m-type';
 
 export const routes: Routes = [
     {path:'', redirectTo:'login', pathMatch:'full'},
@@ -25,5 +26,6 @@ export const routes: Routes = [
     {path:'add-match',component:AddMatch},
     {path:'default-settings',component:DefaultSettings},
     {path:'currency',component:Currency},
-    {path:'competition-setting',component:LimitSettings}
+    {path:'competition-setting',component:LimitSettings},
+    {path:'mType',component:MType}
 ];

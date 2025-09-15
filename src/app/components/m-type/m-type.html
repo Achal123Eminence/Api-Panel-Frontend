@@ -1,0 +1,106 @@
+<div class="cricket-container">
+  <div class="select-sport">
+    <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">Cricket Match</button>
+    <button class="top-btn" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">Soccer Match</button>
+    <button class="top-btn" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">Tennis Match</button>
+  </div>
+    <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
+  <!-- Search & Page Size -->
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;border-bottom: 1px solid #fff;">
+      <div>
+        <label class="me-2">Show</label>
+        <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50" selected>50</option>
+        </select>
+        <label class="ms-2">entries</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search..."
+          style="max-width: 250px;"
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 5%;">Sr.No</th>
+          <!-- <th scope="col">EventId/MarketID</th> -->
+          <th scope="col" style="width: 10%;">EventId</th>
+          <th scope="col" style="width: 20%;">Event Name</th>
+          <th scope="col" style="width: 25%;">Cmpt Id/Name</th>
+          <th scope="col" style="width: 15%;">Open Date</th>
+          <!-- <th scope="col">Sport Name</th> -->
+          <!-- <th scope="col">Market Count</th> -->
+          <th scope="col" style="width: 5%;">Provider</th>
+          <th scope="col" style="width: 5%;">Status</th>
+          <th scope="col" style="width: 15%;text-align: center;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of paginatedList(); track $index) {
+          <tr>
+            <td scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</td>
+            <!-- <td>{{item.eventId}}/{{item.marketId}}</td> -->
+            <td>{{item.eventId}}</td>
+            <td>{{item.eventName}}</td>
+            <td>
+              <span>{{item.competitionId}}/</span>
+              <span>{{item.competitionName}}</span>
+              <!-- <div style="display: grid;">
+              </div> -->
+               <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
+            <td>{{item.openDate}}</td>
+            <!-- <td>{{item.sportName}}</td> -->
+            <td><span *ngIf="item.isAdded == true">Active</span> <span *ngIf="item.isAdded == false">Inactive</span> </td>
+            <td><span>Betfair</span></td>
+            <td>
+              <div style="display: flex;justify-content: left;gap: 1rem;">
+                <button class="events-btn" (click)="removeEvent(item)" *ngIf="item.isAdded == false">Rollback</button>
+                <button class="events-btn" style="background-color: #8d8b8b !important;border: 1px solid rgb(89, 86, 86);" *ngIf="item.isAdded == true" disabled>Rollback</button>
+                <button class="delete-event-btn" style="margin-left: 3px;" (click)="deleteEvent(item)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;">
+      <div class="entries-num">
+        Showing <strong>{{ (currentPage()-1) * pageSize() + 1 }}</strong> to <strong>{{ Math.min(currentPage() * pageSize(), filteredList().length) }}</strong> of <strong>{{ filteredList().length }}</strong> entries
+      </div>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage() === 1">
+            <a class="page-link" (click)="setPage(currentPage()-1)">Previous</a>
+          </li>
+          @for (page of [].constructor(totalPages()); track $index) {
+            <li class="page-item" [class.active]="currentPage() === ($index+1)">
+              <a class="page-link" (click)="setPage($index+1)">{{ $index+1 }}</a>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+            <a class="page-link" (click)="setPage(currentPage()+1)">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<div class="loader-overlay" *ngIf="isloading">
+  <div class="spinner"></div>
+</div>
