@@ -64,9 +64,9 @@
             <td><span>Betfair</span></td>
             <td>
               <div style="display: flex;justify-content: left;gap: 1rem;">
-                <button  class="events-btn" *ngIf="item.isAdded == false" (click)="openModal(item)" >Add</button>
+                <button  class="events-btn" *ngIf="item.isAdded == false" (click)="openModal(item,false)" >Add</button>
                 <button  class="events-btn" style="background-color: #012c58 !important;" *ngIf="item.isAdded == true">Added</button>
-                <button *ngIf="item.marketName == 'Winner' && item.isAdded == false" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item)">Cup Winner</button>
+                <button *ngIf="item.marketName == 'Winner' && item.isAdded == false" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button>
               </div>
             </td>
           </tr>
@@ -109,27 +109,29 @@
       <div class="modal-body">
         <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
 
-          <div class="mb-3">
-            <label>Competition Grade</label>
-            <select class="form-select" formControlName="competitionGrade">
-              <option value="">Select</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
+          <div class="mb-3 form-main">
+            <div class="form-sub">
+              <label>Competition Grade</label>
+              <select class="form-select" formControlName="competitionGrade">
+                <option value="">Select</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+            
+            <div class="form-sub">
+              <label>Event Grade</label>
+              <select class="form-select" formControlName="eventGrade">
+                <option value="">Select</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label>Event Grade</label>
-            <select class="form-select" formControlName="eventGrade">
-              <option value="">Select</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
-          </div>
-
-          <div *ngIf="selectedSport === '4' && selectedEvent?.marketName !== 'Winner'">
+          <!-- <div *ngIf="selectedSport === '4' && selectedEvent?.marketName !== 'Winner'">
             <div class="mb-3">
               <label>Match Type</label>
               <select class="form-select" formControlName="matchType">
@@ -152,9 +154,37 @@
               </select>
             </div>
           
+          </div> -->
+          <div *ngIf="selectedSport === '4' && selectedEvent?.isWinnerOpen !== true">
+            <div class="mb-3">
+              <label class="d-block mb-2">Match Type</label>
+          
+              <div class="form-check form-check-inline" *ngFor="let type of ['t10','t15','100balls','t20','oneDay','test']">
+                <input type="radio" class="form-check-input" [value]="type" formControlName="matchType" id="matchType-{{type}}">
+                <label class="form-check-label" [for]="'matchType-' + type">
+                  {{ type | titlecase }}
+                </label>
+              </div>
+            </div>
+          
+            <div class="mb-3">
+              <label class="d-block mb-2">Only Premium ?</label>
+          
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [value]="true" formControlName="premium" id="premium-yes">
+                <label class="form-check-label" for="premium-yes">Yes</label>
+              </div>
+          
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [value]="false" formControlName="premium" id="premium-no">
+                <label class="form-check-label" for="premium-no">No</label>
+              </div>
+            </div>
           </div>
+
           <div class="text-end">
-            <button type="submit" class="btn btn-success" [disabled]="addEventForm.invalid">Add Event</button>
+            <button type="submit" class="btn btn-success" [disabled]="addEventForm.invalid">Save Changes</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()" style="margin-left: 1rem;">Close</button>
           </div>
         </form>
       </div>

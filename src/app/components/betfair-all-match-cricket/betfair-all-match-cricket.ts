@@ -68,8 +68,9 @@ export class BetfairAllMatchCricket implements OnInit {
     }
   }
 
-  openModal(event: any) {
+  openModal(event: any, isWinnerOpen:Boolean) {
     this.selectedEvent = event;
+    this.selectedEvent.isWinnerOpen = isWinnerOpen
     this.initForm(this.selectedSport);
     const modalEl = document.getElementById('addEventModal');
     if (modalEl) {

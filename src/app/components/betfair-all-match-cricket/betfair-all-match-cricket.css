@@ -122,3 +122,33 @@ label, .entries-num{
     font-weight: 500;
     margin-bottom: 4px;
 }
+
+.form-main{
+    display: flex;
+    gap: 1rem;
+}
+
+.form-sub{
+    width: 50%;
+}
+
+.modal{
+    --bs-modal-width: 525px;
+}
+
+.close-btn{
+    background-color: #094d51;
+    color: #fff;
+    border: 1px solid #007078;
+    border-radius: 10px;
+    padding: 5px 10px;   
+}
+
+.modal-header{
+    background-color: #006e76;
+    color: #fff;
+}
+
+.btn-close{
+    background-color: #fff;
+}
