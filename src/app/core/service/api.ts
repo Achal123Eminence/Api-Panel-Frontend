@@ -80,6 +80,14 @@ export class Api {
     return this.http.post(`${this.baseUrl}/manual/add-event`,data);
   }
 
+  getManualCompetitionList(data:any={}){
+    return this.http.post(`${this.baseUrl}/manual/get-manual-competition`,data);
+  }
+
+  updateManualCompetition(data:any){
+    return this.http.post(`${this.baseUrl}/manual/update-manual-competition`,data);
+  }
+
   addSingleMarket(data:any){
     return this.http.post(`${this.baseUrl}/event/add-market`,data);
   }

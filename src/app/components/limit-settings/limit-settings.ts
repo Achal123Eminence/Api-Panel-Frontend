@@ -154,12 +154,7 @@ export class LimitSettings implements OnInit {
   }
 
   updateEventGrade(data:any){
-    const payload = {
-      _id: data._id,
-      eventGrade: data.eventGrade,
-      eventId: data.eventId,
-    };
-    console.log(payload, 'payload');
+    const payload = data;
 
     Swal.fire({
       title: 'Are you sure?',

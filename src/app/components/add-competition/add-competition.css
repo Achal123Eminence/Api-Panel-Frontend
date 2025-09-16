@@ -37,7 +37,6 @@ input {
 
 button {
   font-weight: 500;
-  width: 16%;
   padding: 9px;
   background-color: #006e76;
   color: white;
@@ -77,6 +76,28 @@ h1{
     padding: 10px 10px 20px 10px;
 }
 
+.submit-btn{
+  width: 16%;
+}
+
 select{
     padding: 8px;
+}
+
+/* Table */
+thead tr th{
+    background-color: #006e76 !important;
+    color: #fff;
+}
+
+.hide-btn{
+  font-weight: 500;
+  /* width: 100% !important; */
+  padding: 9px;
+  background-color: #006e76;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

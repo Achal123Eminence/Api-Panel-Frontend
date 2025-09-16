@@ -16,13 +16,14 @@ export class AddCompetition implements OnInit{
   competitionForm!: FormGroup;
   sports = [
     { id: '4', name: 'Cricket' },
-    { id: '1', name: 'Tennis' },
-    { id: '2', name: 'Soccer' },
+    { id: '2', name: 'Tennis' },
+    { id: '1', name: 'Soccer' },
   ];
   competitionTypes = [
     { id: 'virtual', name: 'virtual' },
     { id: 'manual', name: 'manual' }
   ];
+  maunalCompetitionList = signal<any[]>([]);
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -35,7 +36,8 @@ export class AddCompetition implements OnInit{
       openDate: ['', Validators.required],
     });
 
-    this.getNextCompetitionId()
+    this.getNextCompetitionId();
+    this.getManualCompetitionList();
   }
 
   onSubmit() {
@@ -49,6 +51,7 @@ export class AddCompetition implements OnInit{
           this.resetForm();
           this.showToast("Competition added successfully");
           this.getNextCompetitionId();
+          this.getManualCompetitionList()
         },
         error: (err) => {
           this.showToast("Error in adding Competition!!");
@@ -78,6 +81,44 @@ export class AddCompetition implements OnInit{
         console.log("Error in getting competition next id");
       }
     })
+  }
+
+  getManualCompetitionList(){
+    this.apiService.getManualCompetitionList().subscribe({
+      next: (res:any) => {
+        this.maunalCompetitionList.set(res.data);
+        console.log(this.maunalCompetitionList(),"manual list")
+      },
+      error: (err) => {
+        console.log("Error in getting manual competition list!!");
+      }
+    })
+  }
+
+  updateManualComeptiiton(id:any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to Hide this Competition?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Hide it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.updateManualCompetition({id}).subscribe({
+          next: (res: any) => {
+            console.log(res,"competition Hidden successfully");
+            this.getManualCompetitionList();
+            this.showToast("Competition Hidden successfully");
+          },
+          error: (err) => {
+            console.log("Error in updating competition",err);
+            this.showToast(`Error in hiding competition:${err.error.message}`);
+          },
+        });
+      }
+    });
   }
 
   private showToast(message: string, isError: boolean = false): void {

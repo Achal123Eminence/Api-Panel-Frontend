@@ -1,18 +1,20 @@
 // src/app/pages/currency-master/currency-master.component.ts
-import {
-  Component,
-  OnInit,
-  signal,
-  inject
-} from '@angular/core';
+import { Component, OnInit, signal, inject, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule,FormBuilder,ReactiveFormsModule,Validators,FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormsModule,
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+  FormArray,
+} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Api } from '../../core/service/api';
 
 @Component({
   selector: 'app-currency',
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './currency.html',
   styleUrl: './currency.css',
 })
@@ -23,21 +25,21 @@ export class Currency implements OnInit {
   allCurrencies = signal<any[]>([]);
   base: any;
 
-  addCurrencyForm!:FormGroup;
+  addCurrencyForm!: FormGroup;
   updateForm!: FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder,private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.addCurrencyForm = this.fb.group({
-      name:['', Validators.required],
-      value:['', Validators.required],
-    })
-    
-    this.updateForm = this.fb.group({
-      currencies: this.fb.array([])
+      name: ['', Validators.required],
+      value: ['', Validators.required],
     });
-    
+
+    this.updateForm = this.fb.group({
+      currencies: this.fb.array([]),
+    });
+
     this.getAllCurrency();
     this.getBaseCurrency();
   }
@@ -64,6 +66,7 @@ export class Currency implements OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.base = res.data;
+        this.cd.detectChanges();
         console.log(this.base, 'res');
       },
       error: (err) => {
@@ -79,8 +82,13 @@ export class Currency implements OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.currencies.clear();
-        res.data.forEach((c: any) => this.currencies.push(this.buildCurrencyGroup(c)));
-        console.log(this.currencies);
+        // backend already returns only non-base
+        (res.data || []).forEach((c: any) =>
+          this.currencies.push(this.buildCurrencyGroup(c))
+        );
+
+        this.cd.detectChanges();
+        console.log('Currencies (non-base):', this.currencies.value);
       },
       error: (err) => {
         this.isLoading = false;
@@ -106,7 +114,9 @@ export class Currency implements OnInit {
           next: (res: any) => {
             this.isLoading = false;
             this.showToast('Currency deleted successfully');
+            // refresh both base + non-base
             this.getAllCurrency();
+            this.getBaseCurrency();
           },
           error: (err) => {
             this.isLoading = false;
@@ -120,25 +130,27 @@ export class Currency implements OnInit {
     });
   }
 
-  createCurrency(){
+  createCurrency() {
     if (this.addCurrencyForm.invalid) {
       this.addCurrencyForm.markAllAsTouched();
       return;
-    };
+    }
 
     this.isLoading = true;
     this.api.addCurrency(this.addCurrencyForm.value).subscribe({
-      next:(res:any)=>{
+      next: (res: any) => {
         this.isLoading = false;
-        this.showToast("Currency created successfully");
-        this.addCurrencyForm.reset()
+        this.showToast('Currency created successfully');
+        this.addCurrencyForm.reset();
+        // refresh both base + non-base
         this.getAllCurrency();
+        this.getBaseCurrency();
       },
-      error:(err)=>{
+      error: (err) => {
         this.isLoading = false;
-        this.showToast(err.error.message || "Error creating currency", true)
-      }
-    })
+        this.showToast(err.error.message || 'Error creating currency', true);
+      },
+    });
   }
 
   updateCurrencies() {
@@ -154,7 +166,9 @@ export class Currency implements OnInit {
       next: () => {
         this.isLoading = false;
         this.showToast('Currencies updated successfully');
+        // refresh both lists
         this.getAllCurrency();
+        this.getBaseCurrency();
       },
       error: (err) => {
         this.isLoading = false;
