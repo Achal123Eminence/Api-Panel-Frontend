@@ -327,6 +327,33 @@ export class LimitSettings implements OnInit {
     });
   }
 
+  allowDecimal(event: KeyboardEvent) {
+    const char = event.key;
+    const input = event.target as HTMLInputElement; // direct input element
+    const currentValue = input.value || '';
+
+    // Allow digits 0–9
+    if (/^[0-9]$/.test(char)) {
+      return;
+    }
+
+    // Allow only one decimal point
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+
+    // Block everything else
+    event.preventDefault();
+  }
+
+  onDecimalPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    // Allow only numbers with a single decimal point
+    if (!/^\d*\.?\d*$/.test(pasteData)) {
+      event.preventDefault();
+    }
+  }
+
   private showToast(message: string, isError: boolean = false): void {
     Swal.fire({
       toast: true,

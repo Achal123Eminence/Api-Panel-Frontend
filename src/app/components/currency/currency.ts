@@ -1,5 +1,11 @@
 // src/app/pages/currency-master/currency-master.component.ts
-import { Component, OnInit, signal, inject, ChangeDetectorRef  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  inject,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -23,12 +29,12 @@ export class Currency implements OnInit {
   isLoading = false;
 
   allCurrencies = signal<any[]>([]);
-  base: any;
+  base: any = { name: '' };
 
   addCurrencyForm!: FormGroup;
   updateForm!: FormGroup;
 
-  constructor(private fb: FormBuilder,private cd: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.addCurrencyForm = this.fb.group({
@@ -175,6 +181,93 @@ export class Currency implements OnInit {
         this.showToast(err.error.message || 'Error updating currencies', true);
       },
     });
+  }
+
+  updateBaseCurrency(data: any) {
+    this.isLoading = true;
+    const payload = {
+      id: this.base?._id,
+      name: this.base?.name,
+    };
+    console.log(payload, 'payload');
+    this.api.updateCurrency(payload).subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+        this.showToast('Base currency updated successfully');
+        this.getAllCurrency();
+        this.getBaseCurrency();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.showToast(
+          err.error.message || 'Error updating base currencies',
+          true
+        );
+      },
+    });
+  }
+
+  allowOnlyAlphabets(event: KeyboardEvent) {
+    const char = event.key;
+    // allow only a-z and A-Z
+    if (!/^[a-zA-Z]$/.test(char)) {
+      event.preventDefault();
+    }
+  }
+
+  onPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    if (!/^[a-zA-Z]+$/.test(pasteData)) {
+      event.preventDefault();
+    }
+  }
+
+  allowDecimal(event: KeyboardEvent) {
+    const char = event.key;
+
+    // Allow digits 0–9
+    if (/^[0-9]$/.test(char)) {
+      return;
+    }
+
+    // Allow only one decimal point
+    const control = this.addCurrencyForm.get('marketId');
+    const currentValue = control?.value || '';
+
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+
+    // Block everything else
+    event.preventDefault();
+  }
+
+  allowDecimal02(event: KeyboardEvent) {
+    const char = event.key;
+
+    // Allow digits 0–9
+    if (/^[0-9]$/.test(char)) {
+      return;
+    }
+
+    // Allow only one decimal point
+    const control = this.updateForm.get('marketId');
+    const currentValue = control?.value || '';
+
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+
+    // Block everything else
+    event.preventDefault();
+  }
+
+  onDecimalPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    // Allow only numbers with a single decimal point
+    if (!/^\d*\.?\d*$/.test(pasteData)) {
+      event.preventDefault();
+    }
   }
 
   private showToast(message: string, isError: boolean = false): void {

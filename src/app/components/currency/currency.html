@@ -5,15 +5,15 @@
         <section class="panel">
             <div class="sub-div">
                 <h4 style="margin-right: 6rem;">Base Currency</h4>
-                <input class="input" placeholder="Currency" style="width: 27rem;" [value]="base?.name"  />
-                <button class="btn">UPDATE</button>
+                <input class="input" placeholder="Currency" style="width: 27rem;" (keypress)="allowOnlyAlphabets($event)" (paste)="onPaste($event)" [(ngModel)]="base.name" />
+                <button class="btn" (click)="updateBaseCurrency(base._id)">UPDATE</button>
             </div>
 
             <div class="sub-div">
                 <h4 style="margin-right: 6rem;">Base Currency</h4>
                 <form [formGroup]="addCurrencyForm" (ngSubmit)="createCurrency()" class="add-currency-form">
-                    <input class="input" placeholder="Currency" formControlName="name" style="width: 13rem;" />
-                    <input class="input" placeholder="Value" formControlName="value" style="width: 13rem;" />
+                    <input class="input" (keypress)="allowOnlyAlphabets($event)" (paste)="onPaste($event)" placeholder="Currency" formControlName="name" style="width: 13rem;" />
+                    <input class="input" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" placeholder="Value" formControlName="value" style="width: 13rem;" />
                     <button class="btn" type="submit" [disabled]="addCurrencyForm.invalid" >CREATE</button>
                 </form>
             </div>
@@ -44,7 +44,7 @@
                             </button>
                         </div>
             
-                        <input class="input" type="number" placeholder="Value" formControlName="value" style="width: 13rem;" />
+                        <input class="input" type="number" placeholder="Value" formControlName="value" (keypress)="allowDecimal02($event)" (paste)="onDecimalPaste($event)" style="width: 13rem;" />
                     </div>
                 </div>
             

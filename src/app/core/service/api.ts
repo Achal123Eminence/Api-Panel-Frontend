@@ -52,6 +52,10 @@ export class Api {
     return this.http.post(`${this.baseUrl}/currency/create`,data);
   }
 
+  updateCurrency(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/update-base`,data);
+  }
+
   getCurrency(data:any={}): Observable<any>{
     return this.http.post(`${this.baseUrl}/currency/get`,data);
   }

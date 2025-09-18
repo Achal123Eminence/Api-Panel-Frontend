@@ -147,16 +147,16 @@
                                       <span class="slider"></span>
                                     </label>
                                   </td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].preMinStake" placeholder="preMinStake"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].preMaxStake" placeholder="preMaxStake"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].preMaxPL" placeholder="preMaxPL"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].minStake" placeholder="minStake"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].maxStake" placeholder="maxStake"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].maxPL" placeholder="maxPL"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].delay" placeholder="delay"></td>
-                                  <td><input type="text" [(ngModel)]="market.limit[0].oddsLimit" placeholder="oddsLimit"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMinStake" placeholder="preMinStake"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMaxStake" placeholder="preMaxStake"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMaxPL" placeholder="preMaxPL"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].minStake" placeholder="minStake"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].maxStake" placeholder="maxStake"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].maxPL" placeholder="maxPL"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].delay" placeholder="delay"></td>
+                                  <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].oddsLimit" placeholder="oddsLimit"></td>
                                   <td>
-                                    <button class="save-btn" (click)="updateEventDefaultSetting(match.eventId,market)"><i class="fa fa-save"></i></button>
+                                     <button class="save-btn" (click)="updateEventDefaultSetting(match.eventId,market)"><i class="fa fa-save"></i></button>
                                   </td>
                                 </tr>
                               </ng-container>
@@ -186,14 +186,14 @@
                                 <span class="slider"></span>
                             </label>
                         </td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].preMinStake" placeholder="preMinStake"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].preMaxStake" placeholder="preMaxStake"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].preMaxPL" placeholder="preMaxPL"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].minStake" placeholder="minStake"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].maxStake" placeholder="maxStake"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].maxPL" placeholder="maxPL"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].delay" placeholder="delay"></td>
-                        <td><input type="text" [(ngModel)]="market.limit[0].oddsLimit" placeholder="oddsLimit"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].minStake" placeholder="minStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].delay" placeholder="delay"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="market.limit[0].oddsLimit" placeholder="oddsLimit"></td>
                         <td>
                             <button class="save-btn" (click)="updateCompetitiondefaultSetting(comp.competitionId,market)"><i class="fa fa-save"></i></button>
                         </td>
