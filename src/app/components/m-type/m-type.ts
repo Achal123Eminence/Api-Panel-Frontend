@@ -54,7 +54,6 @@ private apiService = inject(Api);
     this.isloading = true;
     this.apiService.getSavedEventList({sportId:this.selectedSport}).subscribe({
       next: (res: any) => {
-        console.log(res,"res")
         this.isloading = false;
         this.cricketAllEventList.set(res.data);
         console.log(this.cricketAllEventList());
@@ -73,12 +72,10 @@ private apiService = inject(Api);
   }
 
   deleteEvent(data: any) {
+    this.isloading = true;
       const payload = {
         _id: data._id
       };
-  
-      console.log(payload, 'payload');
-  
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Delete this Match?',
@@ -91,10 +88,12 @@ private apiService = inject(Api);
         if (result.isConfirmed) {
           this.apiService.deleteEvent(payload).subscribe({
             next: (res: any) => {
+              this.isloading = false;
               this.fetchCricketAllEventList(this.selectedSport);
               this.showToast('Event Deleted successfully');
             },
             error: (err) => {
+              this.isloading = false;
               this.fetchCricketAllEventList(this.selectedSport);
               this.showToast(
                 `Failed to Deleted Event: ${err.error.message}`,
@@ -107,12 +106,10 @@ private apiService = inject(Api);
     }
   
     removeEvent(data: any) {
+      this.isloading = true;
       const payload = {
         _id: data._id
       };
-  
-      console.log(payload, 'payload');
-  
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Rollback this Match?',
@@ -125,10 +122,12 @@ private apiService = inject(Api);
         if (result.isConfirmed) {
           this.apiService.rollBackEvent(payload).subscribe({
             next: (res: any) => {
+              this.isloading = false;
               this.fetchCricketAllEventList(this.selectedSport);
               this.showToast('Event Rollbacked successfully');
             },
             error: (err) => {
+              this.isloading = false;
               this.fetchCricketAllEventList(this.selectedSport);
               this.showToast(
                 `Failed to Rollback Event: ${err.error.message}`,

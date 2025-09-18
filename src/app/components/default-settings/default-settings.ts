@@ -34,7 +34,6 @@ export class DefaultSettings implements OnInit {
       next: (res: any) => {
         this.isloading = false;
         this.allDataList.set(res.data);
-        console.log(this.allDataList(), 'Fetch all default settings');
         if (res) {
           this.selectedSport = id;
           const filteredData = this.allDataList().filter((m) => m.sport === id);

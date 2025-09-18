@@ -51,22 +51,12 @@ export class Home implements OnInit{
   fetchCricketCompetitionList(id:any){
     this.selectedSport = id;
     this.isloading = true;
-    this.apiService.getCompetitionList(id).subscribe({
+    this.apiService.getCompetitionList({sportId:id}).subscribe({
       next: (res:any) => {
-        console.log(res)
         this.isloading = false;
         this.cricketCompetitionList.set(res?.competitions || []);
         console.log(this.cricketCompetitionList())
         this.currentPage.set(1);
-        // if(this.selectedSport=="4"){
-        //   this.showToast("Cricket competition list fetched successfully");
-        // }
-        // if(this.selectedSport=="1"){
-        //   this.showToast("Soccer competition list fetched successfully");
-        // }
-        // if(this.selectedSport=="2"){
-        //   this.showToast("Tennis competition list fetched successfully");
-        // }
       },
       error: (err) =>{
         this.isloading = false;

@@ -52,13 +52,12 @@ export class Events implements OnInit{
       this.competitionId = param.get('competitionId');
       this.sportId = param.get('sportId')
       this.fetchCricketEventList(this.competitionId);
-      console.log(this.sportId,"this.sportId")
     })
   }
 
   fetchCricketEventList(id: any) {
     this.isloading = true
-    this.apiService.getEventList(id).subscribe({
+    this.apiService.getEventList({competitionId:id}).subscribe({
       next: (res: any) => {
         this.isloading = false
         this.cricketEventList.set(res.events);

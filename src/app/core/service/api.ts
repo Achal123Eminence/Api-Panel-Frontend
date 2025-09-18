@@ -16,24 +16,24 @@ export class Api {
     return this.http.post(`${this.baseUrl}/user/login`, obj);
   }  
 
-  getAllEvents(sportId:any): Observable<any>{
-    return this.http.get(`${this.baseUrl}/sport/all-event/${sportId}`);
+  getAllEvents(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/all-event`,data);
   }
 
-  getCompetitionList(sportId:any): Observable<any>{
-    return this.http.get(`${this.baseUrl}/sport/competition/${sportId}`);
+  getCompetitionList(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/competition`,data);
   };
 
-  getEventList(competitionId:any): Observable<any>{
-    return this.http.get(`${this.baseUrl}/sport/event/${competitionId}`);
+  getEventList(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/event`,data);
   }
 
-  getMarketList(eventId:any): Observable<any>{
-    return this.http.get(`${this.baseUrl}/sport/market/${eventId}`);
+  getMarketList(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/market`,data);
   }
 
-  getMarketBook(marketId:any): Observable<any>{
-    return this.http.get(`${this.baseUrl}/sport/book/${marketId}`);
+  getMarketBook(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/book`,data);
   }
 
   addEvent(data:any): Observable<any>{
@@ -68,8 +68,8 @@ export class Api {
     return this.http.post(`${this.baseUrl}/currency/update`,data);
   }
 
-  deleteCurrency(id:any): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/currency/remove/${id}`);
+  deleteCurrency(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/currency/remove`,data);
   }
 
   addManualCompetition(data:any){

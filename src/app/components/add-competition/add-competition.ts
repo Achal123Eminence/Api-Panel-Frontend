@@ -24,6 +24,8 @@ export class AddCompetition implements OnInit {
     { id: 'manual', name: 'manual' },
   ];
   maunalCompetitionList = signal<any[]>([]);
+  isloading = false;
+
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -41,19 +43,20 @@ export class AddCompetition implements OnInit {
   }
 
   onSubmit() {
+    this.isloading = true
     if (this.competitionForm.valid) {
       const formData = this.competitionForm.getRawValue();
       delete formData.competitionId;
-      console.log(formData, 'formData');
       this.apiService.addManualCompetition(formData).subscribe({
         next: (res) => {
-          console.log('Competition saved:', res);
+          this.isloading = false;
           this.resetForm();
           this.showToast('Competition added successfully');
           this.getNextCompetitionId();
           this.getManualCompetitionList();
         },
         error: (err) => {
+          this.isloading = false;
           this.showToast('Error in adding Competition!!');
           console.error('Error:', err);
         },
@@ -84,18 +87,22 @@ export class AddCompetition implements OnInit {
   }
 
   getManualCompetitionList() {
+    this.isloading = true;
     this.apiService.getManualCompetitionList().subscribe({
       next: (res: any) => {
+        this.isloading = false;
         this.maunalCompetitionList.set(res.data);
         console.log(this.maunalCompetitionList(), 'manual list');
       },
       error: (err) => {
+        this.isloading = false;
         console.log('Error in getting manual competition list!!');
       },
     });
   }
 
   updateManualComeptiiton(id: any) {
+    this.isloading = true;
     Swal.fire({
       title: 'Are you sure?',
       text: 'Do you want to Hide this Competition?',
@@ -108,11 +115,12 @@ export class AddCompetition implements OnInit {
       if (result.isConfirmed) {
         this.apiService.updateManualCompetition({ id }).subscribe({
           next: (res: any) => {
-            console.log(res, 'competition Hidden successfully');
+            this.isloading = true;
             this.getManualCompetitionList();
             this.showToast('Competition Hidden successfully');
           },
           error: (err) => {
+            this.isloading = false;
             console.log('Error in updating competition', err);
             this.showToast(`Error in hiding competition:${err.error.message}`);
           },
@@ -124,14 +132,14 @@ export class AddCompetition implements OnInit {
   allowAlphaNumeric(event: KeyboardEvent) {
     const char = event.key;
     // allow only a-z, A-Z, 0-9
-    if (!/^[a-zA-Z0-9]$/.test(char)) {
+    if (!/^[a-zA-Z0-9\s]$/.test(char)) {
       event.preventDefault();
     }
   }
 
   onAlphaNumericPaste(event: ClipboardEvent) {
     const pasteData = event.clipboardData?.getData('text') || '';
-    if (!/^[a-zA-Z0-9]+$/.test(pasteData)) {
+    if (!/^[a-zA-Z0-9\s]+$/.test(pasteData)) {
       event.preventDefault();
     }
   }

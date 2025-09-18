@@ -33,6 +33,8 @@ export class Currency implements OnInit {
 
   addCurrencyForm!: FormGroup;
   updateForm!: FormGroup;
+  isloading = false;
+
 
   constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
@@ -116,7 +118,7 @@ export class Currency implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.deleteCurrency(id).subscribe({
+        this.api.deleteCurrency({id:id}).subscribe({
           next: (res: any) => {
             this.isLoading = false;
             this.showToast('Currency deleted successfully');

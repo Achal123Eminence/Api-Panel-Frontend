@@ -93,7 +93,7 @@ export class BetfairAllMatchCricket implements OnInit {
   fetchCricketAllEventList(id: any) {
     this.selectedSport = id;
     this.isloading = true;
-    this.apiService.getAllEvents(id).subscribe({
+    this.apiService.getAllEvents({sportId:id}).subscribe({
       next: (res: any) => {
         this.isloading = false;
         this.cricketAllEventList.set(res.events);
@@ -123,10 +123,8 @@ export class BetfairAllMatchCricket implements OnInit {
       ...this.addEventForm.value,
     };
 
-    console.log(payload);
     if (payload) {
       payload.isAdded = true;
-      console.log(payload, 'payload');
       this.apiService.addEvent(payload).subscribe({
         next: (res: any) => {
           this.showToast('Event Added successfully');

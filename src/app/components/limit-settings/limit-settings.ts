@@ -83,6 +83,7 @@ export class LimitSettings implements OnInit {
   }
 
   updateCompetiitonGrade(data: any) {
+    this.isloading =  true;
     const payload = {
       _id: data._id,
       competitionGrade: data.competitionGrade,
@@ -103,10 +104,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.updateCompetitionGrade(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Competition Grade updated successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to update Competition Grade: ${err.error.message}`,
@@ -119,12 +122,11 @@ export class LimitSettings implements OnInit {
   }
 
   deleteCompetiiton(data: any) {
+    this.isloading = true;
     const payload = {
       _id: data._id,
       competitionId: data.competitionId,
     };
-
-    console.log(payload, 'payload');
 
     Swal.fire({
       title: 'Are you sure?',
@@ -138,10 +140,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.deleteCompetition(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Competition Deleted successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to Deleted Competition: ${err.error.message}`,
@@ -154,6 +158,7 @@ export class LimitSettings implements OnInit {
   }
 
   updateEventGrade(data:any){
+    this.isloading = true;
     const payload = data;
 
     Swal.fire({
@@ -168,10 +173,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.updateEventGrade(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Match Grade updated successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to update Match Grade: ${err.error.message}`,
@@ -184,6 +191,7 @@ export class LimitSettings implements OnInit {
   }
 
   deleteEvent(data: any) {
+    this.isloading = true;
     const payload = {
       _id: data._id
     };
@@ -202,10 +210,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.deleteEvent(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Event Deleted successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to Deleted Event: ${err.error.message}`,
@@ -218,6 +228,7 @@ export class LimitSettings implements OnInit {
   }
 
   removeEvent(data: any) {
+    this.isloading = true;
     const payload = {
       _id: data._id
     };
@@ -236,10 +247,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.removeEvent(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Event Removed successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to Remove Event: ${err.error.message}`,
@@ -252,15 +265,13 @@ export class LimitSettings implements OnInit {
   }
 
   updateCompetitiondefaultSetting(competitionId:any,market:any){
-    console.log(competitionId,"data from competition default",market);
+    this.isloading = true;
     const payload = {
       status: market.status,
       marketId: market.marketId,
       competitionId: competitionId,
       updatedLimits:market.limit[0]
     };
-
-    console.log(payload, 'payload');
 
     Swal.fire({
       title: 'Are you sure?',
@@ -274,10 +285,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.updateCompetitionMarket(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Competition Market updated successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to update Competition Market: ${err.error.message}`,
@@ -290,15 +303,13 @@ export class LimitSettings implements OnInit {
   }
 
   updateEventDefaultSetting(eventId:any,market:any){
-    console.log(eventId,"data from Event default",market);
+    this.isloading = true;
     const payload = {
       status: market.status,
       marketId: market.marketId,
       eventId: eventId,
       updatedLimits:market.limit[0]
     };
-
-    console.log(payload, 'payload');
 
     Swal.fire({
       title: 'Are you sure?',
@@ -312,10 +323,12 @@ export class LimitSettings implements OnInit {
       if (result.isConfirmed) {
         this.apiService.updateEventMarket(payload).subscribe({
           next: (res: any) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast('Event Market updated successfully');
           },
           error: (err) => {
+            this.isloading = false;
             this.getCompetitionList(this.selectedSport);
             this.showToast(
               `Failed to update Event Market: ${err.error.message}`,

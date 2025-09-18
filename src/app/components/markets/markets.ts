@@ -59,7 +59,7 @@ export class Markets implements OnInit{
 
   fetchCricketMarketList(id: any) {
     this.isloading = true;
-    this.apiService.getMarketList(id).subscribe({
+    this.apiService.getMarketList({eventId:id}).subscribe({
       next: (res: any) => {
         this.isloading = false;
         this.cricketMarketList.set(res.markets);
@@ -146,7 +146,7 @@ export class Markets implements OnInit{
   // openMarketDataModal(id: any) {
   //   if(id){
   //     this.isloading = true;
-  //     this.apiService.getMarketBook(id).subscribe({
+  //     this.apiService.getMarketBook({marketId:id}).subscribe({
   //       next:(res:any) => {
   //         this.isloading =false;
   //         this.cricketMarketBookList.set(res.marketBook[0]);

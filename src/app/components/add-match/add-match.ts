@@ -16,8 +16,8 @@ export class AddMatch implements OnInit {
   matchForm!: FormGroup;
   sports = [
     { id: '4', name: 'Cricket' },
-    { id: '1', name: 'Tennis' },
-    { id: '2', name: 'Soccer' },
+    { id: '2', name: 'Tennis' },
+    { id: '1', name: 'Soccer' },
   ];
   compGrade = [
     { id: 'A', name: 'A' },
@@ -29,6 +29,7 @@ export class AddMatch implements OnInit {
     { id: 'manual', name: 'Manual' },
     { id: 'virtual', name: 'Virtual' },
   ];
+  isloading = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -47,17 +48,17 @@ export class AddMatch implements OnInit {
   }
 
   onSubmit() {
+    this.isloading = true;
     if (this.matchForm.valid) {
       const formData = this.matchForm.value;
-      console.log('Submitting competition:', formData);
-
       this.apiService.addManualEvent(formData).subscribe({
         next: (res) => {
-          console.log('Competition saved:', res);
+          this.isloading = false;
           this.showToast('Match added successfully');
           this.matchForm.reset();
         },
         error: (err) => {
+          this.isloading = false;
           console.error('Error:', err);
           this.showToast(`Error in adding match:${err.error.message}`, true);
         },
@@ -68,14 +69,14 @@ export class AddMatch implements OnInit {
   allowAlphaNumeric(event: KeyboardEvent) {
     const char = event.key;
     // allow only a-z, A-Z, 0-9
-    if (!/^[a-zA-Z0-9]$/.test(char)) {
+    if (!/^[a-zA-Z0-9\s]$/.test(char)) {
       event.preventDefault();
     }
   }
 
   onAlphaNumericPaste(event: ClipboardEvent) {
     const pasteData = event.clipboardData?.getData('text') || '';
-    if (!/^[a-zA-Z0-9]+$/.test(pasteData)) {
+    if (!/^[a-zA-Z0-9\s]+$/.test(pasteData)) {
       event.preventDefault();
     }
   }
