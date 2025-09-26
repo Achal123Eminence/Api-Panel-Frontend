@@ -1,9 +1,15 @@
-import { Component, OnInit, signal, inject,computed } from '@angular/core';
+import { Component, OnInit, signal, inject, computed,ChangeDetectorRef  } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Api } from '../../core/service/api';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
-import { FormsModule,FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-betfair-all-match-cricket',
@@ -43,7 +49,7 @@ export class BetfairAllMatchCricket implements OnInit {
     () => Math.ceil(this.filteredList().length / this.pageSize()) || 1
   );
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.fetchCricketAllEventList(this.selectedSport);
@@ -51,32 +57,97 @@ export class BetfairAllMatchCricket implements OnInit {
   }
 
   initForm(sportId: string) {
-    if (sportId === '4' && this.selectedEvent?.marketName !== 'Winner') {
-      // Cricket events (non-winner)
-      this.addEventForm = this.fb.group({
-        competitionGrade: ['', Validators.required],
-        eventGrade: ['', Validators.required],
-        matchType: ['', Validators.required],
-        premium: [null, Validators.required],
-      });
+    this.addEventForm = this.fb.group({
+      competitionGrade: ['', Validators.required],
+      eventGrade: ['', Validators.required],
+      matchType: [''],
+      premium: [null],
+    });
+    // 1. Competition Grade → only required if competition doesn't exist
+    if (this.selectedEvent?.isCompetitionExist === false) {
+      this.addEventForm
+        .get('competitionGrade')
+        ?.setValidators([Validators.required]);
     } else {
-      // Soccer, Tennis, OR Cricket Winner market
-      this.addEventForm = this.fb.group({
-        competitionGrade: ['', Validators.required],
-        eventGrade: ['', Validators.required],
-      });
+      this.addEventForm.get('competitionGrade')?.clearValidators();
     }
+    this.addEventForm.get('competitionGrade')?.updateValueAndValidity();
+
+    // then set validators conditionally
+    if (
+      sportId === '4' &&
+      !this.selectedEvent?.marketName?.toLowerCase().includes('winner') &&
+      this.selectedEvent?.isWinnerOpen === true
+    ) {
+      this.addEventForm.get('matchType')?.setValidators([Validators.required]);
+      this.addEventForm.get('premium')?.setValidators([Validators.required]);
+    } else {
+      this.addEventForm.get('matchType')?.clearValidators();
+      this.addEventForm.get('premium')?.clearValidators();
+    }
+
+    this.addEventForm.get('matchType')?.updateValueAndValidity();
+    this.addEventForm.get('premium')?.updateValueAndValidity();
   }
 
-  openModal(event: any, isWinnerOpen:Boolean) {
+  // openModal(event: any, isWinnerOpen: Boolean) {
+  //   this.selectedEvent = event;
+  //   console.log(this.selectedEvent.competitionId,"this.selectedEvent.competitionId")
+  //   this.apiService.competitionCheck({competitionId:this.selectedEvent.competitionId}).subscribe({
+  //     next: (res:any) => {
+  //       console.log(res?.data,"res?.data")
+  //       this.selectedEvent.isCompetitionExist = res?.data;
+  //     },
+  //     error:(err) => {
+  //       console.log('Error in Checking competition ', err);
+  //     }
+  //   })
+  //   this.selectedEvent.isWinnerOpen = isWinnerOpen;
+
+  //   console.log(this.selectedEvent,"this.selectedEvent-this.selectedEvent")
+  //   console.log(this.selectedEvent.isCompetitionExist,"isCompetitionExist-isCompetitionExist---this.selectedEvent-this.selectedEvent")
+  //   this.initForm(this.selectedSport);
+  //   const modalEl = document.getElementById('addEventModal');
+  //   if (modalEl) {
+  //     const modal = new (window as any).bootstrap.Modal(modalEl);
+  //     modal.show();
+  //   }
+  // }
+
+  openModal(event: any, isWinnerOpen: boolean) {
     this.selectedEvent = event;
-    this.selectedEvent.isWinnerOpen = isWinnerOpen
-    this.initForm(this.selectedSport);
-    const modalEl = document.getElementById('addEventModal');
-    if (modalEl) {
-      const modal = new (window as any).bootstrap.Modal(modalEl);
-      modal.show();
-    }
+    console.log(
+      this.selectedEvent.competitionId,
+      'this.selectedEvent.competitionId'
+    );
+
+    this.apiService
+      .competitionCheck({ competitionId: this.selectedEvent.competitionId })
+      .subscribe({
+        next: (res: any) => {
+          console.log(res?.data, 'res?.data');
+          this.selectedEvent.isCompetitionExist = res?.data;
+          this.selectedEvent.isWinnerOpen = isWinnerOpen;
+          this.cd.detectChanges(); // force refresh
+
+          console.log(this.selectedEvent, 'this.selectedEvent-after-API');
+          console.log(
+            this.selectedEvent.isCompetitionExist,
+            'isCompetitionExist-after-API'
+          );
+
+          // Init form & open modal here (after we know competition exist status)
+          this.initForm(this.selectedSport);
+          const modalEl = document.getElementById('addEventModal');
+          if (modalEl) {
+            const modal = new (window as any).bootstrap.Modal(modalEl);
+            modal.show();
+          }
+        },
+        error: (err) => {
+          console.log('Error in Checking competition ', err);
+        },
+      });
   }
 
   closeModal() {
@@ -93,7 +164,7 @@ export class BetfairAllMatchCricket implements OnInit {
   fetchCricketAllEventList(id: any) {
     this.selectedSport = id;
     this.isloading = true;
-    this.apiService.getAllEvents({sportId:id}).subscribe({
+    this.apiService.getAllEvents({ sportId: id }).subscribe({
       next: (res: any) => {
         this.isloading = false;
         this.cricketAllEventList.set(res.events);
@@ -138,6 +209,10 @@ export class BetfairAllMatchCricket implements OnInit {
         },
       });
     }
+  }
+
+  isCupWinner(item: any): boolean {
+    return item.marketName?.toLowerCase().includes('winner') && !item.isAdded;
   }
 
   setPageSize(event: Event) {

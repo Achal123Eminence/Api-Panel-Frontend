@@ -1,14 +1,33 @@
 thead tr th{
-    background-color: #006e76 !important;
-    color: #fff;
+    background-color: #f6f7fb !important;
+    color: #433c50;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+td{
+    background-color: #fff !important;
+    color: #433c50;
+    font-size: 0.9rem;
+    /* font-weight: 500; */
 }
 
 .events-btn{
-    background-color: #006e76;
-    color: #fff;
-    border: 1px solid #0aadb8;
+    /* background-color: #8c57ff; */
+    color: #8c57ff;
+    border: 1px solid #8c57ff;
     border-radius: 10px;
     padding: 5px 10px;
+    font-weight: 400;
+}
+
+.events-btn-added{
+    background-color: #8c57ff;
+    color: #ffffff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 400;
 }
 
 .main-heading{
@@ -52,20 +71,12 @@ label, .entries-num{
 }
 /* Loader end */
 
+
 .select-sport{
     display: flex;
-    gap: 3rem;
-    margin-bottom: 2rem;
-}
-
-.top-btn{
-    font-size: 1.1rem;
-    border: none;
-    box-shadow: #000 0 2px 6px;
-    border-radius: 10px;
-    padding: 9px 45px;
-    font-weight: 500;
-    color: #fff;
+    gap: 0.5rem;
+    padding: 1rem 0.7rem;
+    background-color: #fff;
 }
 
 .blue{
@@ -96,19 +107,20 @@ label, .entries-num{
 }
 
 .top-btn{
-    font-size: 1.1rem;
-    border: none;
-    box-shadow: #000 0 2px 6px;
+    font-size: 0.9rem;
+    /* border: none; */
+    /* box-shadow: #000 0 2px 6px; */
     border-radius: 10px;
-    padding: 9px 45px;
+    padding: 7px 20px 7px 11px;
     font-weight: 500;
-    color: #fff;
-    background-color: rgb(162, 159, 159);
+    color: #8c57ff;
+    border: 0.5px solid #8c57ff;
 }
 
 .top-btn.active{
-    background-color: #006e76;
-    box-shadow: none;
+    background-color: #8c57ff;
+    color: #fff;
+    border: none;
 }
 
 .purpel{
@@ -127,5 +139,15 @@ label, .entries-num{
     background-color: rgb(170, 28, 28);
     color: white;
     border: 1px solid rgb(213, 7, 7);
-    border-radius: 4px;
+    border-radius: 10px;
+}
+
+label, .entries-num, select, .pagination {
+    color: #433c50;
+    font-size: 0.9rem;
+}
+
+.search-input {
+    color: #433c50;
+    font-size: 0.9rem !important;
 }

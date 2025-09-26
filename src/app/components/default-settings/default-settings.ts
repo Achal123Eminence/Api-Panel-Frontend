@@ -98,11 +98,14 @@ export class DefaultSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.updateDefaultSetting(payload).subscribe({
           next: (res: any) => {
+            this.isloading =  false;
             this.showToast('Market updated successfully');
           },
           error: (err) => {
+            this.isloading =  false;
             this.showToast(
               `Failed to update market: ${err.error.message}`,
               true

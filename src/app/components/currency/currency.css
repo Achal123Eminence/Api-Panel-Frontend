@@ -21,31 +21,36 @@
 
 .main{
     border: 1px solid rgb(227, 224, 224);
-    border-radius: 10px;
+    border-radius: 5px;
     width: 95%;
     box-shadow: #000 0 2px 6px;
 }
 
 h3{
-    font-size: 1.4rem;
-    color: rgb(6 139 160);
-    padding: 9px 13px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #433c50;
+    padding: 12px;
     border-bottom: 1px solid rgb(227, 224, 224);
     /* text-align: center; */
-    background-color: rgb(237, 237, 237);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    background: #eae1ff !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 0px;
 }
 
 
 h4{
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     /* padding: 9px 13px; */
     text-align: center;
+    color: #433c50;
+    font-weight: 500;
 }
 
 .delete-currency{
     display: flex;
+    justify-content: space-between;
 }
 
 .delete-currency button{
@@ -56,18 +61,21 @@ h4{
 }
 
 .btn{
-    background-color: #d31010;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 600;
+   background-color: #8c57ff;
+    color: #ffffff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
 input{
     border-radius: 8px;
     border: 1px solid rgb(205, 203, 203);
     padding: 4px 7px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .fa{
@@ -113,3 +121,8 @@ input{
   }
 }
 /* Loader end */
+
+.panel{
+  background-color: #fff;
+  padding-top: 0.5rem;
+}

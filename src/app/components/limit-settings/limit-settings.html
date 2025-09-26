@@ -1,15 +1,9 @@
 <div class="setting-container">
   <!-- Sport Selector -->
   <div class="select-sport">
-    <button class="top-btn" (click)="getCompetitionList('4')" [class.active]="selectedSport === '4'">
-      Cricket Default Markets
-    </button>
-    <button class="top-btn" (click)="getCompetitionList('1')" [class.active]="selectedSport === '1'">
-      Soccer Default Markets
-    </button>
-    <button class="top-btn" (click)="getCompetitionList('2')" [class.active]="selectedSport === '2'">
-      Tennis Default Markets
-    </button>
+    <button class="top-btn" (click)="getCompetitionList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Default Markets</button>
+    <button class="top-btn" (click)="getCompetitionList('1')" [class.active]="selectedSport === '1'">⚽ Soccer Default Markets</button>
+    <button class="top-btn" (click)="getCompetitionList('2')" [class.active]="selectedSport === '2'">🎾 Tennis Default Markets</button>
   </div>
 
   <div class="main">
@@ -21,18 +15,18 @@
           <ng-container *ngFor="let comp of allCompetitionList(); let i = index">
             <!-- Competition Row -->
             <tr>
-              <td style="color: red;font-weight: 600;line-height: 2.1rem;padding-left: 15px;">{{i+1}}. {{ comp.competitionName | uppercase }}</td>
-              <td >{{ comp.competitionId }}</td>
+              <td style="color: #433c50;font-weight: 400;line-height: 2.1rem;padding-left: 15px;">{{i+1}}. {{ comp.competitionName | uppercase }}</td>
+              <td style="line-height: 2.1rem;text-align: center;">{{ comp.competitionId }}</td>
 
               <!-- Expand Events -->
-              <td>
+              <td style="text-align: center;"> 
                 <button class="btn allMatch" (click)="toggleCompetition(comp)">
                   All Matches
                   {{ expandedCompetition === comp.competitionId ? '➖' : '➕' }}
                 </button>
               </td>
 
-              <td>
+              <td style="text-align: center;">
                 <select name="" id="" class="competition-grade-update" [(ngModel)]="comp.competitionGrade">
                   <option value="A">Grade A</option>
                   <option value="B">Grade B</option>
@@ -42,18 +36,17 @@
               </td>
 
               <!-- Expand Default Markets -->
-              <td>
+              <td style="text-align: center;padding-top: 10px;">
                 <button class="btn defaultSettings" (click)="toggleCompetitionDefault(comp)">
                   <i class="fa-solid fa-gear"></i>
                 </button>
               </td>
 
-              <td>
+              <td style="padding-top: 10px;">
                 <label class="switch">
                   <input type="checkbox" [(ngModel)]="comp.status"/>
                   <span class="slider"></span>
                 </label>
-
                 <span class="competition-boolean-span">Active</span>
 
                 <label class="switch">
@@ -66,7 +59,7 @@
                 <button class="save-Competition-btn"><i class="fa fa-save"></i></button>
               </td>
 
-              <td>
+              <td style="text-align: center;padding-top: 14px;">
                 <button class="delete-competition-btn" (click)="deleteCompetiiton(comp)"><i class="fa fa-trash"></i></button>
               </td>
               
@@ -106,7 +99,7 @@
                           </select>
                           <button class="save-grade-btn" (click)="updateEventGrade(match)"><i class="fa fa-save"></i></button>
                         </td>
-                        <td>
+                        <!-- <td>
                           <label class="switch">
                             <input type="checkbox" [(ngModel)]="match.isAdded" />
                             <span class="slider"></span>
@@ -114,7 +107,7 @@
                           <span class="competition-boolean-span">Active</span>
                         
                           <button class="save-Competition-btn"><i class="fa fa-save"></i></button>
-                        </td>
+                        </td> -->
 
                         <td>
                           <button class="save-Competition-btn" (click)="removeEvent(match)" *ngIf="match.isAdded === true"><i class="fa fa-ban"></i> Remove</button>

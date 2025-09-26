@@ -1,16 +1,24 @@
 .login-container {
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  background-color: rgb(114, 159, 225);
-  font-family: 'Segoe UI', sans-serif;
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 2rem 2rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(12deg, #e8ddff 40%, #c3a8ff 100% 60%);
+  font-family: "Segoe UI", sans-serif;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+h4{
+  color: color-mix(in sRGB, #2e263d 90%, #fff);
+}
+
+p{
+  color: color-mix(in sRGB, #2e263d 90%, #fff);
 }
 
 .form-group {
@@ -22,16 +30,19 @@ h2 {
 label {
   font-weight: 500;
   margin-bottom: 5px;
+  color:  color-mix(in sRGB, #2e263d 90%, #fff);
+  font-size: 0.9rem;
 }
 
 input {
   padding: 10px;
-  font-size: 16px;
+  font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  color:  color-mix(in sRGB, #2e263d 90%, #fff);
 }
 
-button {
+/* button {
   width: 100%;
   padding: 12px;
   background-color: #0659b1;
@@ -40,7 +51,7 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-}
+} */
 
 button:disabled {
   background-color: #aaa;
@@ -49,7 +60,7 @@ button:disabled {
 .error {
   color: red;
   margin-top: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .password-group {
@@ -63,7 +74,7 @@ button:disabled {
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 40px; /* space for eye button */
+  padding-right: 40px;
   box-sizing: border-box;
 }
 
@@ -80,4 +91,14 @@ button:disabled {
   padding: 0;
   line-height: 1;
   width: auto;
+}
+
+a, a span {
+    color: #8c57ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.social-icons a{
+  font-size: 1.5rem;
 }

@@ -1,13 +1,15 @@
 <div class="cricket-container">
-    <div class="select-sport">
-        <button class="top-btn" (click)="fetchCricketCompetitionList('4')" [class.active]="selectedSport === '4'">Cricket Competition</button>
-        <button class="top-btn" (click)="fetchCricketCompetitionList('1')" [class.active]="selectedSport === '1'">Soccer Competition</button>
-        <button class="top-btn" (click)="fetchCricketCompetitionList('2')" [class.active]="selectedSport === '2'">Tennis Competition</button>
-    </div>
 
   <!-- Search & Page Size -->
-  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
-    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;border-bottom: 1px solid #fff;">
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;">
+
+    <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
+        <button class="top-btn" (click)="fetchCricketCompetitionList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Competition</button>
+        <button class="top-btn" (click)="fetchCricketCompetitionList('1')" [class.active]="selectedSport === '1'">⚽ Soccer Competition</button>
+        <button class="top-btn" (click)="fetchCricketCompetitionList('2')" [class.active]="selectedSport === '2'">🎾 Tennis Competition</button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #fff;border-bottom: 1px solid #e4e4e4;">
       <div>
         <label class="me-2">Show</label>
         <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
@@ -21,7 +23,7 @@
       <div>
         <input
           type="text"
-          class="form-control"
+          class="form-control search-input"
           placeholder="Search..."
           style="max-width: 250px;"
           [value]="searchTerm()"
@@ -31,7 +33,7 @@
     </div>
 
     <!-- Table -->
-    <table class="table table-striped mb-0">
+    <table class="table mb-0">
       <thead>
         <tr>
           <th scope="col">Sr.No</th>
@@ -47,7 +49,7 @@
       <tbody>
         @for (item of paginatedList(); track $index) { 
           <tr>
-            <th scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</th>
+            <td>{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</td>
             <td>{{item.competitionId}}</td>
             <td>{{item.competitionName}}</td>
             <td>{{item.competitionRegion}}</td>
@@ -63,7 +65,7 @@
     </table>
 
     <!-- Pagination -->
-    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;">
+    <div class="d-flex justify-content-between align-items-center p-2">
       <div class="entries-num">
         Showing <strong>{{ (currentPage()-1) * pageSize() + 1 }}</strong> to <strong>{{ Math.min(currentPage() * pageSize(), filteredList().length) }}</strong> of <strong>{{ filteredList().length }}</strong> entries
       </div>

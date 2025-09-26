@@ -1,13 +1,16 @@
 <div class="cricket-container">
-  <div class="select-sport">
-    <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">Cricket Match</button>
-    <button class="top-btn" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">Soccer Match</button>
-    <button class="top-btn" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">Tennis Match</button>
-  </div>
+  
     <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
   <!-- Search & Page Size -->
-  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
-    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;border-bottom: 1px solid #fff;">
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;">
+
+    <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
+      <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Match</button>
+      <button class="top-btn" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">⚽ Soccer Match</button>
+      <button class="top-btn" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">🎾 Tennis Match</button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-3" style="background-color: #ffffff;border-bottom: 1px solid #e4e4e4;">
       <div>
         <label class="me-2">Show</label>
         <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
@@ -21,7 +24,7 @@
       <div>
         <input
           type="text"
-          class="form-control"
+          class="form-control search-input"
           placeholder="Search..."
           style="max-width: 250px;"
           [value]="searchTerm()"
@@ -31,19 +34,19 @@
     </div>
 
     <!-- Table -->
-    <table class="table table-striped mb-0">
+    <table class="table mb-0">
       <thead>
         <tr>
-          <th scope="col" style="width: 5%;">Sr.No</th>
-          <!-- <th scope="col">EventId/MarketID</th> -->
-          <th scope="col" style="width: 10%;">EventId</th>
-          <th scope="col" style="width: 20%;">Event Name</th>
-          <th scope="col" style="width: 30%;">Cmpt Id/Name</th>
-          <th scope="col" style="width: 15%;">Open Date</th>
-          <!-- <th scope="col">Sport Name</th> -->
-          <!-- <th scope="col">Market Count</th> -->
-          <th scope="col" style="width: 5%;">Provider</th>
-          <th scope="col" style="width: 15%;text-align: center;">Action</th>
+          <th style="width: 5%;">Sr.No</th>
+          <!-- <th>EventId/MarketID</th> -->
+          <th style="width: 10%;">EventId</th>
+          <th style="width: 20%;">Event Name</th>
+          <th style="width: 30%;">Cmpt Id/Name</th>
+          <th style="width: 15%;">Open Date</th>
+          <!-- <th>Sport Name</th> -->
+          <!-- <th>Market Count</th> -->
+          <th style="width: 5%;">Provider</th>
+          <th style="width: 15%;text-align: center;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -63,10 +66,10 @@
             <!-- <td>{{item.sportName}}</td> -->
             <td><span>Betfair</span></td>
             <td>
-              <div style="display: flex;justify-content: left;gap: 1rem;">
+              <div style="display: flex;justify-content: center;gap: 1rem;">
                 <button  class="events-btn" *ngIf="item.isAdded == false" (click)="openModal(item,false)" >Add</button>
-                <button  class="events-btn" style="background-color: #012c58 !important;" *ngIf="item.isAdded == true">Added</button>
-                <button *ngIf="item.marketName == 'Winner' && item.isAdded == false" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button>
+                <button  class="events-btn-added" style="" *ngIf="item.isAdded == true">Added</button>
+                <button *ngIf="isCupWinner(item)" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button>
               </div>
             </td>
           </tr>
@@ -75,7 +78,7 @@
     </table>
 
     <!-- Pagination -->
-    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;">
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #fff;">
       <div class="entries-num">
         Showing <strong>{{ (currentPage()-1) * pageSize() + 1 }}</strong> to <strong>{{ Math.min(currentPage() * pageSize(), filteredList().length) }}</strong> of <strong>{{ filteredList().length }}</strong> entries
       </div>
@@ -102,15 +105,15 @@
 <div class="modal fade" id="addEventModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="padding: 8px 16px;">
         <h5 class="modal-title">Add Event Details</h5>
-        <button type="button" class="btn-close" (click)="closeModal()"></button>
+        <button type="button" class="btn-close" (click)="closeModal()" style="padding: 6px;font-size: 9px;"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
 
           <div class="mb-3 form-main">
-            <div class="form-sub">
+            <div class="form-sub" *ngIf="selectedEvent?.isCompetitionExist === false">
               <label>Competition Grade</label>
               <select class="form-select" formControlName="competitionGrade">
                 <option value="">Select</option>
@@ -183,15 +186,14 @@
           </div>
 
           <div class="text-end">
-            <button type="submit" class="btn btn-success" [disabled]="addEventForm.invalid">Save Changes</button>
-            <button type="button" class="btn btn-secondary" (click)="closeModal()" style="margin-left: 1rem;">Close</button>
+            <button type="button" class="btn btn-outline-secondary waves-effect" (click)="closeModal()">Close</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" [disabled]="addEventForm.invalid" style="margin-left: 1rem;">Save Changes</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
 
 <div class="loader-overlay" *ngIf="isloading">
   <div class="spinner"></div>

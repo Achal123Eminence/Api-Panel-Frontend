@@ -102,7 +102,6 @@ export class AddCompetition implements OnInit {
   }
 
   updateManualComeptiiton(id: any) {
-    this.isloading = true;
     Swal.fire({
       title: 'Are you sure?',
       text: 'Do you want to Hide this Competition?',
@@ -113,9 +112,10 @@ export class AddCompetition implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading = true;
         this.apiService.updateManualCompetition({ id }).subscribe({
           next: (res: any) => {
-            this.isloading = true;
+            this.isloading = false;
             this.getManualCompetitionList();
             this.showToast('Competition Hidden successfully');
           },

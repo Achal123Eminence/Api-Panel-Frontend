@@ -4,7 +4,7 @@
   /* padding: 30px; */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  background-color: rgb(241, 243, 247);
+  background-color: rgb(255, 255, 255);
   font-family: 'Segoe UI', sans-serif;
   /* border: 0.1px solid #006e76; */
 }
@@ -24,13 +24,13 @@ h2 {
 label {
   font-weight: 500;
   margin-bottom: 5px;
-  /* color: #01595f; */
-  color: rgb(46, 44, 44);
+  color: #433c50;
+  font-size: 0.9rem;
 }
 
 input {
-  padding: 8px;
-  font-size: 16px;
+  padding: 6px;
+  font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
@@ -60,13 +60,13 @@ button:disabled {
 /* ---- */
 
 h1{
-    background: #006e76;
-    color: white;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    background: #eae1ff !important;
+    color: #433c50;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     padding: 12px;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .button-submit{
@@ -81,18 +81,22 @@ h1{
 }
 
 select{
-    padding: 8px;
+    padding: 6px;
+    font-size: 0.9rem;
+    color: #433c50;
+    font-weight: 400;
 }
 
 /* Table */
 thead tr th{
-    background-color: #006e76 !important;
-    color: #fff;
+    background-color: #f6f7fb !important;
+    color: #433c50;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-.hide-btn{
+/* .hide-btn{
   font-weight: 500;
-  /* width: 100% !important; */
   padding: 9px;
   background-color: #006e76;
   color: white;
@@ -100,7 +104,7 @@ thead tr th{
   border: none;
   border-radius: 6px;
   cursor: pointer;
-}
+} */
 
 /* Loader start */
 .loader-overlay {
@@ -131,3 +135,29 @@ thead tr th{
   }
 }
 /* Loader end */
+
+td{
+    background-color: #fff !important;
+    color: #433c50;
+    font-size: 0.9rem;
+    /* font-weight: 500; */
+}
+
+.hide-btn{
+    /* background-color: #8c57ff; */
+    color: #8c57ff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 400;
+    background-color: transparent !important;
+}
+
+.events-btn-added{
+    background-color: #8c57ff;
+    color: #ffffff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 400;
+}

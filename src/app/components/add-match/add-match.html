@@ -4,7 +4,7 @@
         <div class="form-group">
             <label for="option01">Select Sport Type</label>
             <select class="form-select" formControlName="sportId">
-                <option value=""> Select </option>
+                <option value=""> Select Sport</option>
                 <option *ngFor="let sport of sports" [value]="sport.id">
                     {{ sport.name }}
                 </option>
@@ -16,17 +16,17 @@
                 <option value=""> Select </option>
                 <option  [value]="competitionId">{{competitionId}}</option>
             </select> -->
-            <input class="form-control" formControlName="competitionId" placeholder="Enter Competition Id" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)" />
+            <input class="form-control" formControlName="competitionId" placeholder="Enter Competition-id" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)" />
         </div>
         <div class="form-group">
             <label for="option01">Competition Name</label>
-            <input class="form-control" formControlName="competitionName" placeholder="Enter Competition Name" (keypress)="allowAlphaNumeric($event)" (paste)="onAlphaNumericPaste($event)" />
+            <input class="form-control" formControlName="competitionName" placeholder="Enter Competition-name" (keypress)="allowAlphaNumeric($event)" (paste)="onAlphaNumericPaste($event)" />
         </div>
 
         <div class="form-group">
             <label for="option01">Select Competition Grade</label>
             <select class="form-select" formControlName="competitionGrade">
-                <option value=""> Select </option>
+                <option value=""> Select Competition Grade</option>
                 <option *ngFor="let grade of compGrade" [value]="grade.id">
                     {{ grade.name }}
                 </option>
@@ -35,24 +35,24 @@
 
         <div class="form-group">
             <label for="option01">Event Id</label>
-            <input class="form-control" formControlName="eventId" placeholder="Enter Event Id" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)" />
+            <input class="form-control" formControlName="eventId" placeholder="Enter Event-id" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)" />
         </div>
 
         <div class="form-group">
             <label for="option01">Event Name</label>
-            <input class="form-control" formControlName="eventName" placeholder="Enter Event Name" (keypress)="allowAlphaNumeric($event)" (paste)="onAlphaNumericPaste($event)" />
+            <input class="form-control" formControlName="eventName" placeholder="Enter Event-name" (keypress)="allowAlphaNumeric($event)" (paste)="onAlphaNumericPaste($event)" />
         </div>
 
         <div class="form-group">
             <label for="option01">Market Id</label>
-            <input class="form-control" formControlName="marketId" placeholder="Enter Market Id" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" />
+            <input class="form-control" formControlName="marketId" placeholder="Enter Market-id" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" />
         </div>
 
 
         <div class="form-group">
             <label for="option01">Select Event Type</label>
             <select class="form-select" formControlName="eventType">
-                <option value=""> Select </option>
+                <option value=""> Select Event Type</option>
                 <option *ngFor="let type of eventTypes" [value]="type.id">
                     {{ type.name }}
                 </option>
@@ -60,7 +60,7 @@
         </div>
         <div class="form-group">
             <label for="option01">Open Date</label>
-            <input type="datetime-local" class="form-control" formControlName="openDate" />
+            <input type="datetime-local" class="form-control" placeholder="Select Open-date" formControlName="openDate" />
         </div>
         <div class="button-submit" type="submit" >
             <button [disabled]="matchForm.invalid">Submit</button>

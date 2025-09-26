@@ -56,7 +56,7 @@ export class Navbar {
   }
 
   isSettingsActive(): boolean {
-    return ['/default-settings','/currency'].includes(this.router.url);
+    return ['/default-settings','/currency','/competition-setting'].includes(this.router.url);
   }
 
   isDefaultSettingsActive(): boolean {
@@ -67,9 +67,9 @@ export class Navbar {
     return ['/currency'].includes(this.router.url);
   }
 
-  isLimitSettingsActive(): boolean {
-    return ['/competition-setting'].includes(this.router.url);
-  }
+  // isLimitSettingsActive(): boolean {
+  //   return ['/competition-setting'].includes(this.router.url);
+  // }
 
   isCompetitionSettingsActive(): boolean {
     return ['/competition-setting'].includes(this.router.url);

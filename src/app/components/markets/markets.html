@@ -1,10 +1,14 @@
 <div class="cricket-container">
-  <h1 class="main-heading">{{ sportId === '4' ? 'Cricket' : sportId === '1' ? 'Soccer' : sportId === '2' ? 'Tennis' : '' }} Markets</h1>
-
+  
   <!-- Search & Page Size -->
-  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;">
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;">
+    
+    <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
+      <h1 class="main-heading">{{ sportId === '4' ? '🏏 Cricket' : sportId === '1' ? '⚽ Soccer' : sportId === '2' ? '🎾 Tennis' : '' }} Markets</h1>
+    </div>
+
     <div class="d-flex justify-content-between align-items-center p-2"
-      style="background-color: #006e76;border-bottom: 1px solid #fff;">
+      style="background-color: #fff;border-bottom: 1px solid #e4e4e4;;">
       <div>
         <label class="me-2">Show</label>
         <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
@@ -16,13 +20,13 @@
         <label class="ms-2">entries</label>
       </div>
       <div>
-        <input type="text" class="form-control" placeholder="Search..." style="max-width: 250px;" [value]="searchTerm()"
+        <input type="text" class="form-control search-input" placeholder="Search..." style="max-width: 250px;" [value]="searchTerm()"
           (input)="onSearchChange($event)" />
       </div>
     </div>
 
     <!-- Table -->
-    <table class="table table-striped mb-0">
+    <table class="table mb-0">
       <thead>
         <tr>
           <th scope="col">Sr.No</th>
@@ -41,7 +45,7 @@
           <td>{{item.marketId}}</td>
           <td>
             <button class="events-btn" (click)="addSingleMarket(item)" *ngIf="item.isAdded === false">Add</button>
-            <button class="events-btn purpel" (click)="removeSingleMarket(item)" *ngIf="item.isAdded === true">Remove</button>
+            <button class="events-btn-added" (click)="removeSingleMarket(item)" *ngIf="item.isAdded === true">Remove</button>
           </td>
         </tr>
         }
@@ -49,7 +53,7 @@
     </table>
 
     <!-- Pagination -->
-    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #006e76;">
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #fff;">
       <div class="entries-num">
         Showing <strong>{{ (currentPage()-1) * pageSize() + 1 }}</strong> to <strong>{{ Math.min(currentPage() * pageSize(), filteredList().length) }}</strong> of <strong>{{ filteredList().length }}</strong> entries
       </div>

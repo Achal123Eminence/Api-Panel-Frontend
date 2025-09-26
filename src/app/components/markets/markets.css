@@ -1,21 +1,41 @@
 thead tr th{
-    background-color: #006e76 !important;
-    color: #fff;
+    background-color: #f6f7fb !important;
+    color: #433c50;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+td{
+    background-color: #fff !important;
+    color: #433c50;
+    font-size: 0.9rem;
+    /* font-weight: 500; */
 }
 
 .events-btn{
-    background-color: #006e76;
-    color: #fff;
-    border: 1px solid #0aadb8;
-    border-radius: 15px;
+    /* background-color: #8c57ff; */
+    color: #8c57ff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
     padding: 5px 10px;
+    font-weight: 400;
 }
+
+.events-btn-added{
+    background-color: #8c57ff;
+    color: #ffffff;
+    border: 1px solid #8c57ff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 400;
+}
+
 
 .main-heading{
     font-size: 1.3rem;
-    color: #006e76;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    color: #433c50;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 label, .entries-num{
@@ -51,8 +71,20 @@ label, .entries-num{
   }
 }
 
-.purpel{
-    border: 1px solid purple;
-    background-color: rgb(81, 0, 81) !important;
-}
 /* Loader end */
+
+.select-sport{
+    gap: 0.5rem;
+    padding: 1rem 1.2rem;
+    background-color: #fff;
+}
+
+label, .entries-num, select {
+    color: #433c50;
+    font-size: 0.9rem;
+}
+
+.search-input {
+    color: #433c50;
+    font-size: 0.9rem !important;
+}

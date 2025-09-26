@@ -1,57 +1,168 @@
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <!-- <a class="navbar-brand" href="#">BetFair2025</a> -->
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link sidebartoggler nav-icon-hover ms-n3" id="headerCollapse" href="javascript:void(0)" style="font-size: 1.5rem;">
-                API PANEL
+<!-- NEW NAVBAR -->
+
+<nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+  <div class="container-xxl">
+    <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-6">
+      <a class="app-brand-link gap-2" style="text-decoration: none !important;">
+        <span class="app-brand-text demo menu-text fw-semibold ms-1">🌐 API PANEL</span>
+      </a>
+    </div>
+    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0  d-xl-none  ">
+      <a class="nav-item nav-link px-0 me-xl-6">
+        <i class="ri-menu-fill ri-24px"></i>
+      </a>
+    </div>
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+      <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <!-- User -->
+        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+          <a class="nav-link dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+            <div class="avatar avatar-online">
+              <img src="/assets/image/1.png" alt="Profile" class="rounded-circle me-1" style="width: 35px; height: 35px;" />
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
+            <li>
+              <a class="dropdown-item pb-3">
+                <div class="d-flex align-items-center">
+                  <div class="flex-shrink-0 me-3">
+                    <div class="avatar avatar-online">
+                      <img src="/assets/image/1.png" alt="Profile" class="rounded-circle me-1" style="width: 40px; height: 40px;" />
+                    </div>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-0 small">John Doe</h6>
+                    <small class="text-muted">Admin</small>
+
+                  </div>
+                </div>
               </a>
             </li>
+            <li>
+              <div class="dropdown-divider my-0"></div>
+            </li>
+            <li>
+              <a class="dropdown-item top-nav-dropdown-item" >
+                <i class="ri-user-3-line ri-22px me-2"></i>
+                <span class="align-middle">My Profile</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item top-nav-dropdown-item">
+                <i class="ri-settings-4-line ri-22px me-2"></i>
+                <span class="align-middle">Settings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a class="dropdown-item top-nav-dropdown-item" style="padding-right: 8px;">
+                <span class="d-flex align-items-center align-middle">
+                  <i class="flex-shrink-0 ri-file-text-line ri-22px me-2"></i>
+                  <span class="flex-grow-1 align-middle">Billing</span>
+                  <span
+                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
+                </span>
+              </a>
+            </li> -->
+            <!-- <li>
+              <a class="dropdown-item top-nav-dropdown-item">
+                <i class="ri-money-dollar-circle-line ri-22px me-2"></i>
+                <span class="align-middle">Pricing</span>
+              </a>
+            </li> -->
+            <li>
+              <a class="dropdown-item top-nav-dropdown-item">
+                <i class="ri-question-line ri-22px me-2"></i>
+                <span class="align-middle">FAQ</span>
+              </a>
+            </li>
+            <li>
+              <div class="dropdown-divider"></div>
+            </li>
+            <li>
+              <div class="d-grid px-4 pt-2 pb-1">
+                <a class="btn btn-danger d-flex" style="font-weight: 500;" (click)="logout()">
+                  <small class="align-middle">Logout</small>
+                  <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <!--/ User -->
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link"  routerLink="/betfair" aria-current="page" [class.active]="isBetfairAllActive()">
-            Add Betfair Match
+    </div>
+
+
+    <!-- Search Small Screens
+    <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+      <input type="text" class="form-control search-input  border-0" placeholder="Search..." aria-label="Search...">
+      <i class="ri-close-fill search-toggler cursor-pointer"></i>
+    </div> -->
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg" style="box-shadow: 0px 4px 8px -4px rgba(46, 38, 61, .42);">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" >BetFair2025</a> -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <!-- <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link sidebartoggler nav-icon-hover ms-n3" id="headerCollapse"
+            style="font-size: 1.5rem;">
+            API PANEL
           </a>
+        </li>
+      </ul> -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" [class.active]="isBetfairCompetitionActive()"
+            aria-current="page"><i class="fa fa-trophy"></i> Betfair Competition</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="/betfair" aria-current="page" [class.active]="isBetfairAllActive()"><i class="fa fa-users"></i> Add Betfair Match</a>
           <!-- <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/betfair-cricket" [class.active]="isBetfairCricketActive()">Cricket</a></li>
             <li><a class="dropdown-item" routerLink="/betfair-soccer" [class.active]="isBetfairSoccerActive()">Soccer</a></li>
             <li><a class="dropdown-item" routerLink="/betfair-tennis" [class.active]="isBetfairTennisActive()">Tennis</a></li>
           </ul> -->
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddActive()"><i class="fas fa-plus-circle"></i> Add <i class="fa fa-angle-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/add-competition" [class.active]="isAddCompetitionActive()"><i class="fas fa-tasks" style="margin-right: 3px;"></i>  Add Competition</a></li>
+            <li><a class="dropdown-item" routerLink="/add-match" [class.active]="isAddMatchActive()"><i class="fa fa-columns" style="margin-right: 3px;"></i> Add Match</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            [class.active]="isSettingsActive()">
+            <i class="fas fa-cog"></i> Settings <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/default-settings"
+                [class.active]="isDefaultSettingsActive()"><i class="fa fa-question-circle" style="margin-right: 3px;"></i> Default Settings</a></li>
+            <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()"><i class="fas fa-dollar-sign" style="margin-right: 6px;"></i> Add Currency</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()"><i class="fa fa-flag-checkered" style="margin-right: 6px;"></i> Competition Settings</a>
+            </li>
+          </ul>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            [class.active]="isLimitSettingsActive()">
+            <i class="fas fa-sliders-h"></i> Limit Settings <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()">Competition Settings</a>
+            </li>
+          </ul>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" [class.active]="isBetfairCompetitionActive()" aria-current="page">Betfair Competition</a>
+          <a class="nav-link" routerLink="/mType" [class.active]="isMtypeActive()" aria-current="page"><i class="fa fa-calendar"></i>  M-Type</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddActive()">
-            Add
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/add-competition" [class.active]="isAddCompetitionActive()">Add Competition</a></li>
-            <li><a class="dropdown-item" routerLink="/add-match" [class.active]="isAddMatchActive()">Add Match</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isSettingsActive()">
-            Settings
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/default-settings" [class.active]="isDefaultSettingsActive()">Default Settings</a></li>
-            <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()">Add Currency</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isLimitSettingsActive()">
-            Limit Settings
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()">Competition Settings</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/mType" [class.active]="isMtypeActive()" aria-current="page">M-Type</a>
-        </li>
+        
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/tennis" [class.active]="isTennisActive()" aria-current="page">TENNIS</a>
         </li>
@@ -79,7 +190,7 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <!-- <li class="nav-item d-none d-lg-block">
-            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <a class="nav-link nav-icon-hover" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fa fa-search"></i>
             </a>
         </li> -->
@@ -87,20 +198,16 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
-            <img
-              src="/assets/image/user.png"
-              alt="Profile"
-              class="rounded-circle me-1"
-              style="width: 30px; height: 30px;"
-            />
+            <img src="/assets/image/user.png" alt="Profile" class="rounded-circle me-1"
+              style="width: 30px; height: 30px;" />
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+            <li><a class="nav-link  dropdown-item" routerLink="/profile">Profile</a></li>
+            <li><a class="nav-link dropdown-item" (click)="logout()">Logout</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

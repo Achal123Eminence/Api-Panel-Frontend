@@ -76,7 +76,6 @@ export class Markets implements OnInit{
   }
 
   addSingleMarket(data:any){
-    this.isloading = true;
     const payload = {
       eventId:data.event.id,
       marketId:data.marketId,
@@ -92,6 +91,7 @@ export class Markets implements OnInit{
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading = true;
         this.apiService.addSingleMarket(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -110,7 +110,6 @@ export class Markets implements OnInit{
   }
 
   removeSingleMarket(data:any){
-    this.isloading = true;
     const payload = {
       eventId:data.event.id,
       marketId:data.marketId
@@ -126,6 +125,7 @@ export class Markets implements OnInit{
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading = true;
         this.apiService.removeSingleMarket(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;

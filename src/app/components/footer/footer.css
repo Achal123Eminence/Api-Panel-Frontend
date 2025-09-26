@@ -1,10 +1,11 @@
 .app-footer {
-  background-color: #006e76;
-  color: #ffffff;
+  background-color: #fff;
+  color: #433c50;
   text-align: center;
   padding: 1rem 0;
   border-top: 1px solid #ddd;
   font-size: 14px;
+  box-shadow: #000 0 2px 6px;
 }
 
 .footer-container {
@@ -17,7 +18,7 @@
 }
 
 .footer-links a {
-  color: #ffffff;
+  color: #433c50;
   text-decoration: none;
   margin: 0 0.5rem;
 }

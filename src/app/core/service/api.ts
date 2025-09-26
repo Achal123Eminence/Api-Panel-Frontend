@@ -112,7 +112,7 @@ export class Api {
     return this.http.post(`${this.baseUrl}/event/remove-competition`,data);
   }
 
-  updateEventGrade(data:any){
+  updateEventGrade(data:any){ 
     return this.http.post(`${this.baseUrl}/event/update-event-grade`,data);
   }
 
@@ -138,5 +138,9 @@ export class Api {
 
   rollBackEvent(data:any){
     return this.http.post(`${this.baseUrl}/event/rollback-event`,data);
+  }
+
+  competitionCheck(data:any){
+     return this.http.post(`${this.baseUrl}/event/competition-check`,data);
   }
 }

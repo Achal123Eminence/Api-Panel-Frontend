@@ -83,7 +83,6 @@ export class LimitSettings implements OnInit {
   }
 
   updateCompetiitonGrade(data: any) {
-    this.isloading =  true;
     const payload = {
       _id: data._id,
       competitionGrade: data.competitionGrade,
@@ -102,6 +101,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.updateCompetitionGrade(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -122,7 +122,6 @@ export class LimitSettings implements OnInit {
   }
 
   deleteCompetiiton(data: any) {
-    this.isloading = true;
     const payload = {
       _id: data._id,
       competitionId: data.competitionId,
@@ -138,6 +137,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.deleteCompetition(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -158,7 +158,6 @@ export class LimitSettings implements OnInit {
   }
 
   updateEventGrade(data:any){
-    this.isloading = true;
     const payload = data;
 
     Swal.fire({
@@ -171,6 +170,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.updateEventGrade(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -191,7 +191,6 @@ export class LimitSettings implements OnInit {
   }
 
   deleteEvent(data: any) {
-    this.isloading = true;
     const payload = {
       _id: data._id
     };
@@ -208,6 +207,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.deleteEvent(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -228,7 +228,6 @@ export class LimitSettings implements OnInit {
   }
 
   removeEvent(data: any) {
-    this.isloading = true;
     const payload = {
       _id: data._id
     };
@@ -245,6 +244,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.removeEvent(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -265,7 +265,6 @@ export class LimitSettings implements OnInit {
   }
 
   updateCompetitiondefaultSetting(competitionId:any,market:any){
-    this.isloading = true;
     const payload = {
       status: market.status,
       marketId: market.marketId,
@@ -283,6 +282,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.updateCompetitionMarket(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;
@@ -303,7 +303,6 @@ export class LimitSettings implements OnInit {
   }
 
   updateEventDefaultSetting(eventId:any,market:any){
-    this.isloading = true;
     const payload = {
       status: market.status,
       marketId: market.marketId,
@@ -321,6 +320,7 @@ export class LimitSettings implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isloading =  true;
         this.apiService.updateEventMarket(payload).subscribe({
           next: (res: any) => {
             this.isloading = false;

@@ -1,13 +1,9 @@
 <div class="setting-container">
     <div class="select-sport">
-        <button class="top-btn" (click)="fetchAllData('4')" [class.active]="selectedSport === '4'">Cricket
-            Default Markets</button>
-        <button class="top-btn" (click)="fetchAllData('1')" [class.active]="selectedSport === '1'">Soccer
-            Default Markets</button>
-        <button class="top-btn" (click)="fetchAllData('2')" [class.active]="selectedSport === '2'">Tennis
-            Default Markets</button>
+            <button class="top-btn" (click)="fetchAllData('4')" [class.active]="selectedSport === '4'">🏏 Cricket Default Markets</button>
+            <button class="top-btn" (click)="fetchAllData('1')" [class.active]="selectedSport === '1'">⚽ Soccer Default Markets</button>
+            <button class="top-btn" (click)="fetchAllData('2')" [class.active]="selectedSport === '2'">🎾 Tennis Default Markets</button>
     </div>
-
     <div class="main">
         <div class="grade-container">
             <h3>GRADE A</h3>
@@ -30,22 +26,30 @@
                 <tbody>
                     @for (item of gradeA(); track $index) {
                     <tr>
-                        <td>{{item.marketName}}</td>
+                        <td style="line-height: 36px;">{{item.marketName}}</td>
                         <!-- <td>{{item.status}}</td> -->
                         <td>
-                            <label class="switch">
-                                <input type="checkbox" [(ngModel)]="item.status"/>
+                            <label class="switch" style="line-height: 11px;">
+                                <input type="checkbox" [(ngModel)]="item.status" />
                                 <span class="slider"></span>
                             </label>
                         </td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.minStake" placeholder="minStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.delay" placeholder="delay"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
                         <td>
                             <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
                         </td>
@@ -75,22 +79,30 @@
                 <tbody>
                     @for (item of gradeB(); track $index) {
                     <tr>
-                        <td>{{item.marketName}}</td>
+                        <td style="line-height: 36px;">{{item.marketName}}</td>
                         <!-- <td>{{item.status}}</td> -->
                         <td>
-                            <label class="switch">
-                                <input type="checkbox" [(ngModel)]="item.status"/>
+                            <label class="switch" style="line-height: 11px;">
+                                <input type="checkbox" [(ngModel)]="item.status" />
                                 <span class="slider"></span>
                             </label>
                         </td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.minStake" placeholder="minStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.delay" placeholder="delay"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
                         <td>
                             <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
                         </td>
@@ -119,23 +131,31 @@
                 </thead>
                 <tbody>
                     @for (item of gradeC(); track $index) {
-                    <tr>
+                    <tr style="line-height: 36px;">
                         <td>{{item.marketName}}</td>
                         <!-- <td>{{item.status}}</td> -->
                         <td>
-                            <label class="switch">
-                                <input type="checkbox" [(ngModel)]="item.status"/>
+                            <label class="switch" style="line-height: 11px;">
+                                <input type="checkbox" [(ngModel)]="item.status" />
                                 <span class="slider"></span>
                             </label>
                         </td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.minStake" placeholder="minStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.delay" placeholder="delay"></td>
-                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)" [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMinStake" placeholder="preMinStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxStake" placeholder="preMaxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.preMaxPL" placeholder="preMaxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.minStake" placeholder="minStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxStake" placeholder="maxStake"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.maxPL" placeholder="maxPL"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.delay" placeholder="delay"></td>
+                        <td><input type="text" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)"
+                                [(ngModel)]="item.oddsLimit" placeholder="oddsLimit"></td>
                         <td>
                             <button class="save-btn" (click)="updateRow(item)"><i class="fa fa-save"></i></button>
                         </td>
@@ -148,5 +168,5 @@
 </div>
 
 <div class="loader-overlay" *ngIf="isloading">
-  <div class="spinner"></div>
+    <div class="spinner"></div>
 </div>

@@ -40,13 +40,13 @@
 <!-- Search & Page Size -->
 <div class="table-responsive" style="box-shadow: #000 0 2px 6px;" *ngIf="maunalCompetitionList().length > 0">
     <!-- Table -->
-    <table class="table table-striped mb-0">
+    <table class="table mb-0">
       <thead>
         <tr>
-          <th scope="col">Sr.No</th>
-          <th scope="col">Cmpt ID</th>
-          <th scope="col">Cmpt Name</th>
-          <!-- <th scope="col">Cmpt Region</th> -->
+          <th scope="col" style="width: 6%;">Sr.No</th>
+          <th scope="col">Competition Id</th>
+          <th scope="col">Competition Name</th>
+          <th scope="col">Open Date</th>
           <th scope="col">Sports Name</th>
           <!-- <th scope="col">Event Count</th> -->
           <!-- <th scope="col">Market Count</th> -->
@@ -56,18 +56,17 @@
       <tbody>
         @for (item of maunalCompetitionList(); track $index) { 
           <tr>
-            <th scope="row">{{ ($index + 1) }}</th>
+            <td>{{ ($index + 1) }}</td>
             <td>{{item.competitionId}}</td>
             <td>{{item.competitionName}}</td>
-            <!-- <td>{{item.competitionRegion}}</td> -->
+            <td>{{item.openDate | date:'dd/MM/yyyy hh:mm a'}}</td>
             <td>{{ item.sportId === '4' ? 'Cricket' : item.sportId === '1' ? 'Soccer' : item.sportId === '2' ? 'Tennis' : '' }}</td>
             <!-- <td>{{item.eventCount}}</td> -->
             <!-- <td>{{item.marketCount}}</td> -->
             <td>
-              <button class="hide-btn" [disabled]="!item.status" [ngStyle]="{ 'background-color': !item.status ? '#04363a' : '' }"
-                (click)="updateManualComeptiiton(item._id)">
-                {{ item.status ? 'Hide' : 'Hidden' }}
+              <button *ngIf="item.status" class="hide-btn" (click)="updateManualComeptiiton(item._id)">Hide
               </button>
+              <button *ngIf="!item.status" class="events-btn-added">Hidden</button>
             </td>
           </tr>
         }
