@@ -1,0 +1,290 @@
+<div class="cricket-container">
+  
+    <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
+  <!-- Search & Page Size -->
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;">
+
+    <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
+      <!-- <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Match</button>
+      <button class="top-btn" (click)="fetchCricketAllEventList('1')" [class.active]="selectedSport === '1'">⚽ Soccer Match</button>
+      <button class="top-btn" (click)="fetchCricketAllEventList('2')" [class.active]="selectedSport === '2'">🎾 Tennis Match</button> -->
+      <h3>{{ sportId === '4' ? '🏏 Cricket' : sportId === '1' ? '⚽ Soccer' : sportId === '2' ? '🎾 Tennis' : '' }}Running Events List</h3>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-3" style="background-color: #ffffff;border-bottom: 1px solid #e4e4e4;">
+      <div>
+        <label class="me-2">Show</label>
+        <select class="form-select d-inline-block w-auto" (change)="setPageSize($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50" selected>50</option>
+        </select>
+        <label class="ms-2">entries</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Search..."
+          style="max-width: 250px;"
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th style="width: 4%;">Sr.No</th>
+          <th style="width: 8%;">MarketID</th>
+          <th style="width: 8%;">EventId</th>
+          <th style="width: 16%;">Event Name</th>
+          <th style="width: 17%;">Cmpt Name</th>
+          <th style="width: 15%;">Open Date</th>
+          <!-- <th>Sport Name</th> -->
+          <!-- <th>Market Count</th> -->
+          <th style="width: 7%;text-align: center;">Match Type</th>
+          <th style="width: 20%;text-align: center;">Action</th>
+          <th style="width: 5%;">Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of paginatedList(); track $index) {
+          <tr>
+            <td scope="row">{{ ($index + 1) + ((currentPage()-1) * pageSize()) }}</td>
+            <td>{{item.marketId}}</td>
+            <td>{{item.eventId}}</td>
+            <td>{{item.eventName}}</td>
+            <td>
+              <!-- <span>{{item.competitionId}}/</span> -->
+              <span>{{item.competitionName}}</span>
+              <!-- <div style="display: grid;">
+              </div> -->
+               <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
+            <td>{{item.openDate}}</td>
+            <!-- <td>{{item.sportName}}</td> -->
+            <td style="text-align: center;"><span>{{ item.matchType || item.mType }}</span></td>
+            <td>
+              <div style="display: flex;justify-content: center;gap: 1rem;">
+                <button  class="events-btn-added" *ngIf="item.isAdded == false" (click)="rollBackEvent(item)">Rollback</button>
+                <button  class="events-btn" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
+                <button  class="delete-event-btn" style="" (click)="deleteEvent(item)">Delete</button>
+                <button class="btn btn-sm btn-primary dropdown-toggle settings-btn" type="button" id="actionMenuButton" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Settings
+                </button>
+                
+                <ul class="dropdown-menu" aria-labelledby="actionMenuButton">
+                  <li>
+                    <a class="dropdown-item"  routerLink="/running-match-market/{{sportId}}/{{item.eventId}}">
+                      <i class="fas fa-store me-2"></i> Markets
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" >
+                      <i class="fas fa-check me-2"></i> Check Data
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item">
+                      <i class="fas fa-signal me-2"></i> Live Data
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="openModalRunners(item)">
+                      <i class="fas fa-people-group me-2"></i> Runners
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="openModalOpenDate(item)">
+                      <i class="fas fa-sync me-2"></i> Change Date
+                    </a>
+                  </li>
+                  <li *ngIf="sportId === '4' && item.matchType && item.premium">
+                    <a class="dropdown-item" (click)="openModal(item)">
+                      <i class="fas fa-trophy me-2"></i> Match Type
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item"  (click)="openModalBookmaker(item)">
+                      <i class="fas fa-redo me-2"></i> Update Bookmaker
+                    </a>
+                  </li>
+                </ul>
+
+                <!-- <button *ngIf="isCupWinner(item)" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button> -->
+              </div>
+            </td>
+            <td style="text-align: center;"><span [ngClass]="item.premium === 'true' ? 'badge-green' : 'badge-red'" >{{item.premium === "true" ? 'Yes' : 'No'}}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center p-2" style="background-color: #fff;">
+      <div class="entries-num">
+        Showing <strong>{{ (currentPage()-1) * pageSize() + 1 }}</strong> to <strong>{{ Math.min(currentPage() * pageSize(), filteredList().length) }}</strong> of <strong>{{ filteredList().length }}</strong> entries
+      </div>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage() === 1">
+            <a class="page-link" (click)="setPage(currentPage()-1)">Previous</a>
+          </li>
+          @for (page of [].constructor(totalPages()); track $index) {
+            <li class="page-item" [class.active]="currentPage() === ($index+1)">
+              <a class="page-link" (click)="setPage($index+1)">{{ $index+1 }}</a>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+            <a class="page-link" (click)="setPage(currentPage()+1)">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--Update Event Type Modal popup -->
+<div class="modal fade" id="updateEventModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 8px 16px;">
+        <h5 class="modal-title">Change Match Type</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" style="padding: 6px;font-size: 9px;"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateMatchTypeForm" (ngSubmit)="updateEventMarketType()">
+
+          <div>
+            <div class="mb-3">
+              <label class="d-block mb-2">Match Type</label>
+          
+              <div class="form-check form-check-inline" *ngFor="let type of ['t10','t15','100balls','t20','oneDay','test']">
+                <input type="radio" class="form-check-input" [value]="type" formControlName="matchType" id="matchType-{{type}}">
+                <label class="form-check-label" [for]="'matchType-' + type">
+                  {{ type | titlecase }}
+                </label>
+              </div>
+            </div>
+          
+            <div class="mb-3">
+              <label class="d-block mb-2">Only Premium ?</label>
+          
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [value]="true" formControlName="premium" id="premium-yes">
+                <label class="form-check-label" for="premium-yes">Yes</label>
+              </div>
+          
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" [value]="false" formControlName="premium" id="premium-no">
+                <label class="form-check-label" for="premium-no">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-secondary waves-effect" (click)="closeModal()">Close</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" [disabled]="updateMatchTypeForm.invalid" style="margin-left: 1rem;">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Update Event Open Date Modal popup -->
+<div class="modal fade" id="updateEventOpenDateModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 8px 16px;">
+        <h5 class="modal-title">Change Date</h5>
+        <button type="button" class="btn-close" (click)="closeModalOpenDate()" style="padding: 6px;font-size: 9px;"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateMatchDateForm" (ngSubmit)="updateEventOpenDate()">
+
+          <div class="mb-3" style="display:flex;justify-content: center;">
+            <div class="" style="width: 82%;">
+              <label for="option01">{{selectedEvent?.eventName}}</label>
+              <input type="datetime-local" class="form-control" formControlName="openDate" />
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-secondary waves-effect" (click)="closeModalOpenDate()">Close</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" [disabled]="updateMatchDateForm.invalid" style="margin-left: 1rem;">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Update Event Runners Modal popup -->
+<div class="modal fade" id="updateEventRunnersModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 60% !important;">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 8px 16px;">
+        <h5 class="modal-title">Runners</h5>
+        <button type="button" class="btn-close" (click)="closeModalRunners()" style="padding: 6px;font-size: 9px;"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateMatchRunnersForm" (ngSubmit)="updateEventRunners()">
+        
+          <div formArrayName="runners" class="row">
+            <div class="col-md-4 mb-3 form-main" *ngFor="let runnerCtrl of runnersFormArray.controls; let i = index" [formGroupName]="i">
+              <div class="">
+                <label>Selection Id: {{ runnerCtrl.get('selectionId')?.value }}</label>
+                <input style="width: 17rem;" type="text" class="form-control" formControlName="runnerName" />
+              </div>
+            </div>
+          </div>
+        
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-secondary" (click)="closeModalRunners()">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="updateMatchRunnersForm.invalid"
+              style="margin-left: 1rem;">Save Changes</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Update Event Bookmaker Modal popup -->
+<div class="modal fade" id="updateMatchBookmakerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 8px 16px;">
+        <h5 class="modal-title">Update Bookmaker</h5>
+        <button type="button" class="btn-close" (click)="closeModalBookmaker()" style="padding: 6px;font-size: 9px;"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateMatchBookmaker" (ngSubmit)="updateEventBookmaker()">
+
+          <div class="mb-3" style="display:flex;justify-content: center;">
+            <div class="" style="width: 82%;">
+              <label for="option01">{{selectedEvent?.eventName}}</label>
+              <input type="text" class="form-control" formControlName="bookmaker" />
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-secondary waves-effect" (click)="closeModalBookmaker()">Close</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" [disabled]="updateMatchBookmaker.invalid" style="margin-left: 1rem;">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loader-overlay" *ngIf="isloading">
+  <div class="spinner"></div>
+</div>

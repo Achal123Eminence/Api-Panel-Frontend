@@ -74,4 +74,20 @@ export class Navbar {
   isCompetitionSettingsActive(): boolean {
     return ['/competition-setting'].includes(this.router.url);
   }
+
+  isRunningMatchActive(): boolean {
+    return ['/running-match/4','/running-match/1','/running-match/2',].includes(this.router.url);
+  }
+
+  isRunningCricketActive(): boolean {
+    return ['/running-match/4'].includes(this.router.url);
+  }
+
+  isRunningSoccerActive(): boolean {
+    return ['/running-match/1'].includes(this.router.url);
+  }
+
+  isRunningTennisActive(): boolean {
+    return ['/running-match/2'].includes(this.router.url);
+  }
 }

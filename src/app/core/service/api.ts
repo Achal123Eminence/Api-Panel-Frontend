@@ -143,4 +143,28 @@ export class Api {
   competitionCheck(data:any){
      return this.http.post(`${this.baseUrl}/event/competition-check`,data);
   }
+
+  getRunningEventList(data:any){
+     return this.http.post(`${this.baseUrl}/running-matches/get-events`,data);
+  }
+
+  getRunningEventMarketList(data:any){
+     return this.http.post(`${this.baseUrl}/running-matches/get-markets`,data);
+  }
+
+  updateRunningEventMarketStatus(data:any){
+     return this.http.post(`${this.baseUrl}/running-matches/update-markets-status`,data);
+  }
+
+  updateRunningEventType(data:any){
+     return this.http.post(`${this.baseUrl}/running-matches/update-event-type`,data);
+  }
+
+  updateRunningEventOpenDate(data:any){
+    return this.http.post(`${this.baseUrl}/running-matches/update-event-open-date`,data);
+  }
+
+  updateRunningEventRunners(data:any){
+    return this.http.post(`${this.baseUrl}/running-matches/update-event-runner`,data);
+  }
 }

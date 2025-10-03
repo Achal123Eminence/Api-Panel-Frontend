@@ -106,7 +106,6 @@ private apiService = inject(Api);
     }
   
     removeEvent(data: any) {
-      this.isloading = true;
       const payload = {
         _id: data._id
       };
@@ -120,6 +119,7 @@ private apiService = inject(Api);
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isloading = true;
           this.apiService.rollBackEvent(payload).subscribe({
             next: (res: any) => {
               this.isloading = false;
