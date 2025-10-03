@@ -476,6 +476,21 @@ export class RunnerMatches implements OnInit {
     });
   }
 
+  allowAlphaNumeric(event: KeyboardEvent) {
+    const char = event.key;
+    // allow only a-z, A-Z, 0-9
+    if (!/^[a-zA-Z0-9\s]$/.test(char)) {
+      event.preventDefault();
+    }
+  }
+
+  onAlphaNumericPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    if (!/^[a-zA-Z0-9\s]+$/.test(pasteData)) {
+      event.preventDefault();
+    }
+  }
+
   setPageSize(event: Event) {
     const select = event.target as HTMLSelectElement | null;
     if (select) {
