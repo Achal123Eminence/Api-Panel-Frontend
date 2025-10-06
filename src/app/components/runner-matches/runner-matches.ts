@@ -106,6 +106,7 @@ export class RunnerMatches implements OnInit {
       }
     }
     this.updateMatchTypeForm.reset();
+    this.selectedEvent = null;
   }
 
   initFormOpenDate() {
@@ -136,6 +137,7 @@ export class RunnerMatches implements OnInit {
       }
     }
     this.updateMatchDateForm.reset();
+    this.selectedEvent = null;
   }
 
   initFormRunners() {
@@ -179,11 +181,12 @@ export class RunnerMatches implements OnInit {
       }
     }
     this.updateMatchRunnersForm.reset();
+    this.selectedEvent = null;
   }
 
   initFormBookmaker() {
     this.updateMatchBookmaker = this.fb.group({
-      bookmaker: ['', Validators.required],
+      worldBookmakerType: ['', Validators.required],
     });
 
     this.updateMatchBookmaker.get('bookmaker')?.updateValueAndValidity();
@@ -193,6 +196,12 @@ export class RunnerMatches implements OnInit {
     this.selectedEvent = event;
 
     this.initFormBookmaker();
+
+    // Prefill the form with existing value
+    this.updateMatchBookmaker.patchValue({
+      worldBookmakerType: this.selectedEvent?.worldBookmakerType || '',
+    });
+
     const modalEl = document.getElementById('updateMatchBookmakerModal');
     if (modalEl) {
       const modal = new (window as any).bootstrap.Modal(modalEl);
@@ -209,6 +218,7 @@ export class RunnerMatches implements OnInit {
       }
     }
     this.updateMatchBookmaker.reset();
+    this.selectedEvent = null;
   }
 
   fetchCricketAllEventList(id: any) {
@@ -346,26 +356,26 @@ export class RunnerMatches implements OnInit {
 
     const payload = {
       ...this.selectedEvent,
-      ...this.updateMatchDateForm.value,
+      ...this.updateMatchBookmaker.value,
     };
 
     console.log(payload, 'payload');
 
-    // if (payload) {
-    //   this.apiService.updateRunningEventOpenDate(payload).subscribe({
-    //     next: (res: any) => {
-    //       this.showToast('Match Runners Updated successfully');
-    //       this.closeModalRunner();
-    //       this.fetchCricketAllEventList(this.sportId);
-    //       this.selectedEvent = null;
-    //     },
-    //     error: (err) => {
-    //       this.isloading = false;
-    //       console.log('Error in Updating Match Runners: ', err);
-    //       this.showToast(`Error in Updating Match Runners:${err.error.message}`, true);
-    //     },
-    //   });
-    // }
+    if (payload) {
+      this.apiService.updateRunningBookmaker(payload).subscribe({
+        next: (res: any) => {
+          this.showToast('Match Bookmaker Updated successfully');
+          this.closeModalBookmaker();
+          this.fetchCricketAllEventList(this.sportId);
+          this.selectedEvent = null;
+        },
+        error: (err) => {
+          this.isloading = false;
+          console.log('Error in Updating Match Bookmaker: ', err);
+          this.showToast(`Error in Updating Match Bookmaker:${err.error.message}`, true);
+        },
+      });
+    }
   }
 
   deleteEvent(data: any) {

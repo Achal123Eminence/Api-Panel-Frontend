@@ -167,4 +167,8 @@ export class Api {
   updateRunningEventRunners(data:any){
     return this.http.post(`${this.baseUrl}/running-matches/update-event-runner`,data);
   }
+
+  updateRunningBookmaker(data:any){
+    return this.http.post(`${this.baseUrl}/running-matches/update-event-bookmaker`,data);
+  }
 }
