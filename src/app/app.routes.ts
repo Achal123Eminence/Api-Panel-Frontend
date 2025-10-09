@@ -14,6 +14,7 @@ import { LimitSettings } from './components/limit-settings/limit-settings';
 import { MType } from './components/m-type/m-type';
 import { RunnerMatches } from './components/runner-matches/runner-matches';
 import { RunningMatchMarket } from './components/running-match-market/running-match-market';
+import { AddDiamondSkyCricket } from './components/add-diamond-sky-cricket/add-diamond-sky-cricket';
 
 export const routes: Routes = [
     {path:'', redirectTo:'login', pathMatch:'full'},
@@ -31,6 +32,6 @@ export const routes: Routes = [
     {path:'competition-setting',component:LimitSettings},
     {path:'mType',component:MType},
     {path:'running-match/:id',component:RunnerMatches},
-    {path:'running-match-market/:sportId/:eventId',component:RunningMatchMarket}
-    
+    {path:'running-match-market/:sportId/:eventId',component:RunningMatchMarket},
+    {path:'add-diamondSky/:id',component:AddDiamondSkyCricket}
 ];

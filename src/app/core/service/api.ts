@@ -171,4 +171,8 @@ export class Api {
   updateRunningBookmaker(data:any){
     return this.http.post(`${this.baseUrl}/running-matches/update-event-bookmaker`,data);
   }
+
+  getAllProviderEvents(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/sport/all-provider-events`,data);
+  }
 }

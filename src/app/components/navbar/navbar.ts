@@ -90,4 +90,24 @@ export class Navbar {
   isRunningTennisActive(): boolean {
     return ['/running-match/2'].includes(this.router.url);
   }
+
+  isAddDiamondSky(): boolean {
+    return ['/add-diamondSky/1','/add-diamondSky/2','/add-diamondSky/4','/add-dsVirtual'].includes(this.router.url);
+  }
+
+  isAdd_DS_CricketActive(): boolean {
+    return ['/add-diamondSky/4'].includes(this.router.url);
+  }
+
+  isAdd_DS_SoccerActive(): boolean {
+    return ['/add-diamondSky/1'].includes(this.router.url);
+  }
+  
+  isAdd_DS_TennisActive(): boolean {
+    return ['/add-diamondSky/2'].includes(this.router.url);
+  }
+  
+  isAdd_DS_VirtualActive(): boolean {
+    return ['/add-dsVirtual'].includes(this.router.url);
+  }
 }
