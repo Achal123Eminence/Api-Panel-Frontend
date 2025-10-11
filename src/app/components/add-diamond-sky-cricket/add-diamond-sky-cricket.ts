@@ -34,11 +34,14 @@ export class AddDiamondSkyCricket implements OnInit {
   betfairMatchListDS = signal<any[]>([]);
   manualMatchListDS = signal<any[]>([]);
   skySrlMatchListDS = signal<any[]>([]);
-  selectedSport: string = '4';
+  selectedSport: any ;
   addEventForm!: FormGroup;
   selectedEvent: any = null;
-
   isloading = false;
+
+  addDoubleEventForm!: FormGroup;
+  selectedDoubleEvent: any = null;
+  maunalCompetitionManualList = signal<any[]>([]);
 
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -47,7 +50,9 @@ export class AddDiamondSkyCricket implements OnInit {
       this.sportId = param.get('id');
       console.log(this.sportId, 'this.sportId');
       this.fetchAll_DS_EventList(this.sportId);
-      this.initForm(this.selectedSport);
+      this.initForm(this.sportId);
+      this.initDoubleEventModalForm(this.sportId);
+      this.selectedSport = this.sportId;
     });
   }
 
@@ -63,7 +68,7 @@ export class AddDiamondSkyCricket implements OnInit {
         // Betfair: provider = "common"
         const betfairMatchList = allEvents.filter(
           (event: any) =>
-            event.isElectronic == false && event.isManualEvent == false
+            event.provider == 'common'
         );
 
         // Manual: provider = "sky" or "diamond" AND eventName does NOT contain "SRL"
@@ -144,7 +149,10 @@ export class AddDiamondSkyCricket implements OnInit {
           this.cd.detectChanges(); // force refresh
 
           console.log(this.selectedEvent, 'this.selectedEvent-after-API');
-          console.log(this.selectedEvent.isCompetitionExist,'isCompetitionExist-after-API');
+          console.log(
+            this.selectedEvent.isCompetitionExist,
+            'isCompetitionExist-after-API'
+          );
 
           // Init form & open modal here (after we know competition exist status)
           this.initForm(this.selectedSport);
@@ -178,27 +186,267 @@ export class AddDiamondSkyCricket implements OnInit {
       return;
     }
 
-    const payload = {
+    let payload = {
       ...this.selectedEvent,
       ...this.addEventForm.value,
     };
 
-    console.log(payload,"payload")
-    // if (payload) {
-    //   payload.isAdded = true;
-    //   this.apiService.addEvent(payload).subscribe({
-    //     next: (res: any) => {
-    //       this.showToast('Event Added successfully');
-    //       this.closeModal();
-    //       this.fetchAll_DS_EventList(this.selectedSport);
-    //     },
-    //     error: (err) => {
-    //       this.isloading = false;
-    //       console.log('Error in Adding Event: ', err);
-    //       this.showToast(`Error in Adding Event:${err.error.message}`, true);
-    //     },
-    //   });
-    // }
+    console.log(payload, 'payload');
+    if (payload) {
+      payload.isAdded = true;
+      payload.mType = 'normal';
+      payload.marketName = payload.marketName || '';
+      payload.markets = payload.markets || [];
+      this.apiService.addEvent(payload).subscribe({
+        next: (res: any) => {
+          this.showToast('Event Added successfully');
+          this.closeModal();
+          this.fetchAll_DS_EventList(this.selectedSport);
+        },
+        error: (err) => {
+          this.isloading = false;
+          console.log('Error in Adding Event: ', err);
+          this.showToast(`Error in Adding Event:${err.error.message}`, true);
+        },
+      });
+    }
+  }
+
+  // ADD DOUBLE EVENT
+
+  initDoubleEventModalForm(sportId: string) {
+    this.addDoubleEventForm = this.fb.group({
+      competition: [''],
+      competitionGrade: [''],
+      eventGrade: ['', Validators.required],
+      primaryEventId: [''],
+      primaryMarketId: [''],
+      altEventId: [''],
+      altMarketId: [''],
+      matchType: [''],
+      premium: [null],
+    });
+
+    // 🟡 Handle competition fields
+    if (this.selectedDoubleEvent?.isCompetitionExist === false) {
+      this.addDoubleEventForm
+        .get('competition')
+        ?.setValidators([Validators.required]);
+      this.addDoubleEventForm
+        .get('competitionGrade')
+        ?.setValidators([Validators.required]);
+    } else {
+      // remove validators & clear values
+      this.addDoubleEventForm.get('competition')?.clearValidators();
+      this.addDoubleEventForm.get('competitionGrade')?.clearValidators();
+      this.addDoubleEventForm.patchValue({
+        competition: '',
+        competitionGrade: '',
+      });
+    }
+    this.addDoubleEventForm.get('competition')?.updateValueAndValidity();
+    this.addDoubleEventForm.get('competitionGrade')?.updateValueAndValidity();
+
+    // 🟡 Handle matchType & premium (only for cricket, non-winner)
+    if (
+      sportId === '4' &&
+      !this.selectedEvent?.marketName?.toLowerCase().includes('winner') &&
+      this.selectedEvent?.isWinnerOpen !== true
+    ) {
+      this.addDoubleEventForm
+        .get('matchType')
+        ?.setValidators([Validators.required]);
+      this.addDoubleEventForm
+        .get('premium')
+        ?.setValidators([Validators.required]);
+    } else {
+      this.addDoubleEventForm.get('matchType')?.clearValidators();
+      this.addDoubleEventForm.get('premium')?.clearValidators();
+    }
+    this.addDoubleEventForm.get('matchType')?.updateValueAndValidity();
+    this.addDoubleEventForm.get('premium')?.updateValueAndValidity();
+
+    // 🟡 Handle Double event fields
+    if (this.selectedDoubleEvent?.isDouble) {
+      if (this.selectedDoubleEvent?.provider === 'sky') {
+        this.addDoubleEventForm.patchValue({
+          primaryEventId: this.selectedDoubleEvent.eventId,
+          primaryMarketId: this.selectedDoubleEvent.marketId,
+        });
+      }
+
+      if (this.selectedDoubleEvent?.provider === 'diamond') {
+        this.addDoubleEventForm.patchValue({
+          altEventId: this.selectedDoubleEvent.eventId,
+          altMarketId: this.selectedDoubleEvent.marketId,
+        });
+      }
+
+      // mark them required for double events
+      [
+        'primaryEventId',
+        'primaryMarketId',
+        'altEventId',
+        'altMarketId',
+      ].forEach((key) => {
+        this.addDoubleEventForm.get(key)?.setValidators([Validators.required]);
+        this.addDoubleEventForm.get(key)?.updateValueAndValidity();
+      });
+    } else {
+      // if not double → clear fields and validators
+      this.addDoubleEventForm.patchValue({
+        primaryEventId: '',
+        primaryMarketId: '',
+        altEventId: '',
+        altMarketId: '',
+      });
+      [
+        'primaryEventId',
+        'primaryMarketId',
+        'altEventId',
+        'altMarketId',
+      ].forEach((key) => {
+        this.addDoubleEventForm.get(key)?.clearValidators();
+        this.addDoubleEventForm.get(key)?.updateValueAndValidity();
+      });
+    }
+  }
+
+  openDoubleEventModal(event: any, isDouble: boolean) {
+    this.selectedDoubleEvent = event;
+    this.selectedDoubleEvent.isDouble = isDouble;
+
+    console.log(event.competitionId,"event.competitionId")
+    this.apiService
+      .competitionCheck({ competitionId: event.competitionId })
+      .subscribe({
+        next: (res: any) => {
+          console.log(res,"check the res")
+          this.selectedDoubleEvent.isCompetitionExist = res?.data;
+          this.cd.detectChanges();
+
+          // Init form now that we know the competition status
+          this.initDoubleEventModalForm(this.selectedSport);
+
+          // Fetch competition list if needed
+          if (event.isManualEvent && !event.isElectronic) {
+            this.apiService.getManualCompetitionListBySport({sportId:this.sportId}).subscribe({
+              next: (res: any) => {
+                res.data = res.data.filter(
+                  (comp: any) => comp.competitionType == 'manual'
+                );
+                this.maunalCompetitionManualList.set(res.data);
+                console.log(this.maunalCompetitionManualList(),"this.maunalCompetitionManualList()")
+              },
+            });
+          }
+
+          if (event.isElectronic) {
+            this.apiService.getManualCompetitionListBySport({sportId:this.sportId}).subscribe({
+              next: (res: any) => {
+                res.data = res.data.filter(
+                  (comp: any) => comp.competitionType == 'virtual'
+                );
+                this.maunalCompetitionManualList.set(res.data);
+                console.log(this.maunalCompetitionManualList(),"this.maunalCompetitionManualList()")
+              },
+            });
+          }
+
+          // Show modal
+          const modalEl = document.getElementById('addDoubleEventModal');
+          if (modalEl) {
+            const modal = new (window as any).bootstrap.Modal(modalEl);
+            modal.show();
+          }
+        },
+        error: (err) => {
+          console.log('Error in Checking competition ', err);
+        },
+      });
+  }
+
+  closeDoubleEventModal() {
+    const modalEl = document.getElementById('addDoubleEventModal');
+    if (modalEl) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      if (modal) {
+        modal.hide();
+      }
+    }
+    // this.addDoubleEventForm.reset();
+    this.selectedDoubleEvent = null;
+  }
+
+  addDoubleEvent() {
+    if (this.addDoubleEventForm.invalid) {
+      Swal.fire('Error', 'Please fill all fields correctly.', 'error');
+      return;
+    }
+
+    // console.log(this.selectedDoubleEvent, 'this.selectedDoubleEvent');
+    // console.log(this.addDoubleEventForm.value, 'this.addDoubleEventForm.value');
+
+    // console.log(this.addDoubleEventForm.value.competition, 'this.addDoubleEventForm.value');
+
+
+    let payload = {
+      ...this.selectedDoubleEvent,
+      ...this.addDoubleEventForm.value,
+      competitionId : this.addDoubleEventForm.value.competition.competitionId,
+      competitionName : this.addDoubleEventForm.value.competition.competitionName
+    };
+
+    if (payload.competition && typeof payload.competition === 'object') {
+      payload.competitionId = payload.competition.competitionId || '';
+      payload.competitionName = payload.competition.competitionName || '';
+      delete payload.competition;
+    }
+
+    // remove fields that shouldn’t be sent if competition exists
+    if (this.selectedDoubleEvent?.isCompetitionExist === true) {
+      delete payload.competition;
+      delete payload.competitionGrade;
+    }
+
+    // remove double fields if not a double event
+    if (!this.selectedDoubleEvent?.isDouble) {
+      delete payload.primaryEventId;
+      delete payload.primaryMarketId;
+      delete payload.altEventId;
+      delete payload.altMarketId;
+    }
+
+    console.log(payload, 'payload');
+    if (payload) {
+      payload.isAdded = true;
+      if(payload.isElectronic == false && payload.isManualEvent == false){
+        payload.mType = 'normal'
+      }
+
+      if(payload.isElectronic == false && payload.isManualEvent == true){
+        payload.mType = 'manual'
+      }
+
+      if(payload.isElectronic == true){
+        payload.mType = 'virtual'
+      }
+
+      payload.marketName = payload.marketName || "";
+      payload.markets = payload.markets || [];
+      this.apiService.addEvent(payload).subscribe({
+        next: (res: any) => {
+          this.showToast('Event Added successfully');
+          this.closeDoubleEventModal();
+          this.fetchAll_DS_EventList(this.selectedSport);
+        },
+        error: (err) => {
+          this.isloading = false;
+          console.log('Error in Adding Event: ', err);
+          this.showToast(`Error in Adding Event:${err.error.message}`, true);
+        },
+      });
+    }
   }
 
   private showToast(message: string, isError: boolean = false): void {

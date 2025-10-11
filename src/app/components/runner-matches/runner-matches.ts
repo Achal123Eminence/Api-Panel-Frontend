@@ -31,6 +31,10 @@ export class RunnerMatches implements OnInit {
   private apiService = inject(Api);
   private fb = inject(FormBuilder);
   cricketAllEventList = signal<any[]>([]);
+  cricketAllCommonEventList = signal<any[]>([]);
+  cricketAllManualEventList = signal<any[]>([]);
+  cricketAllVirtualEventList = signal<any[]>([]);
+
   isloading = false;
   Math = Math;
   sportId: any;
@@ -228,6 +232,20 @@ export class RunnerMatches implements OnInit {
         this.isloading = false;
         this.cricketAllEventList.set(res.data);
         console.log(this.cricketAllEventList());
+
+        const normalMatchList = res.data.filter((event: any) => event.mType == 'normal'|| event.mType.toLowerCase().includes('winner'));
+        const manualMatchList = res.data.filter((event: any) =>event.mType == 'manual');
+        const virtualMatchList = res.data.filter((event: any) => event.mType == 'virtual');
+
+        // ✅ Set results in signals
+        this.cricketAllCommonEventList.set(normalMatchList);
+        this.cricketAllManualEventList.set(manualMatchList);
+        this.cricketAllVirtualEventList.set(virtualMatchList);
+
+        console.log('✅ Common Matches:', this.cricketAllCommonEventList());
+        console.log('✅ Manual Matches:', this.cricketAllManualEventList());
+        console.log('✅ Virtual Matches:', this.cricketAllVirtualEventList());
+
         this.showToast('Running Matches fetched successfully');
         this.currentPage.set(1);
       },

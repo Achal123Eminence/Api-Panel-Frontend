@@ -88,6 +88,10 @@ export class Api {
     return this.http.post(`${this.baseUrl}/manual/get-manual-competition`,data);
   }
 
+  getManualCompetitionListBySport(data:any){
+    return this.http.post(`${this.baseUrl}/manual/get-manual-competition-bySport`,data);
+  }
+
   updateManualCompetition(data:any){
     return this.http.post(`${this.baseUrl}/manual/update-manual-competition`,data);
   }

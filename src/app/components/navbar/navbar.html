@@ -142,21 +142,6 @@
             <li><a class="dropdown-item" routerLink="/add-dsVirtual" [class.active]="isAdd_DS_VirtualActive()"> 🎮 Add Virtual</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            [class.active]="isSettingsActive()">
-            <i class="fas fa-cog"></i> Settings <i class="fa fa-angle-down"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/default-settings"
-                [class.active]="isDefaultSettingsActive()"><i class="fa fa-question-circle" style="margin-right: 3px;"></i> Default Settings</a></li>
-            <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()"><i class="fas fa-dollar-sign" style="margin-right: 6px;"></i> Add Currency</a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()"><i class="fa fa-flag-checkered" style="margin-right: 6px;"></i> Competition Settings</a>
-            </li>
-          </ul>
-        </li>
         <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             [class.active]="isLimitSettingsActive()">
@@ -183,6 +168,21 @@
             </li>
             <li>
               <a class="dropdown-item" routerLink="/running-match/2" [class.active]="isRunningTennisActive()">🎾 Tennis </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            [class.active]="isSettingsActive()">
+            <i class="fas fa-cog"></i> Settings <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/default-settings"
+                [class.active]="isDefaultSettingsActive()"><i class="fa fa-question-circle" style="margin-right: 3px;"></i> Default Settings</a></li>
+            <li><a class="dropdown-item" routerLink="/currency" [class.active]="isCurrencyActive()"><i class="fas fa-dollar-sign" style="margin-right: 6px;"></i> Add Currency</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()"><i class="fa fa-flag-checkered" style="margin-right: 6px;"></i> Competition Settings</a>
             </li>
           </ul>
         </li>
