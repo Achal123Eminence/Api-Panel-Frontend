@@ -179,4 +179,8 @@ export class Api {
   getAllProviderEvents(data:any): Observable<any>{
     return this.http.post(`${this.baseUrl}/sport/all-provider-events`,data);
   }
+
+  getRunningCompetitionCount(data:any){
+     return this.http.post(`${this.baseUrl}/running-matches/get-running-competition-count`,data);
+  }
 }

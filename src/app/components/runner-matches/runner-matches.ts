@@ -48,6 +48,8 @@ export class RunnerMatches implements OnInit {
   pageSize = signal<number>(50);
   searchTerm = signal('');
   currentPage = signal(1);
+  competitionCount:any;
+
 
   // Derived data using Angular Signals
   filteredList = computed(() => {
@@ -71,6 +73,7 @@ export class RunnerMatches implements OnInit {
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((param: any) => {
       this.sportId = param.get('id');
+      this.fetchCompetitionCount(this.sportId)
       this.fetchCricketAllEventList(this.sportId);
       this.initForm();
       this.initFormOpenDate();
@@ -548,6 +551,17 @@ export class RunnerMatches implements OnInit {
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
+    });
+  }
+
+  fetchCompetitionCount(id:any){
+    this.apiService.getRunningCompetitionCount({ sportId: id }).subscribe({
+      next: (res: any) => {
+        this.competitionCount = res?.data;
+      },
+      error: (err) => {
+        console.log('Error in getting Running Competition count: ', err);
+      },
     });
   }
 }

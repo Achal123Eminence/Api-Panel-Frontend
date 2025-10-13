@@ -222,3 +222,12 @@ h3 {
   border-radius: 10px;
   font-weight: 500;
 }
+
+.competitionCount{
+    color: #433c50;
+    margin-bottom: 0.8rem;
+    margin-right: 7px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: right
+}

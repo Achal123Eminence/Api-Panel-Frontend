@@ -2,7 +2,9 @@
   
     <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
   <!-- Search & Page Size -->
-  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;">
+  <h2 class="competitionCount">Competitions: {{competitionCount}}</h2>
+
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;" *ngIf="cricketAllCommonEventList().length > 0">
 
     <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
       <!-- <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Match</button>
@@ -147,7 +149,7 @@
     </div> -->
   </div>
 
-    <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;">
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;" *ngIf="cricketAllManualEventList().length > 0">
 
     <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
       <!-- <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Match</button>
@@ -292,7 +294,7 @@
     </div> -->
   </div>
 
-    <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;">
+  <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;" *ngIf="cricketAllVirtualEventList().length > 0">
 
     <div class="select-sport" style="border-bottom: 1px solid #e4e4e4;">
       <!-- <button class="top-btn" (click)="fetchCricketAllEventList('4')" [class.active]="selectedSport === '4'">🏏 Cricket Match</button>
