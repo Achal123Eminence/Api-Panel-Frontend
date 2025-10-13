@@ -1,24 +1,9 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  inject,
-  computed,
-  ChangeDetectorRef,
-} from '@angular/core';
+import {Component, OnInit, signal, inject, computed, ChangeDetectorRef, } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Api } from '../../core/service/api';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-  FormArray,
-  FormControl,
-} from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray, FormControl,} from '@angular/forms';
 
 @Component({
   selector: 'app-add-diamond-sky-cricket',
