@@ -35,17 +35,17 @@ export class AddDiamondSkyCricket implements OnInit {
       this.sportId = param.get('id');
       console.log(this.sportId, 'this.sportId');
       this.fetchAll_DS_EventList(this.sportId);
-      this.initForm(this.sportId);
+      this.initForm();
       this.initDoubleEventModalForm(this.sportId);
       this.selectedSport = this.sportId;
     });
   }
 
   fetchAll_DS_EventList(id: any) {
-    this.isloading = true;
+    // this.isloading = true;
     this.apiService.getAllProviderEvents({ sportId: id }).subscribe({
       next: (res: any) => {
-        this.isloading = false;
+        // this.isloading = false;
 
         const allEvents = res.data || [];
         console.log(allEvents, 'allEvents');
@@ -79,7 +79,7 @@ export class AddDiamondSkyCricket implements OnInit {
         this.showToast('Running Matches fetched successfully');
       },
       error: (err) => {
-        this.isloading = false;
+        // this.isloading = false;
         console.log('Error in getting Running Matches list: ', err);
         this.showToast(
           `Error in getting Running Matches list:${err.error.message}`,
@@ -89,28 +89,27 @@ export class AddDiamondSkyCricket implements OnInit {
     });
   }
 
-  initForm(sportId: string) {
+  initForm() {
     this.addEventForm = this.fb.group({
       competitionGrade: ['', Validators.required],
       eventGrade: ['', Validators.required],
       matchType: [''],
       premium: [null],
     });
-    // 1. Competition Grade → only required if competition doesn't exist
+    // 🟡 Handle competition grade
     if (this.selectedEvent?.isCompetitionExist === false) {
-      this.addEventForm
-        .get('competitionGrade')
-        ?.setValidators([Validators.required]);
+      this.addEventForm.get('competitionGrade')?.setValidators([Validators.required]);
     } else {
       this.addEventForm.get('competitionGrade')?.clearValidators();
+      this.addEventForm.patchValue({ competitionGrade: '' });
     }
     this.addEventForm.get('competitionGrade')?.updateValueAndValidity();
 
-    // then set validators conditionally
+    // 🟡 Handle matchType & premium for Cricket
     if (
-      sportId === '4' &&
-      !this.selectedEvent?.marketName?.toLowerCase().includes('winner') &&
-      this.selectedEvent?.isWinnerOpen === true
+      this.selectedSport === '4' &&
+      !this.selectedEvent?.marketName?.toLowerCase()?.includes('winner') &&
+      this.selectedEvent?.isWinnerOpen !== true
     ) {
       this.addEventForm.get('matchType')?.setValidators([Validators.required]);
       this.addEventForm.get('premium')?.setValidators([Validators.required]);
@@ -118,7 +117,6 @@ export class AddDiamondSkyCricket implements OnInit {
       this.addEventForm.get('matchType')?.clearValidators();
       this.addEventForm.get('premium')?.clearValidators();
     }
-
     this.addEventForm.get('matchType')?.updateValueAndValidity();
     this.addEventForm.get('premium')?.updateValueAndValidity();
   }
@@ -132,15 +130,8 @@ export class AddDiamondSkyCricket implements OnInit {
           this.selectedEvent.isCompetitionExist = res?.data;
           this.selectedEvent.isWinnerOpen = isWinnerOpen;
           this.cd.detectChanges(); // force refresh
-
-          console.log(this.selectedEvent, 'this.selectedEvent-after-API');
-          console.log(
-            this.selectedEvent.isCompetitionExist,
-            'isCompetitionExist-after-API'
-          );
-
           // Init form & open modal here (after we know competition exist status)
-          this.initForm(this.selectedSport);
+          this.initForm();
           const modalEl = document.getElementById('addEventModal');
           if (modalEl) {
             const modal = new (window as any).bootstrap.Modal(modalEl);
@@ -176,7 +167,6 @@ export class AddDiamondSkyCricket implements OnInit {
       ...this.addEventForm.value,
     };
 
-    console.log(payload, 'payload');
     if (payload) {
       payload.isAdded = true;
       payload.mType = 'normal';

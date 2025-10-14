@@ -63,21 +63,20 @@ export class BetfairAllMatchCricket implements OnInit {
       matchType: [''],
       premium: [null],
     });
-    // 1. Competition Grade → only required if competition doesn't exist
+    // Handle competition grade
     if (this.selectedEvent?.isCompetitionExist === false) {
-      this.addEventForm
-        .get('competitionGrade')
-        ?.setValidators([Validators.required]);
+      this.addEventForm.get('competitionGrade')?.setValidators([Validators.required]);
     } else {
       this.addEventForm.get('competitionGrade')?.clearValidators();
+      this.addEventForm.patchValue({ competitionGrade: '' });
     }
     this.addEventForm.get('competitionGrade')?.updateValueAndValidity();
 
-    // then set validators conditionally
+    // Handle matchType & premium for Cricket
     if (
-      sportId === '4' &&
-      !this.selectedEvent?.marketName?.toLowerCase().includes('winner') &&
-      this.selectedEvent?.isWinnerOpen === true
+      this.selectedSport === '4' &&
+      !this.selectedEvent?.marketName?.toLowerCase()?.includes('winner') &&
+      this.selectedEvent?.isWinnerOpen !== true
     ) {
       this.addEventForm.get('matchType')?.setValidators([Validators.required]);
       this.addEventForm.get('premium')?.setValidators([Validators.required]);
@@ -85,7 +84,6 @@ export class BetfairAllMatchCricket implements OnInit {
       this.addEventForm.get('matchType')?.clearValidators();
       this.addEventForm.get('premium')?.clearValidators();
     }
-
     this.addEventForm.get('matchType')?.updateValueAndValidity();
     this.addEventForm.get('premium')?.updateValueAndValidity();
   }

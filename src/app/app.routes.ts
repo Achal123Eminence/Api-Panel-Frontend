@@ -1,37 +1,77 @@
 import { Routes } from '@angular/router';
-import { Login } from './components/login/login';
-import { Home } from './components/home/home';
-import { BetfairAllMatchCricket } from './components/betfair-all-match-cricket/betfair-all-match-cricket';
-import { BetfairAllMatchSoccer } from './components/betfair-all-match-soccer/betfair-all-match-soccer';
-import { BetfairAllMatchTennis } from './components/betfair-all-match-tennis/betfair-all-match-tennis';
-import { Events } from './components/events/events';
-import { Markets } from './components/markets/markets';
-import { AddCompetition } from './components/add-competition/add-competition';
-import { AddMatch } from './components/add-match/add-match';
-import { DefaultSettings } from './components/default-settings/default-settings';
-import { Currency } from './components/currency/currency';
-import { LimitSettings } from './components/limit-settings/limit-settings';
-import { MType } from './components/m-type/m-type';
-import { RunnerMatches } from './components/runner-matches/runner-matches';
-import { RunningMatchMarket } from './components/running-match-market/running-match-market';
-import { AddDiamondSkyCricket } from './components/add-diamond-sky-cricket/add-diamond-sky-cricket';
 
 export const routes: Routes = [
-    {path:'', redirectTo:'login', pathMatch:'full'},
-    {path:'login',component:Login},
-    {path:'home',component:Home},
-    {path:'betfair',component:BetfairAllMatchCricket},
-    // {path:'betfair-soccer',component:BetfairAllMatchSoccer},
-    // {path:'betfair-tennis',component:BetfairAllMatchTennis},
-    {path:'events/:sportId/:competitionId',component:Events},
-    {path:'markets/:sportId/:eventId',component:Markets},
-    {path:'add-competition',component:AddCompetition},
-    {path:'add-match',component:AddMatch},
-    {path:'default-settings',component:DefaultSettings},
-    {path:'currency',component:Currency},
-    {path:'competition-setting',component:LimitSettings},
-    {path:'mType',component:MType},
-    {path:'running-match/:id',component:RunnerMatches},
-    {path:'running-match-market/:sportId/:eventId',component:RunningMatchMarket},
-    {path:'add-diamondSky/:id',component:AddDiamondSkyCricket}
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./components/login/login').then((m) => m.Login),
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./components/home/home').then((m) => m.Home),
+  },
+  {
+    path: 'betfair',
+    loadComponent: () =>
+      import('./components/betfair-all-match-cricket/betfair-all-match-cricket')
+        .then((m) => m.BetfairAllMatchCricket),
+  },
+  {
+    path: 'events/:sportId/:competitionId',
+    loadComponent: () =>
+      import('./components/events/events').then((m) => m.Events),
+  },
+  {
+    path: 'markets/:sportId/:eventId',
+    loadComponent: () =>
+      import('./components/markets/markets').then((m) => m.Markets),
+  },
+  {
+    path: 'add-competition',
+    loadComponent: () =>
+      import('./components/add-competition/add-competition').then((m) => m.AddCompetition),
+  },
+  {
+    path: 'add-match',
+    loadComponent: () =>
+      import('./components/add-match/add-match').then((m) => m.AddMatch),
+  },
+  {
+    path: 'default-settings',
+    loadComponent: () =>
+      import('./components/default-settings/default-settings').then((m) => m.DefaultSettings),
+  },
+  {
+    path: 'currency',
+    loadComponent: () =>
+      import('./components/currency/currency').then((m) => m.Currency),
+  },
+  {
+    path: 'competition-setting',
+    loadComponent: () =>
+      import('./components/limit-settings/limit-settings').then((m) => m.LimitSettings),
+  },
+  {
+    path: 'mType',
+    loadComponent: () =>
+      import('./components/m-type/m-type').then((m) => m.MType),
+  },
+  {
+    path: 'running-match/:id',
+    loadComponent: () =>
+      import('./components/runner-matches/runner-matches').then((m) => m.RunnerMatches),
+  },
+  {
+    path: 'running-match-market/:sportId/:eventId',
+    loadComponent: () =>
+      import('./components/running-match-market/running-match-market').then((m) => m.RunningMatchMarket),
+  },
+  {
+    path: 'add-diamondSky/:id',
+    loadComponent: () =>
+      import('./components/add-diamond-sky-cricket/add-diamond-sky-cricket').then((m) => m.AddDiamondSkyCricket),
+  },
 ];

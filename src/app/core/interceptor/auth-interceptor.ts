@@ -1,5 +1,6 @@
 import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
-import { inject, NgZone } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, NgZone,PLATFORM_ID } from '@angular/core';
 import { User } from '../service/user';
 import { Router } from '@angular/router';
 import { catchError, throwError, map, from, switchMap  } from 'rxjs';
@@ -8,10 +9,16 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import * as Fingerprint2 from 'fingerprintjs2';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const platformId = inject(PLATFORM_ID);
   const userService = inject(User);
   const router = inject(Router);
   const crypto = inject(CryptoService);
   const ngZone = inject(NgZone);
+
+  // Skip when running on the server
+  if (!isPlatformBrowser(platformId)) {
+    return next(req);
+  }
 
   const token = userService.getToken();
   let authReq = token
