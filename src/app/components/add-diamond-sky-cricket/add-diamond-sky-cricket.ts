@@ -19,7 +19,7 @@ export class AddDiamondSkyCricket implements OnInit {
   betfairMatchListDS = signal<any[]>([]);
   manualMatchListDS = signal<any[]>([]);
   skySrlMatchListDS = signal<any[]>([]);
-  selectedSport: any ;
+  selectedSport: any;
   addEventForm!: FormGroup;
   selectedEvent: any = null;
   isloading = false;
@@ -52,8 +52,7 @@ export class AddDiamondSkyCricket implements OnInit {
 
         // Betfair: provider = "common"
         const betfairMatchList = allEvents.filter(
-          (event: any) =>
-            event.provider == 'common'
+          (event: any) => event.provider == 'common'
         );
 
         // Manual: provider = "sky" or "diamond" AND eventName does NOT contain "SRL"
@@ -98,7 +97,9 @@ export class AddDiamondSkyCricket implements OnInit {
     });
     // 🟡 Handle competition grade
     if (this.selectedEvent?.isCompetitionExist === false) {
-      this.addEventForm.get('competitionGrade')?.setValidators([Validators.required]);
+      this.addEventForm
+        .get('competitionGrade')
+        ?.setValidators([Validators.required]);
     } else {
       this.addEventForm.get('competitionGrade')?.clearValidators();
       this.addEventForm.patchValue({ competitionGrade: '' });
@@ -297,12 +298,10 @@ export class AddDiamondSkyCricket implements OnInit {
     this.selectedDoubleEvent = event;
     this.selectedDoubleEvent.isDouble = isDouble;
 
-    console.log(event.competitionId,"event.competitionId")
     this.apiService
       .competitionCheck({ competitionId: event.competitionId })
       .subscribe({
         next: (res: any) => {
-          console.log(res,"check the res")
           this.selectedDoubleEvent.isCompetitionExist = res?.data;
           this.cd.detectChanges();
 
@@ -311,27 +310,37 @@ export class AddDiamondSkyCricket implements OnInit {
 
           // Fetch competition list if needed
           if (event.isManualEvent && !event.isElectronic) {
-            this.apiService.getManualCompetitionListBySport({sportId:this.sportId}).subscribe({
-              next: (res: any) => {
-                res.data = res.data.filter(
-                  (comp: any) => comp.competitionType == 'manual'
-                );
-                this.maunalCompetitionManualList.set(res.data);
-                console.log(this.maunalCompetitionManualList(),"this.maunalCompetitionManualList()")
-              },
-            });
+            this.apiService
+              .getManualCompetitionListBySport({ sportId: this.sportId })
+              .subscribe({
+                next: (res: any) => {
+                  res.data = res.data.filter(
+                    (comp: any) => comp.competitionType == 'manual'
+                  );
+                  this.maunalCompetitionManualList.set(res.data);
+                  console.log(
+                    this.maunalCompetitionManualList(),
+                    'this.maunalCompetitionManualList()'
+                  );
+                },
+              });
           }
 
           if (event.isElectronic) {
-            this.apiService.getManualCompetitionListBySport({sportId:this.sportId}).subscribe({
-              next: (res: any) => {
-                res.data = res.data.filter(
-                  (comp: any) => comp.competitionType == 'virtual'
-                );
-                this.maunalCompetitionManualList.set(res.data);
-                console.log(this.maunalCompetitionManualList(),"this.maunalCompetitionManualList()")
-              },
-            });
+            this.apiService
+              .getManualCompetitionListBySport({ sportId: this.sportId })
+              .subscribe({
+                next: (res: any) => {
+                  res.data = res.data.filter(
+                    (comp: any) => comp.competitionType == 'virtual'
+                  );
+                  this.maunalCompetitionManualList.set(res.data);
+                  console.log(
+                    this.maunalCompetitionManualList(),
+                    'this.maunalCompetitionManualList()'
+                  );
+                },
+              });
           }
 
           // Show modal
@@ -370,12 +379,12 @@ export class AddDiamondSkyCricket implements OnInit {
 
     // console.log(this.addDoubleEventForm.value.competition, 'this.addDoubleEventForm.value');
 
-
     let payload = {
       ...this.selectedDoubleEvent,
       ...this.addDoubleEventForm.value,
-      competitionId : this.addDoubleEventForm.value.competition.competitionId,
-      competitionName : this.addDoubleEventForm.value.competition.competitionName
+      competitionId: this.addDoubleEventForm.value.competition.competitionId,
+      competitionName:
+        this.addDoubleEventForm.value.competition.competitionName,
     };
 
     if (payload.competition && typeof payload.competition === 'object') {
@@ -401,19 +410,19 @@ export class AddDiamondSkyCricket implements OnInit {
     console.log(payload, 'payload');
     if (payload) {
       payload.isAdded = true;
-      if(payload.isElectronic == false && payload.isManualEvent == false){
-        payload.mType = 'normal'
+      if (payload.isElectronic == false && payload.isManualEvent == false) {
+        payload.mType = 'normal';
       }
 
-      if(payload.isElectronic == false && payload.isManualEvent == true){
-        payload.mType = 'manual'
+      if (payload.isElectronic == false && payload.isManualEvent == true) {
+        payload.mType = 'manual';
       }
 
-      if(payload.isElectronic == true){
-        payload.mType = 'virtual'
+      if (payload.isElectronic == true) {
+        payload.mType = 'virtual';
       }
 
-      payload.marketName = payload.marketName || "";
+      payload.marketName = payload.marketName || '';
       payload.markets = payload.markets || [];
       this.apiService.addEvent(payload).subscribe({
         next: (res: any) => {
@@ -432,15 +441,24 @@ export class AddDiamondSkyCricket implements OnInit {
 
   allowOnlyNumbers(event: KeyboardEvent) {
     const char = event.key;
-    // allow only digits 0-9
-    if (!/^[0-9]$/.test(char)) {
-      event.preventDefault();
+
+    // Allow digits and one leading "-"
+    if (/^[0-9]$/.test(char)) return;
+
+    // Allow "-" only at the beginning (if not already present)
+    const input = event.target as HTMLInputElement;
+    if (char === '-' && !input.value.includes('-') && input.selectionStart === 0
+    ) {
+      return;
     }
+
+    // Otherwise block it
+    event.preventDefault();
   }
 
   onNumberPaste(event: ClipboardEvent) {
     const pasteData = event.clipboardData?.getData('text') || '';
-    if (!/^[0-9]+$/.test(pasteData)) {
+    if (!/^-?[0-9]+$/.test(pasteData)) {
       event.preventDefault();
     }
   }
@@ -456,6 +474,11 @@ export class AddDiamondSkyCricket implements OnInit {
     // Allow only one decimal point
     const control = this.addDoubleEventForm.get('primaryMarketId');
     const currentValue = control?.value || '';
+
+    const input = event.target as HTMLInputElement;
+    if (char === '-' && !input.value.includes('-') && input.selectionStart === 0) {
+      return;
+    }
 
     if (char === '.' && !currentValue.includes('.')) {
       return;
@@ -477,6 +500,12 @@ export class AddDiamondSkyCricket implements OnInit {
     const control = this.addDoubleEventForm.get('altMarketId');
     const currentValue = control?.value || '';
 
+    // Allow single leading "-"
+    const input = event.target as HTMLInputElement;
+    if (char === '-' && !input.value.includes('-') && input.selectionStart === 0) {
+      return;
+    }
+
     if (char === '.' && !currentValue.includes('.')) {
       return;
     }
@@ -488,7 +517,7 @@ export class AddDiamondSkyCricket implements OnInit {
   onDecimalPaste(event: ClipboardEvent) {
     const pasteData = event.clipboardData?.getData('text') || '';
     // Allow only numbers with a single decimal point
-    if (!/^\d*\.?\d*$/.test(pasteData)) {
+    if (!/^-?\d*\.?\d*$/.test(pasteData)) {
       event.preventDefault();
     }
   }
