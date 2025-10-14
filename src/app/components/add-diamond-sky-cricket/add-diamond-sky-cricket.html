@@ -333,24 +333,24 @@
           <div class="mb-3 form-main" *ngIf="selectedDoubleEvent?.isDouble === true">
             <div class="form-sub" style="display: inline-grid">
               <label>Primary EventId</label>
-              <input type="text" formControlName="primaryEventId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;">
+              <input type="text" formControlName="primaryEventId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)">
             </div>
             
             <div class="form-sub" style="display: inline-grid">
               <label>Primary MarketId</label>
-              <input type="text" formControlName="primaryMarketId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;">
+              <input type="text" formControlName="primaryMarketId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;" (keypress)="allowDecimal($event)" (paste)="onDecimalPaste($event)">
             </div>
           </div>
 
           <div class="mb-3 form-main" *ngIf="selectedDoubleEvent?.isDouble === true">
             <div class="form-sub" style="display: inline-grid">
               <label>Alt EventId</label>
-              <input type="text" formControlName="altEventId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;">
+              <input type="text" formControlName="altEventId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;" (keypress)="allowOnlyNumbers($event)" (paste)="onNumberPaste($event)">
             </div>
             
             <div class="form-sub" style="display: inline-grid">
               <label>Alt MarketId</label>
-              <input type="text" formControlName="altMarketId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;">
+              <input type="text" formControlName="altMarketId" style="border-radius: 4px;border: 1px solid #a5a5a5;padding: 4px;" (keypress)="allowDecimal02($event)" (paste)="onDecimalPaste($event)">
             </div>
           </div>
 

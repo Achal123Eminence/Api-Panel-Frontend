@@ -248,6 +248,9 @@ export class AddDiamondSkyCricket implements OnInit {
           primaryEventId: this.selectedDoubleEvent.eventId,
           primaryMarketId: this.selectedDoubleEvent.marketId,
         });
+        // disable these two
+        this.addDoubleEventForm.get('primaryEventId')?.disable();
+        this.addDoubleEventForm.get('primaryMarketId')?.disable();
       }
 
       if (this.selectedDoubleEvent?.provider === 'diamond') {
@@ -255,6 +258,9 @@ export class AddDiamondSkyCricket implements OnInit {
           altEventId: this.selectedDoubleEvent.eventId,
           altMarketId: this.selectedDoubleEvent.marketId,
         });
+        // disable these two
+        this.addDoubleEventForm.get('altEventId')?.disable();
+        this.addDoubleEventForm.get('altMarketId')?.disable();
       }
 
       // mark them required for double events
@@ -421,6 +427,69 @@ export class AddDiamondSkyCricket implements OnInit {
           this.showToast(`Error in Adding Event:${err.error.message}`, true);
         },
       });
+    }
+  }
+
+  allowOnlyNumbers(event: KeyboardEvent) {
+    const char = event.key;
+    // allow only digits 0-9
+    if (!/^[0-9]$/.test(char)) {
+      event.preventDefault();
+    }
+  }
+
+  onNumberPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    if (!/^[0-9]+$/.test(pasteData)) {
+      event.preventDefault();
+    }
+  }
+
+  allowDecimal(event: KeyboardEvent) {
+    const char = event.key;
+
+    // Allow digits 0–9
+    if (/^[0-9]$/.test(char)) {
+      return;
+    }
+
+    // Allow only one decimal point
+    const control = this.addDoubleEventForm.get('primaryMarketId');
+    const currentValue = control?.value || '';
+
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+
+    // Block everything else
+    event.preventDefault();
+  }
+
+  allowDecimal02(event: KeyboardEvent) {
+    const char = event.key;
+
+    // Allow digits 0–9
+    if (/^[0-9]$/.test(char)) {
+      return;
+    }
+
+    // Allow only one decimal point
+    const control = this.addDoubleEventForm.get('altMarketId');
+    const currentValue = control?.value || '';
+
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+
+    // Block everything else
+    event.preventDefault();
+  }
+
+  onDecimalPaste(event: ClipboardEvent) {
+    const pasteData = event.clipboardData?.getData('text') || '';
+    // Allow only numbers with a single decimal point
+    if (!/^\d*\.?\d*$/.test(pasteData)) {
+      event.preventDefault();
     }
   }
 
