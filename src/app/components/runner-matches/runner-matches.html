@@ -2,7 +2,16 @@
   
     <!-- <h1 class="main-heading">{{ selectedSport === '4' ? 'Cricket' : selectedSport === '1' ? 'Soccer' : selectedSport === '2' ? 'Tennis' : '' }} Events List</h1> -->
   <!-- Search & Page Size -->
-  <h2 class="competitionCount">Competitions: {{competitionCount}}</h2>
+  <div class="top-div" style="margin-bottom: 1rem;">
+    <h2 class="competitionCount">Competitions: {{competitionCount}}</h2>
+    <div>
+      <label for="" style="font-family: 0.9rem;color: #433c50;font-weight: 500;margin-right: 5px;">Add Auto Premium: </label>
+       <label class="switch" style="line-height: 22px;">                        
+        <input type="checkbox" [(ngModel)]="autoPremiumStatus" (change)="onAutoPremiumToggle($event)"  />
+        <span class="slider"></span>                      
+      </label>
+    </div>
+  </div>
 
   <div class="table-responsive" style="box-shadow: #000 0 2px 6px;border-radius: 10px;margin-bottom: 2rem;" *ngIf="cricketAllCommonEventList().length > 0">
 
@@ -43,13 +52,13 @@
           <th style="width: 4%;">Sr.No</th>
           <th style="width: 8%;">MarketID</th>
           <th style="width: 8%;">EventId</th>
-          <th style="width: 16%;">Event Name</th>
+          <th style="width: 13%;">Event Name</th>
           <th style="width: 17%;">Cmpt Name</th>
-          <th style="width: 15%;">Open Date</th>
+          <th style="width: 12;">Open Date</th>
           <!-- <th>Sport Name</th> -->
           <!-- <th>Market Count</th> -->
-          <th style="width: 7%;text-align: center;">Match Type</th>
-          <th style="width: 20%;text-align: center;">Action</th>
+          <th style="width: 7%;text-align: center;" *ngIf="sportId == 4">Match Type</th>
+          <th style="width: 26%;text-align: center;">Action</th>
           <th style="width: 5%;">Premium</th>
         </tr>
       </thead>
@@ -68,11 +77,11 @@
                <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
             <td>{{item.openDate}}</td>
             <!-- <td>{{item.sportName}}</td> -->
-            <td style="text-align: center;"><span>{{ item.mType }}</span></td>
+            <td style="text-align:center;display: grid;gap: 5px;justify-items: center;" *ngIf="sportId == 4"><span style="font-weight: 500;">{{ (item.matchType || '-')| titlecase  }}</span><span [ngClass]="item.premium === 'true' ? 'badge-green02' : 'badge-red02'" >{{item.premium == "true" ? 'Yes' : 'No'}}</span></td>
             <td>
               <div style="display: flex;justify-content: center;gap: 1rem;">
                 <button  class="events-btn-added" *ngIf="item.isAdded == false" (click)="rollBackEvent(item)">Rollback</button>
-                <button  class="events-btn" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
+                <button  class="removeP" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
                 <button  class="delete-event-btn" style="" (click)="deleteEvent(item)">Delete</button>
                 <button class="btn btn-sm btn-primary dropdown-toggle settings-btn" type="button" id="actionMenuButton" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -117,10 +126,14 @@
                   </li>
                 </ul>
 
+                <button  class="addP" *ngIf="item.isPremiumData == false" >Add P</button>
+                <button  class="removeP" style="" *ngIf="item.isPremiumData == true" >Remove P</button>
+
+
                 <!-- <button *ngIf="isCupWinner(item)" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button> -->
               </div>
             </td>
-            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premium === 'true' ? 'badge-green' : 'badge-red'" >{{item.premium === "true" ? 'Yes' : 'No'}}</span></td>
+            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premiumStatus == true ? 'badge-green' : 'badge-red'" >{{item.premiumStatus == true ? 'Yes' : 'No'}}</span></td>
           </tr>
         }
       </tbody>
@@ -188,13 +201,13 @@
           <th style="width: 4%;">Sr.No</th>
           <th style="width: 8%;">MarketID</th>
           <th style="width: 8%;">EventId</th>
-          <th style="width: 16%;">Event Name</th>
+          <th style="width: 13%;">Event Name</th>
           <th style="width: 17%;">Cmpt Name</th>
-          <th style="width: 15%;">Open Date</th>
+          <th style="width: 12%;">Open Date</th>
           <!-- <th>Sport Name</th> -->
           <!-- <th>Market Count</th> -->
-          <th style="width: 7%;text-align: center;">Match Type</th>
-          <th style="width: 20%;text-align: center;">Action</th>
+          <th style="width: 7%;text-align: center;" *ngIf="sportId == 4">Match Type</th>
+          <th style="width: 26%;text-align: center;">Action</th>
           <th style="width: 5%;">Premium</th>
         </tr>
       </thead>
@@ -213,11 +226,11 @@
                <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
             <td>{{item.openDate}}</td>
             <!-- <td>{{item.sportName}}</td> -->
-            <td style="text-align: center;"><span>{{ item.mType }}</span></td>
+            <td style="text-align:center;display: grid;gap: 5px;justify-items: center;" *ngIf="sportId == 4"><span style="font-weight: 500;">{{ (item.matchType || '-') | titlecase }}</span><span [ngClass]="item.premium == 'true' ? 'badge-green02' : 'badge-red02'" >{{item.premium == "true" ? 'Yes' : 'No'}}</span></td>
             <td>
               <div style="display: flex;justify-content: center;gap: 1rem;">
                 <button  class="events-btn-added" *ngIf="item.isAdded == false" (click)="rollBackEvent(item)">Rollback</button>
-                <button  class="events-btn" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
+                <button  class="removeP" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
                 <button  class="delete-event-btn" style="" (click)="deleteEvent(item)">Delete</button>
                 <button class="btn btn-sm btn-primary dropdown-toggle settings-btn" type="button" id="actionMenuButton" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -261,11 +274,14 @@
                     </a>
                   </li>
                 </ul>
+                
+                <button  class="addP" *ngIf="item.isPremiumData == false" >Add P</button>
+                <button  class="removeP" style="" *ngIf="item.isPremiumData == true" >Remove P</button>
 
                 <!-- <button *ngIf="isCupWinner(item)" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button> -->
               </div>
             </td>
-            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premium === 'true' ? 'badge-green' : 'badge-red'" >{{item.premium === "true" ? 'Yes' : 'No'}}</span></td>
+            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premiumStatus == true ? 'badge-green' : 'badge-red'" >{{item.premiumStatus == true ? 'Yes' : 'No'}}</span></td>
           </tr>
         }
       </tbody>
@@ -333,13 +349,13 @@
           <th style="width: 4%;">Sr.No</th>
           <th style="width: 8%;">MarketID</th>
           <th style="width: 8%;">EventId</th>
-          <th style="width: 16%;">Event Name</th>
+          <th style="width: 13%;">Event Name</th>
           <th style="width: 17%;">Cmpt Name</th>
-          <th style="width: 15%;">Open Date</th>
+          <th style="width: 12%;">Open Date</th>
           <!-- <th>Sport Name</th> -->
           <!-- <th>Market Count</th> -->
-          <th style="width: 7%;text-align: center;">Match Type</th>
-          <th style="width: 20%;text-align: center;">Action</th>
+          <th style="width: 7%;text-align: center;" *ngIf="sportId == 4">Match Type</th>
+          <th style="width: 26%;text-align: center;">Action</th>
           <th style="width: 5%;">Premium</th>
         </tr>
       </thead>
@@ -358,11 +374,11 @@
                <!-- {{item.competitionId}}/{{item.competitionName}}</td> -->
             <td>{{item.openDate}}</td>
             <!-- <td>{{item.sportName}}</td> -->
-            <td style="text-align: center;"><span>{{ item.mType }}</span></td>
+            <td style="text-align:center;display: grid;gap: 5px;justify-items: center;" *ngIf="sportId == 4"><span style="font-weight: 500;">{{ (item.matchType || '-')| titlecase  }}</span><span [ngClass]="item.premium === 'true' ? 'badge-green02' : 'badge-red02'" >{{item.premium == "true" ? 'Yes' : 'No'}}</span></td>
             <td>
               <div style="display: flex;justify-content: center;gap: 1rem;">
                 <button  class="events-btn-added" *ngIf="item.isAdded == false" (click)="rollBackEvent(item)">Rollback</button>
-                <button  class="events-btn" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
+                <button  class="removeP" style="" *ngIf="item.isAdded == true" (click)="removeEvent(item)">Remove</button>
                 <button  class="delete-event-btn" style="" (click)="deleteEvent(item)">Delete</button>
                 <button class="btn btn-sm btn-primary dropdown-toggle settings-btn" type="button" id="actionMenuButton" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -406,11 +422,14 @@
                     </a>
                   </li>
                 </ul>
-
+                
+                <button  class="addP" *ngIf="item.isPremiumData == false" >Add P</button>
+                <button  class="removeP" style="" *ngIf="item.isPremiumData == true" >Remove P</button>
+                
                 <!-- <button *ngIf="isCupWinner(item)" class="events-btn purpel" style="margin-left: 3px;" (click)="openModal(item,true)">Cup Winner</button> -->
               </div>
             </td>
-            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premium === 'true' ? 'badge-green' : 'badge-red'" >{{item.premium === "true" ? 'Yes' : 'No'}}</span></td>
+            <td style="text-align: center;line-height: 32px;"><span [ngClass]="item.premiumStatus == true ? 'badge-green' : 'badge-red'" >{{item.premiumStatus == true ? 'Yes' : 'No'}}</span></td>
           </tr>
         }
       </tbody>

@@ -183,4 +183,12 @@ export class Api {
   getRunningCompetitionCount(data:any){
      return this.http.post(`${this.baseUrl}/running-matches/get-running-competition-count`,data);
   }
+
+  getAutoPremiumStatusBySport(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/event/get-autoPremium-statusBySport`,data);
+  }
+
+  updateAutoPremiumStatusBySport(data:any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/event/update-autoPremium-statusBySport`,data);
+  }
 }

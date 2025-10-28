@@ -48,8 +48,8 @@ export class RunnerMatches implements OnInit {
   pageSize = signal<number>(50);
   searchTerm = signal('');
   currentPage = signal(1);
-  competitionCount:any;
-
+  competitionCount: any;
+  autoPremiumStatus: boolean = false;
 
   // Derived data using Angular Signals
   filteredList = computed(() => {
@@ -73,7 +73,8 @@ export class RunnerMatches implements OnInit {
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((param: any) => {
       this.sportId = param.get('id');
-      this.fetchCompetitionCount(this.sportId)
+      this.fetchCompetitionCount(this.sportId);
+      this.fetchAutoPremiumStatus(this.sportId);
       this.fetchCricketAllEventList(this.sportId);
       this.initForm();
       this.initFormOpenDate();
@@ -236,9 +237,17 @@ export class RunnerMatches implements OnInit {
         this.cricketAllEventList.set(res.data);
         console.log(this.cricketAllEventList());
 
-        const normalMatchList = res.data.filter((event: any) => event.mType == 'normal'|| event.mType.toLowerCase().includes('winner'));
-        const manualMatchList = res.data.filter((event: any) =>event.mType == 'manual');
-        const virtualMatchList = res.data.filter((event: any) => event.mType == 'virtual');
+        const normalMatchList = res.data.filter(
+          (event: any) =>
+            event.mType == 'normal' ||
+            event.mType.toLowerCase().includes('winner')
+        );
+        const manualMatchList = res.data.filter(
+          (event: any) => event.mType == 'manual'
+        );
+        const virtualMatchList = res.data.filter(
+          (event: any) => event.mType == 'virtual'
+        );
 
         // ✅ Set results in signals
         this.cricketAllCommonEventList.set(normalMatchList);
@@ -393,7 +402,10 @@ export class RunnerMatches implements OnInit {
         error: (err) => {
           this.isloading = false;
           console.log('Error in Updating Match Bookmaker: ', err);
-          this.showToast(`Error in Updating Match Bookmaker:${err.error.message}`, true);
+          this.showToast(
+            `Error in Updating Match Bookmaker:${err.error.message}`,
+            true
+          );
         },
       });
     }
@@ -554,7 +566,7 @@ export class RunnerMatches implements OnInit {
     });
   }
 
-  fetchCompetitionCount(id:any){
+  fetchCompetitionCount(id: any) {
     this.apiService.getRunningCompetitionCount({ sportId: id }).subscribe({
       next: (res: any) => {
         this.competitionCount = res?.data;
@@ -563,5 +575,48 @@ export class RunnerMatches implements OnInit {
         console.log('Error in getting Running Competition count: ', err);
       },
     });
+  }
+
+  fetchAutoPremiumStatus(id: any) {
+    this.apiService.getAutoPremiumStatusBySport({ sportId: id }).subscribe({
+      next: (res: any) => {
+        this.autoPremiumStatus = res?.data?.status;
+        console.log(this.autoPremiumStatus, 'autoPremiumStatus');
+      },
+      error: (err) => {
+        console.log('Error in getting Running Competition count: ', err);
+      },
+    });
+  }
+
+  onAutoPremiumToggle(event: any) {
+    const newStatus = event.target.checked;
+    console.log('Toggled AutoPremium:', newStatus);
+
+    Swal.fire({
+    title: 'Are you sure?',
+    text: `Do you want to ${newStatus ? 'enable' : 'disable'} Auto Premium for this sport?`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update it!',
+    cancelButtonText: 'Cancel',
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.apiService.updateAutoPremiumStatusBySport({sportId: this.sportId,status: newStatus,}).subscribe({
+          next: (res) => {
+            this.showToast(`Auto Premium has been ${newStatus ? 'enabled' : 'disabled'} successfully.`)
+          },
+          error: (err) => {
+            console.error('Error updating AutoPremium:', err);
+            this.showToast('There was an issue updating Auto Premium. Please try again.',true)
+            // ❗ Revert checkbox state if API fails
+            event.target.checked = !newStatus;
+          },
+        });
+    } else {
+      event.target.checked = !newStatus;
+    }
+  });
   }
 }

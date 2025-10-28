@@ -127,14 +127,14 @@
             aria-current="page"><i class="fa fa-trophy"></i> Betfair Competition</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddActive()"><i class="fas fa-plus-circle"></i> Add <i class="fa fa-angle-down"></i></a>
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddActive()"><i class="fas fa-plus-circle"></i> Add Manual <i class="fa fa-angle-down"></i></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/add-competition" [class.active]="isAddCompetitionActive()"><i class="fas fa-tasks" style="margin-right: 3px;"></i>  Add Competition</a></li>
             <li><a class="dropdown-item" routerLink="/add-match" [class.active]="isAddMatchActive()"><i class="fa fa-columns" style="margin-right: 3px;"></i> Add Match</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddDiamondSky()"><i class="fas fa-plus-circle"></i> Add Diamond / Sky <i class="fa fa-angle-down"></i></a>
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" [class.active]="isAddDiamondSky()"><i class="fas fa-plus-circle"></i> Add Diamond Sky <i class="fa fa-angle-down"></i></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/add-diamondSky/4" [class.active]="isAdd_DS_CricketActive()"> 🏏 Add Cricket</a></li>
             <li><a class="dropdown-item" routerLink="/add-diamondSky/2" [class.active]="isAdd_DS_TennisActive()"> 🎾 Add Tennis</a></li>
@@ -153,9 +153,6 @@
             </li>
           </ul>
         </li> -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/mType" [class.active]="isMtypeActive()" aria-current="page"><i class="fa fa-calendar"></i>  M-Type</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             [class.active]="isRunningMatchActive()">
@@ -174,7 +171,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             [class.active]="isSettingsActive()">
-            <i class="fas fa-cog"></i> Settings <i class="fa fa-angle-down"></i>
+            <i class="fas fa-cog"></i> Limit Settings <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/default-settings"
@@ -185,6 +182,9 @@
               <a class="dropdown-item" routerLink="/competition-setting" [class.active]="isCompetitionSettingsActive()"><i class="fa fa-flag-checkered" style="margin-right: 6px;"></i> Competition Settings</a>
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/mType" [class.active]="isMtypeActive()" aria-current="page"><i class="fa fa-calendar"></i>  M-Activites</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/tennis" [class.active]="isTennisActive()" aria-current="page">TENNIS</a>

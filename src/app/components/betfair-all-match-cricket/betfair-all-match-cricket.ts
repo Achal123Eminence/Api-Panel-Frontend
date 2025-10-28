@@ -195,6 +195,8 @@ export class BetfairAllMatchCricket implements OnInit {
     if (payload) {
       payload.isAdded = true;
       payload.mType = 'normal';
+      payload.altEventId = '';
+      payload.altMarketId = ''
       this.apiService.addEvent(payload).subscribe({
         next: (res: any) => {
           this.showToast('Event Added successfully');

@@ -168,11 +168,16 @@ export class AddDiamondSkyCricket implements OnInit {
       ...this.addEventForm.value,
     };
 
+    console.log(payload,"payload",payload.matchType,"payload.matchType")
     if (payload) {
       payload.isAdded = true;
       payload.mType = 'normal';
       payload.marketName = payload.marketName || '';
       payload.markets = payload.markets || [];
+      payload.isWinnerOpen = false;
+      payload.sportName = payload.sportId == 4 ? 'cricket' : payload.sportId == 2 ? 'tennis' : 'soccer' 
+      payload.altEventId = '';
+      payload.altMarketId = ''
       this.apiService.addEvent(payload).subscribe({
         next: (res: any) => {
           this.showToast('Event Added successfully');
@@ -399,15 +404,30 @@ export class AddDiamondSkyCricket implements OnInit {
       delete payload.competitionGrade;
     }
 
-    // remove double fields if not a double event
-    if (!this.selectedDoubleEvent?.isDouble) {
+
+    // double fields handle conditionally
+    if (this.selectedDoubleEvent?.isDouble) {
+      if (this.selectedDoubleEvent?.provider === 'sky') {
+        payload.altEventId = this.addDoubleEventForm.value.altEventId || '';
+        payload.altMarketId = this.addDoubleEventForm.value.altMarketId || '';
+        payload.eventId = this.selectedDoubleEvent?.eventId || '';
+        payload.marketId = this.selectedDoubleEvent?.marketId || '';
+      }
+      if (this.selectedDoubleEvent?.provider === 'diamond') {
+         payload.altEventId = this.selectedDoubleEvent?.eventId || '';
+         payload.altMarketId = this.selectedDoubleEvent?.marketId || '';
+         payload.eventId = this.addDoubleEventForm.value.primaryEventId || '';
+         payload.marketId = this.addDoubleEventForm.value.primaryMarketId || '';
+      }
+    } else {
+      // if not a double → completely remove them
       delete payload.primaryEventId;
       delete payload.primaryMarketId;
       delete payload.altEventId;
       delete payload.altMarketId;
     }
 
-    console.log(payload, 'payload');
+    // console.log(payload, 'payload');
     if (payload) {
       payload.isAdded = true;
       if (payload.isElectronic == false && payload.isManualEvent == false) {
@@ -424,6 +444,9 @@ export class AddDiamondSkyCricket implements OnInit {
 
       payload.marketName = payload.marketName || '';
       payload.markets = payload.markets || [];
+      payload.isWinnerOpen = false;
+      payload.sportName = payload.sportId == 4 ? 'cricket' : payload.sportId == 2 ? 'tennis' : 'soccer' 
+
       this.apiService.addEvent(payload).subscribe({
         next: (res: any) => {
           this.showToast('Event Added successfully');
